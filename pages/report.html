@@ -1,104 +1,218 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campus Maintenance Request</title>
+    <title>Campus Maintenance - Submit Request</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        /* Custom clean animations from your file */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
-<body>
+<body class="bg-gray-50 text-slate-800 min-h-screen flex flex-col font-sans">
 
-    <h1>Submit Work Order</h1>
+    <!-- Navigation Header (Matched Style) -->
+    <nav class="bg-white shadow-md border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <div class="bg-blue-800 text-white p-2 rounded-lg shadow-sm">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
+                    <span class="font-bold text-xl text-slate-800 tracking-tight">CampusFix</span>
+                </div>
+                <div class="flex items-center">
+                    <!-- Placeholder for user profile or logout -->
+                    <div class="h-8 w-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-    <form id="maintenanceForm">
+    <!-- Main Content Area -->
+    <div class="flex-grow flex items-start justify-center p-6">
         
-        <div>
-            <label for="problemType">Problem Type (e.g., Electrical, Plumbing):</label><br>
-            <input type="text" id="problemType" name="problemType" required>
+        <!-- FORM CARD -->
+        <div class="w-full max-w-lg bg-white rounded-xl shadow-xl overflow-hidden fade-in border border-gray-100">
+            
+            <!-- Header Section -->
+            <div class="bg-blue-900 p-6 text-center relative overflow-hidden">
+                <!-- Decorative background circle -->
+                <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+                    <i class="fa-solid fa-wrench text-9xl absolute -left-10 -top-10 transform rotate-45"></i>
+                </div>
+                
+                <h2 class="text-2xl font-bold text-white relative z-10">Submit Work Order</h2>
+                <p class="text-blue-200 text-sm mt-1 relative z-10">Report maintenance issues on campus</p>
+            </div>
+
+            <div class="p-8">
+                <form id="maintenanceForm">
+                    
+                    <!-- Problem Type Input -->
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Problem Type</label>
+                        <div class="relative group">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400 group-focus-within:text-blue-500 transition">
+                                <i class="fa-solid fa-screwdriver-wrench"></i>
+                            </span>
+                            <input type="text" id="problemType" required 
+                                class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-gray-50 focus:bg-white" 
+                                placeholder="e.g., Leaky Faucet, Broken Light">
+                        </div>
+                    </div>
+
+                    <!-- Location Input -->
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                        <div class="relative group">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400 group-focus-within:text-blue-500 transition">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </span>
+                            <input type="text" id="location" required 
+                                class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-gray-50 focus:bg-white" 
+                                placeholder="e.g., Student Center, 2nd Floor">
+                        </div>
+                    </div>
+
+                    <!-- Description Input -->
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                        <div class="relative group">
+                            <span class="absolute top-3 left-0 pl-3 flex text-gray-400 group-focus-within:text-blue-500 transition">
+                                <i class="fa-solid fa-align-left"></i>
+                            </span>
+                            <textarea id="description" rows="4" required 
+                                class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-gray-50 focus:bg-white resize-none" 
+                                placeholder="Describe the issue in detail..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Image Upload Input -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Attach Image (Optional)</label>
+                        <div class="relative border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-blue-500 transition bg-gray-50 text-center group">
+                            <input type="file" id="imageUpload" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                            <div class="flex flex-col items-center justify-center text-gray-500 group-hover:text-blue-500 transition">
+                                <i class="fa-solid fa-cloud-arrow-up text-2xl mb-2"></i>
+                                <span class="text-sm font-medium" id="file-label">Click to upload image</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" 
+                        class="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-lg transition duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                        <span>Submit Request</span>
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+
+                </form>
+            </div>
+            
+            <!-- Status Section (Hidden initially) -->
+            <div id="output-container" class="bg-gray-50 border-t border-gray-100 p-6 hidden">
+                <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Latest Submission</h3>
+                <div id="output" class="bg-white border border-green-200 rounded-lg p-4 shadow-sm relative overflow-hidden">
+                    <!-- Content injected via JS -->
+                </div>
+            </div>
+
         </div>
-
-        <br>
-
-        <div>
-            <label for="location">Location on Campus:</label><br>
-            <!-- Placeholder text indicating this will be a map later -->
-            <input type="text" id="location" name="location" placeholder="e.g., Student Center, 2nd Floor" required>
-        </div>
-
-        <br>
-
-        <div>
-            <label for="description">Problem Description:</label><br>
-            <textarea id="description" name="description" rows="5" cols="40" required></textarea>
-        </div>
-
-        <br>
-
-        <div>
-            <label for="imageUpload">Attach Image (Optional):</label><br>
-            <input type="file" id="imageUpload" name="imageUpload" accept="image/*">
-        </div>
-
-        <br>
-
-        <button type="submit">Submit Request</button>
-
-    </form>
-
-    <hr>
-
-    <h3>Submission Status</h3>
-    <div id="output"></div>
+    </div>
 
     <script>
-        // Simple script to handle the form data without a backend
-        document.getElementById('maintenanceForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Stop page reload
+        const form = document.getElementById('maintenanceForm');
+        const fileInput = document.getElementById('imageUpload');
+        const fileLabel = document.getElementById('file-label');
+        
+        // Update file label on selection
+        fileInput.addEventListener('change', function() {
+            if(this.files && this.files[0]) {
+                fileLabel.textContent = this.files[0].name;
+                fileLabel.classList.add('text-blue-600');
+            } else {
+                fileLabel.textContent = 'Click to upload image';
+                fileLabel.classList.remove('text-blue-600');
+            }
+        });
+
+        // Handle Submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
 
             // Get values
             const type = document.getElementById('problemType').value;
             const location = document.getElementById('location').value;
             const description = document.getElementById('description').value;
-            const fileInput = document.getElementById('imageUpload');
             const timestamp = new Date().toLocaleString();
 
-            // Handle Image Preview logic
-            let imageHtml = '<em>No image attached</em>';
-            let fileName = 'None';
-            
+            // Handle Image Preview
+            let imageHtml = '';
             if (fileInput.files && fileInput.files[0]) {
                 const file = fileInput.files[0];
-                fileName = file.name;
-                // Create a local URL for the uploaded file to display it
                 const objectUrl = URL.createObjectURL(file);
-                // utilizing HTML width attribute to keep it viewable, avoiding CSS
-                imageHtml = `<img src="${objectUrl}" alt="Uploaded Image" width="300"><br><em>${file.name}</em>`;
+                imageHtml = `
+                    <div class="mt-3 rounded-lg overflow-hidden border border-gray-200">
+                        <img src="${objectUrl}" alt="Uploaded Image" class="w-full h-48 object-cover">
+                    </div>
+                `;
             }
 
-            // Display the data (simulating a successful submission)
+            // Show the output container
+            const outputContainer = document.getElementById('output-container');
             const outputDiv = document.getElementById('output');
+            outputContainer.classList.remove('hidden');
+            outputContainer.classList.add('fade-in');
+
+            // Inject styled HTML
             outputDiv.innerHTML = `
-                <p><strong>Report Submitted Successfully</strong></p>
-                <ul>
-                    <li><strong>Time:</strong> ${timestamp}</li>
-                    <li><strong>Type:</strong> ${type}</li>
-                    <li><strong>Location:</strong> ${location}</li>
-                    <li><strong>Description:</strong> ${description}</li>
-                    <li><strong>Image:</strong><br>${imageHtml}</li>
-                </ul>
-                <p><em>(Data logged to console)</em></p>
+                <div class="flex items-start gap-3">
+                    <div class="bg-green-100 text-green-600 rounded-full p-2 mt-1">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <div class="w-full">
+                        <h4 class="font-bold text-gray-800 text-lg">Request Sent!</h4>
+                        <p class="text-xs text-gray-400 mb-2">${timestamp}</p>
+                        
+                        <div class="space-y-2 text-sm text-gray-600 mt-2">
+                            <div class="flex gap-2">
+                                <span class="font-semibold text-gray-700 min-w-[80px]">Type:</span>
+                                <span>${type}</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="font-semibold text-gray-700 min-w-[80px]">Location:</span>
+                                <span>${location}</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <span class="font-semibold text-gray-700 min-w-[80px]">Issue:</span>
+                                <span>${description}</span>
+                            </div>
+                            ${imageHtml}
+                        </div>
+                    </div>
+                </div>
             `;
 
-            // Log to console for debugging
-            console.log('Form Submitted:', {
-                timestamp,
-                type,
-                location,
-                description,
-                imageFileName: fileName
-            });
+            // Console log
+            console.log('Form Submitted:', { timestamp, type, location, description });
 
-            // Optional: clear form
-            this.reset();
+            // Clear form
+            form.reset();
+            fileLabel.textContent = 'Click to upload image';
+            fileLabel.classList.remove('text-blue-600');
         });
     </script>
 
