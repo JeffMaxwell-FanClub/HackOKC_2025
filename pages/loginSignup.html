@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Maintenance - Login & Signup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        /* Custom clean animations */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hidden-section {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-slate-800 h-screen flex flex-col">
+
+    <!-- Navigation Header -->
+    <nav class="bg-white shadow-md border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <!-- Simple Logo Icon -->
+                    <div class="bg-blue-800 text-white p-2 rounded-lg">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
+                    <span class="font-bold text-xl text-slate-800 tracking-tight">CampusFix</span>
+                </div>
+                <div class="flex items-center">
+                    <!-- Reset button removed -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div class="flex-grow flex items-center justify-center p-4">
+        
+        <!-- LOGIN VIEW -->
+        <div id="login-view" class="w-full max-w-md bg-white rounded-xl shadow-xl overflow-hidden fade-in">
+            <div class="bg-blue-900 p-6 text-center">
+                <h2 class="text-2xl font-bold text-white">Welcome Back</h2>
+                <p class="text-blue-200 text-sm mt-1">Sign in to manage maintenance requests</p>
+            </div>
+
+            <div class="p-8">
+                <form onsubmit="handleLogin(event)">
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                                <i class="fa-solid fa-envelope"></i>
+                            </span>
+                            <input type="email" id="login-email" required class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" placeholder="student@campus.edu">
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                                <i class="fa-solid fa-lock"></i>
+                            </span>
+                            <input type="password" id="login-password" required class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" placeholder="••••••••">
+                        </div>
+                    </div>
+
+                    <!-- Error Message Container -->
+                    <div id="login-error" class="hidden mb-4 p-3 bg-red-50 text-red-700 text-sm rounded-lg border border-red-200"></div>
+
+                    <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-lg transition duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                        Sign In
+                    </button>
+                </form>
+
+                <div class="mt-6 text-center border-t pt-6">
+                    <p class="text-sm text-gray-600">Don't have an account?</p>
+                    <button onclick="showSignup()" class="mt-2 text-blue-700 font-semibold hover:underline">Create Account</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIGNUP VIEW -->
+        <div id="signup-view" class="hidden-section w-full max-w-md bg-white rounded-xl shadow-xl overflow-hidden fade-in">
+            <div class="bg-blue-900 p-6 text-center">
+                <h2 class="text-2xl font-bold text-white">Create Account</h2>
+                <p class="text-blue-200 text-sm mt-1">Join the campus maintenance network</p>
+            </div>
+
+            <div class="p-8">
+                <form onsubmit="handleSignup(event)">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                        <input type="text" id="signup-name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="John Doe">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                        <input type="email" id="signup-email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="john@campus.edu">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                        <input type="password" id="signup-password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Create a password">
+                    </div>
+
+                    <!-- Role selection removed -->
+
+                    <!-- Success/Error Message -->
+                    <div id="signup-message" class="hidden mb-4 p-3 text-sm rounded-lg border"></div>
+
+                    <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-lg transition duration-200 shadow-md">
+                        Create Account
+                    </button>
+                </form>
+
+                <div class="mt-6 text-center border-t pt-6">
+                    <p class="text-sm text-gray-600">Already have an account?</p>
+                    <button onclick="showLogin()" class="mt-2 text-blue-700 font-semibold hover:underline">Sign In</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- DASHBOARD VIEW (Placeholder after login) -->
+        <div id="dashboard-view" class="hidden-section w-full max-w-4xl fade-in">
+            <div class="bg-white rounded-xl shadow-lg p-8 text-center">
+                <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Login Successful!</h2>
+                <p id="welcome-msg" class="text-lg text-gray-600 mb-8">Welcome back, User.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+                    <div class="p-6 border rounded-xl hover:shadow-md transition bg-gray-50">
+                        <i class="fa-solid fa-clipboard-list text-3xl text-blue-600 mb-4"></i>
+                        <h3 class="font-bold text-lg mb-2">View Reports</h3>
+                        <p class="text-sm text-gray-500">Check status of existing maintenance requests.</p>
+                    </div>
+                    <div class="p-6 border rounded-xl hover:shadow-md transition bg-gray-50">
+                        <i class="fa-solid fa-plus-circle text-3xl text-blue-600 mb-4"></i>
+                        <h3 class="font-bold text-lg mb-2">New Request</h3>
+                        <p class="text-sm text-gray-500">Submit a new campus maintenance issue.</p>
+                    </div>
+                </div>
+
+                <button onclick="handleLogout()" class="mt-10 text-red-600 hover:text-red-700 font-medium underline">Log Out</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- Simple Frontend Logic (No Backend) ---
+
+        const loginView = document.getElementById('login-view');
+        const signupView = document.getElementById('signup-view');
+        const dashboardView = document.getElementById('dashboard-view');
+
+        // Show Signup Form
+        function showSignup() {
+            loginView.classList.add('hidden-section');
+            signupView.classList.remove('hidden-section');
+            clearMessages();
+        }
+
+        // Show Login Form
+        function showLogin() {
+            signupView.classList.add('hidden-section');
+            loginView.classList.remove('hidden-section');
+            clearMessages();
+        }
+
+        // Handle Registration
+        function handleSignup(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const role = 'student'; // Default role for public signup
+            const msgBox = document.getElementById('signup-message');
+
+            // Simulate saving to database
+            const users = JSON.parse(localStorage.getItem('campusUsers')) || [];
+            
+            // Check if user exists
+            if (users.find(u => u.email === email)) {
+                msgBox.textContent = "Email already registered.";
+                msgBox.className = "mb-4 p-3 bg-red-50 text-red-700 text-sm rounded-lg border border-red-200";
+                msgBox.classList.remove('hidden');
+                return;
+            }
+
+            // Save new user
+            users.push({ name, email, password, role });
+            localStorage.setItem('campusUsers', JSON.stringify(users));
+
+            // Show success
+            msgBox.textContent = "Account created! Redirecting to login...";
+            msgBox.className = "mb-4 p-3 bg-green-50 text-green-700 text-sm rounded-lg border border-green-200";
+            msgBox.classList.remove('hidden');
+
+            setTimeout(() => {
+                showLogin();
+                // Pre-fill login for convenience
+                document.getElementById('login-email').value = email;
+            }, 1500);
+        }
+
+        // Handle Login
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const errorBox = document.getElementById('login-error');
+
+            // "Fetch" users from local storage
+            const users = JSON.parse(localStorage.getItem('campusUsers')) || [];
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (user) {
+                // SUCCESS
+                loginView.classList.add('hidden-section');
+                dashboardView.classList.remove('hidden-section');
+                
+                // Update Dashboard Text based on Role
+                const roleDisplay = user.role === 'maintenance' ? 'Maintenance Staff' : 'Student/Faculty';
+                document.getElementById('welcome-msg').innerHTML = `Welcome back, <b>${user.name}</b>.<br><span class="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded-full mt-2 inline-block">${roleDisplay}</span>`;
+            } else {
+                // FAILURE
+                errorBox.textContent = "Invalid email or password.";
+                errorBox.classList.remove('hidden');
+            }
+        }
+
+        // Handle Logout
+        function handleLogout() {
+            dashboardView.classList.add('hidden-section');
+            loginView.classList.remove('hidden-section');
+            document.getElementById('login-password').value = '';
+            clearMessages();
+        }
+
+        // Utility
+        function clearMessages() {
+            document.getElementById('signup-message').classList.add('hidden');
+            document.getElementById('login-error').classList.add('hidden');
+        }
+
+        function resetSystem() {
+            if(confirm("Reset all demo users?")) {
+                localStorage.removeItem('campusUsers');
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>
