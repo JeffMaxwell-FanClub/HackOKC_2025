@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Maintenance Request</title>
+</head>
+<body>
+
+    <h1>Submit Work Order</h1>
+
+    <form id="maintenanceForm">
+        
+        <div>
+            <label for="problemType">Problem Type (e.g., Electrical, Plumbing):</label><br>
+            <input type="text" id="problemType" name="problemType" required>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="location">Location on Campus:</label><br>
+            <!-- Placeholder text indicating this will be a map later -->
+            <input type="text" id="location" name="location" placeholder="e.g., Student Center, 2nd Floor" required>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="description">Problem Description:</label><br>
+            <textarea id="description" name="description" rows="5" cols="40" required></textarea>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="imageUpload">Attach Image (Optional):</label><br>
+            <input type="file" id="imageUpload" name="imageUpload" accept="image/*">
+        </div>
+
+        <br>
+
+        <button type="submit">Submit Request</button>
+
+    </form>
+
+    <hr>
+
+    <h3>Submission Status</h3>
+    <div id="output"></div>
+
+    <script>
+        // Simple script to handle the form data without a backend
+        document.getElementById('maintenanceForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Stop page reload
+
+            // Get values
+            const type = document.getElementById('problemType').value;
+            const location = document.getElementById('location').value;
+            const description = document.getElementById('description').value;
+            const fileInput = document.getElementById('imageUpload');
+            const timestamp = new Date().toLocaleString();
+
+            // Handle Image Preview logic
+            let imageHtml = '<em>No image attached</em>';
+            let fileName = 'None';
+            
+            if (fileInput.files && fileInput.files[0]) {
+                const file = fileInput.files[0];
+                fileName = file.name;
+                // Create a local URL for the uploaded file to display it
+                const objectUrl = URL.createObjectURL(file);
+                // utilizing HTML width attribute to keep it viewable, avoiding CSS
+                imageHtml = `<img src="${objectUrl}" alt="Uploaded Image" width="300"><br><em>${file.name}</em>`;
+            }
+
+            // Display the data (simulating a successful submission)
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = `
+                <p><strong>Report Submitted Successfully</strong></p>
+                <ul>
+                    <li><strong>Time:</strong> ${timestamp}</li>
+                    <li><strong>Type:</strong> ${type}</li>
+                    <li><strong>Location:</strong> ${location}</li>
+                    <li><strong>Description:</strong> ${description}</li>
+                    <li><strong>Image:</strong><br>${imageHtml}</li>
+                </ul>
+                <p><em>(Data logged to console)</em></p>
+            `;
+
+            // Log to console for debugging
+            console.log('Form Submitted:', {
+                timestamp,
+                type,
+                location,
+                description,
+                imageFileName: fileName
+            });
+
+            // Optional: clear form
+            this.reset();
+        });
+    </script>
+
+</body>
+</html>
