@@ -138,16 +138,16 @@
                 <p id="welcome-msg" class="text-lg text-gray-600 mb-8">Welcome back, User.</p>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-                    <div class="p-6 border rounded-xl hover:shadow-md transition bg-gray-50">
+                    <button type="button" onclick="viewReports()" class="p-6 border rounded-xl hover:shadow-md transition bg-gray-50 text-left cursor-pointer hover:bg-gray-100 w-full">
                         <i class="fa-solid fa-clipboard-list text-3xl text-blue-600 mb-4"></i>
                         <h3 class="font-bold text-lg mb-2">View Reports</h3>
                         <p class="text-sm text-gray-500">Check status of existing maintenance requests.</p>
-                    </div>
-                    <div class="p-6 border rounded-xl hover:shadow-md transition bg-gray-50">
+                    </button>
+                    <a href="/report" class="p-6 border rounded-xl hover:shadow-md transition bg-gray-50 text-left cursor-pointer hover:bg-gray-100 w-full block no-underline text-inherit">
                         <i class="fa-solid fa-plus-circle text-3xl text-blue-600 mb-4"></i>
                         <h3 class="font-bold text-lg mb-2">New Request</h3>
                         <p class="text-sm text-gray-500">Submit a new campus maintenance issue.</p>
-                    </div>
+                    </a>
                 </div>
 
                 <button onclick="handleLogout()" class="mt-10 text-red-600 hover:text-red-700 font-medium underline">Log Out</button>
@@ -227,7 +227,9 @@
             const user = users.find(u => u.email === email && u.password === password);
 
             if (user) {
-                // SUCCESS
+                // SUCCESS - Save current user to localStorage
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                
                 loginView.classList.add('hidden-section');
                 dashboardView.classList.remove('hidden-section');
                 
@@ -243,6 +245,7 @@
 
         // Handle Logout
         function handleLogout() {
+            localStorage.removeItem('currentUser');
             dashboardView.classList.add('hidden-section');
             loginView.classList.remove('hidden-section');
             document.getElementById('login-password').value = '';
@@ -259,6 +262,57 @@
             if(confirm("Reset all demo users?")) {
                 localStorage.removeItem('campusUsers');
                 location.reload();
+            }
+        }
+
+        // Navigation functions
+        function newRequest() {
+            // Ensure user is still logged in
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            if (!currentUser.email) {
+                alert('Please log in first');
+                window.location.href = '/';
+                return false;
+            }
+            // Navigation will happen via anchor tag href
+            return true;
+        }
+        
+        // Add click handler to verify authentication before navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const newRequestLink = document.querySelector('a[href="/report"]');
+            if (newRequestLink) {
+                newRequestLink.addEventListener('click', function(e) {
+                    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+                    if (!currentUser.email) {
+                        e.preventDefault();
+                        alert('Please log in first');
+                        window.location.href = '/';
+                    }
+                });
+            }
+        });
+
+        function viewReports() {
+            // Get current user
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            
+            // Get reports from localStorage
+            const reports = JSON.parse(localStorage.getItem('campusReports')) || [];
+            
+            // Filter reports for current user (or show all if admin/maintenance)
+            const userReports = currentUser.role === 'maintenance' || currentUser.role === 'admin' 
+                ? reports 
+                : reports.filter(r => r.userId === currentUser.email);
+            
+            if (userReports.length === 0) {
+                alert('No reports found. Submit a new request to get started!');
+            } else {
+                // Create a simple display of reports
+                const reportList = userReports.map(r => 
+                    `\n${r.formattedTime || new Date(r.timestamp).toLocaleString()} - ${r.type} at ${r.location} (${r.status})`
+                ).join('');
+                alert(`You have ${userReports.length} report(s):${reportList}\n\nFull report viewing feature coming soon!`);
             }
         }
     </script>
