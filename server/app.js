@@ -108,10 +108,20 @@ app.post('/api/reports', (req, res) => {
   res.json({ success: true, report });
 });
 
-// LISTEN FOR SIGNUP
 app.post('/api/signup', (req, res) => {
+    console.log(req.body);   
+});
+
+app.post('/api/signin', (req, res) => {
     console.log(req.body);
-    res.json({ status: 'ok' });
+    res.send({
+        validLogin: true
+    });
+});
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
 });
 
 app.post('/API/createReport', (req, res) => {
