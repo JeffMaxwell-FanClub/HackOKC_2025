@@ -109,15 +109,96 @@ app.post('/api/reports', (req, res) => {
 });
 
 app.post('/api/signup', (req, res) => {
-    console.log(req.body);   
+    const { name, email, password, role } = req.body;
+
+    const sql = `
+        INSERT INTO [user] (name, email, pass, roleID)
+        VALUES (@name, @email, @pass, @roleID)
+    `;
+
+    const request = new Request(sql, (err) => {
+        if (err) {
+            console.error("SQL Error:", err);
+            return res.status(500).json({ error: err.message });
+        }
+        res.json({ success: true, message: "User created" });
+    });
+
+    request.addParameter("name", TYPES.VarChar, name);
+    request.addParameter("email", TYPES.VarChar, email);
+    request.addParameter("pass", TYPES.VarChar, password);
+    request.addParameter("roleID", TYPES.Int, role); 
+
+    connection.execSql(request);
 });
 
+
+
 app.post('/api/signin', (req, res) => {
-    console.log(req.body);
-    res.send({
-        validLogin: true
+    const { email, password } = req.body;
+
+    // Select user details to verify credentials
+    const sql = `
+        SELECT userID, pass, roleID, name 
+        FROM [user] 
+        WHERE email = @email
+    `;
+
+    const request = new Request(sql, (err) => {
+        if (err) {
+            console.error("Login DB Error:", err);
+            return res.status(500).json({ error: "Database error" });
+        }
     });
+
+    request.addParameter("email", TYPES.VarChar, email);
+
+    let userRecord = null;
+
+    // capture the result row
+    request.on('row', columns => {
+        userRecord = {
+            userID: columns[0].value,
+            storedPass: columns[1].value,
+            roleID: columns[2].value,
+            name: columns[3].value
+        };
+    });
+
+    request.on('requestCompleted', () => {
+        // 1. Check if user exists
+        if (!userRecord) {
+            return res.json({ validLogin: false });
+        }
+
+        // 2. Check if password matches (Direct comparison)
+        if (userRecord.storedPass === password) {
+            res.json({ 
+                validLogin: true,
+                userID: userRecord.userID,
+                name: userRecord.name,
+                roleID: userRecord.roleID // Sending this back in case you want to use it later
+            });
+        } else {
+            res.json({ validLogin: false });
+        }
+    });
+
+    connection.execSql(request);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.post('/API/createReport', (req, res) => {
     const {

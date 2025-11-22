@@ -20,7 +20,6 @@ function handleSignup(e) {
   const name = document.getElementById("signup-name").value;
   const email = document.getElementById("signup-email").value;
   const password = document.getElementById("signup-password").value;
-  const role = "user";
 
   // Simulate saving to database
   fetch("http://localhost:3000/api/signup", {
@@ -32,7 +31,7 @@ function handleSignup(e) {
       name: name,
       email: email,
       password: password,
-      role: role,
+      role: "2",
     }),
   })
     .then((response) => response.json())
