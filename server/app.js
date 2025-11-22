@@ -12,8 +12,7 @@ const model = require('wink-eng-lite-web-model');
 
 
 const app = express();
-const PORT = 3000;
-
+const PORT = process.env.PORT || 3000;
 app.use(express.json({ limit: '10mb' }));
 
 const config = {
@@ -767,7 +766,6 @@ try {
   process.exit(1);
 }
 
-// --- 2. API Endpoint ---
 app.post('/api/triage', (req, res) => {
   const { description } = req.body;
 
@@ -775,12 +773,8 @@ app.post('/api/triage', (req, res) => {
     return res.status(400).json({ error: 'Description is required' });
   }
 
-  // Predict
   const prediction = classifier.predict(description);
   
-  // Optional: Get detailed probability stats if you want them
-  // const metrics = classifier.computeOdds(description);
-
   res.json({
     original_text: description,
     priority: prediction,
