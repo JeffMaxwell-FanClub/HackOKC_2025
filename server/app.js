@@ -224,7 +224,7 @@ app.get('/API/allReports', async (req, res) => {
       u.name AS submittedBy
     FROM reports r
     LEFT JOIN [user] u ON r.userID = u.userID
-    WHERE r.deleted = 0
+    WHERE r.deleted = 0 and r.completion != 1
     ORDER BY r.submissionTime DESC;
   `;
 
