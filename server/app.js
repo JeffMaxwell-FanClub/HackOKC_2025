@@ -1,6 +1,9 @@
 const express = require('express');
 const path = require('path');
 const { Connection, Request, TYPES } = require('tedious');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
+const paths = require('path')
 
 const app = express();
 const PORT = 3000;
@@ -25,6 +28,27 @@ const config = {
 };
 
 const connection = new Connection(config);
+
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Maintenance Crew API',
+      version: '1.0.0',
+      description: 'API documentation for the Hackathon Maintenance Crew application',
+    },
+    servers: [
+      {
+        url: `http://localhost:${PORT}`,
+        description: 'Local Development Server',
+      },
+    ],
+  },
+  apis: ["./server/*.js"]
+};
+
+const swaggerDocs = swaggerJsdoc(swaggerOptions);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 connection.on('connect', err => {
     if (err) {
@@ -120,7 +144,60 @@ app.post('/api/signin', (req, res) => {
         validLogin: true
     });
 });
-
+/**
+ * @swagger
+ * /API/createReport:
+ *   post:
+ *     summary: Create a new maintenance report
+ *     tags: [Reports]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - location
+ *               - description
+ *               - priority
+ *               - userID
+ *             properties:
+ *               location:
+ *                 type: string
+ *               category:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               priority:
+ *                 type: integer
+ *                 description: 1 = Low, 2 = Medium, 3 = High
+ *               submissionTime:
+ *                 type: string
+ *                 format: date-time
+ *               completion:
+ *                 type: boolean
+ *               deleted:
+ *                 type: boolean
+ *               img:
+ *                 type: string
+ *                 description: Base64 encoded image string
+ *               userID:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: The report was successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 reportID:
+ *                   type: integer
+ *       500:
+ *         description: Server error
+ */
 app.post('/API/createReport', (req, res) => {
     const {
         location,
@@ -211,7 +288,49 @@ function runQuery(query) {
     connection.execSql(request);
   });
 }
-
+/**
+ * @swagger
+ * /API/allReports:
+ *   get:
+ *     summary: Get all active, incomplete reports
+ *     tags: [Reports]
+ *     responses:
+ *       200:
+ *         description: List of reports
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 reports:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       reportID:
+ *                         type: integer
+ *                       location:
+ *                         type: string
+ *                       category:
+ *                         type: string
+ *                       description:
+ *                         type: string
+ *                       priority:
+ *                         type: integer
+ *                       submissionTime:
+ *                         type: string
+ *                         format: date-time
+ *                       completion:
+ *                         type: boolean
+ *                       deleted:
+ *                         type: boolean
+ *                       submittedBy:
+ *                         type: string
+ *       500:
+ *         description: Server error
+ */
 app.get('/API/allReports', async (req, res) => {
   const query = `
     SELECT 
@@ -238,7 +357,59 @@ app.get('/API/allReports', async (req, res) => {
   }
 });
 
-
+/**
+ * @swagger
+ * /API/assignedReports:
+ *   get:
+ *     summary: Get reports assigned to workers
+ *     description: Returns all assigned reports, optionally filtered by workerID.
+ *     tags: [Assignments]
+ *     parameters:
+ *       - in: query
+ *         name: workerID
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: Filter results by worker ID
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved assigned reports
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 assigned:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       assignID:
+ *                         type: integer
+ *                       workerID:
+ *                         type: integer
+ *                       workerName:
+ *                         type: string
+ *                       reportID:
+ *                         type: integer
+ *                       location:
+ *                         type: string
+ *                       category:
+ *                         type: string
+ *                       description:
+ *                         type: string
+ *                       priority:
+ *                         type: integer
+ *                       submissionTime:
+ *                         type: string
+ *                         format: date-time
+ *                       completion:
+ *                         type: boolean
+ *       500:
+ *         description: Server error
+ */
 app.get('/API/assignedReports', async (req, res) => {
   const { workerID } = req.query;
 
@@ -269,6 +440,34 @@ app.get('/API/assignedReports', async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /API/assignReport:
+ *   post:
+ *     summary: Assign a report to a worker
+ *     tags: [Assignments]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - workerID
+ *               - reportID
+ *             properties:
+ *               workerID:
+ *                 type: integer
+ *               reportID:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: Assignment successful
+ *       409:
+ *         description: Report already assigned
+ *       500:
+ *         description: Server error
+ */
 app.post('/API/assignReport', (req, res) => {
     const { workerID, reportID } = req.body;
 
@@ -310,8 +509,27 @@ app.post('/API/assignReport', (req, res) => {
     connection.execSql(request);
 });
 
-// API route to mark a report as complete
-// API route to mark a report as complete (using reportID from URL)
+/**
+ * @swagger
+ * /API/completeReport/{reportID}:
+ *   put:
+ *     summary: Mark a report as complete
+ *     tags: [Reports]
+ *     parameters:
+ *       - in: path
+ *         name: reportID
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: The ID of the report to mark complete
+ *     responses:
+ *       200:
+ *         description: Report marked as complete
+ *       404:
+ *         description: Report not found
+ *       500:
+ *         description: Server error
+ */
 app.put('/API/completeReport/:reportID', (req, res) => {
     // Get the reportID from the URL parameters
     const { reportID } = req.params; 
@@ -358,6 +576,48 @@ app.put('/API/completeReport/:reportID', (req, res) => {
 
     connection.execSql(request);
 });
+
+/**
+ * @swagger
+ * /API/completedReports:
+ *   get:
+ *     summary: Get all completed reports
+ *     tags: [Reports]
+ *     responses:
+ *       200:
+ *         description: List of completed reports
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 completed:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       reportID:
+ *                         type: integer
+ *                       location:
+ *                         type: string
+ *                       category:
+ *                         type: string
+ *                       description:
+ *                         type: string
+ *                       priority:
+ *                         type: integer
+ *                       submissionTime:
+ *                         type: string
+ *                         format: date-time
+ *                       completion:
+ *                         type: boolean
+ *                       submittedBy:
+ *                         type: string
+ *       500:
+ *         description: Server error
+ */
 app.get('/API/completedReports', async (req, res) => {
   const query = `
     SELECT 
