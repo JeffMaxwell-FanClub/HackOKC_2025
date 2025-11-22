@@ -66,28 +66,31 @@ function handleLogin(e) {
   const password = document.getElementById("login-password").value;
   const errorBox = document.getElementById("login-error");
 
-  const loginValid = ;
+  const loginValid = test;
   fetch("http://localhost:3000/api/signin", {
     method: "POST",
     body: JSON.stringify({
-      name: name,
       email: email,
-      password: password,
-      role: role,
+      password: password
     }),
   })
-    .then((response) => loginValid = response.json()// RESPONSE TRUE OR FALSE)
+    .then((response) => loginValid = response) // should respond a true or false?
     .then((data) => console.log("Response:", data))
     .catch((error) => console.error("Error:", error));
 
+    let role = "student";
+    if (email === "admin@admin.com") {
+        let role = "maintenance";
+    }
 
+    // not touched
   if (loginValid) {
-    loginView.classList.add("hidden-section"); //!
-    dashboardView.classList.remove("hidden-section"); //!!
+    loginView.classList.add("hidden-section");
+    dashboardView.classList.remove("hidden-section");
 
     // Update Dashboard Text based on Role
     const roleDisplay =
-      user.role === "maintenance" ? "Maintenance Staff" : "Student/Faculty";
+      role === "maintenance" ? "Maintenance Staff" : "Student/Faculty";
     document.getElementById(
       "welcome-msg"
     ).innerHTML = `Welcome back!<br><span class="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded-full mt-2 inline-block">${roleDisplay}</span>`;
@@ -95,7 +98,7 @@ function handleLogin(e) {
     // Show/hide maintenance staff tools
     const maintenanceActions = document.getElementById("maintenance-actions");
     const dashboardActions = document.getElementById("dashboard-actions");
-    if (user.role === "maintenance") {
+    if (role === "maintenance") {
       maintenanceActions.classList.remove("hidden");
       dashboardActions.classList.add("hidden");
     } else {
@@ -109,9 +112,6 @@ function handleLogin(e) {
 }
 
 
-
-
-
 function handleLogout() {
     dashboardView.classList.add('hidden-section');
     loginView.classList.remove('hidden-section');
@@ -123,36 +123,23 @@ function clearMessages() {
     document.getElementById('login-error').classList.add('hidden');
 }
 
+// // Add click handler to verify authentication before navigation
+// document.addEventListener('DOMContentLoaded', function() {
+//     const newRequestLink = document.querySelector('a[href="/report"]');
+//     if (newRequestLink) {
+//         newRequestLink.addEventListener('click', function(e) {
+//             const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+//             if (!currentUser.email) {
+//                 e.preventDefault();
+//                 alert('Please log in first');
+//                 window.location.href = '/';
+//             }
+//         });
+//     }
+// });
 
-//UTIL
-// Navigation functions
-function newRequest() {
-    // Ensure user is still logged in
-    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-    if (!currentUser.email) {
-        alert('Please log in first');
-        window.location.href = '/';
-        return false;
-    }
-    // Navigation will happen via anchor tag href
-    return true;
-}
 
-// Add click handler to verify authentication before navigation
-document.addEventListener('DOMContentLoaded', function() {
-    const newRequestLink = document.querySelector('a[href="/report"]');
-    if (newRequestLink) {
-        newRequestLink.addEventListener('click', function(e) {
-            const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
-            if (!currentUser.email) {
-                e.preventDefault();
-                alert('Please log in first');
-                window.location.href = '/';
-            }
-        });
-    }
-});
-
+// TERRIBLE, NEEDS TO BE A REAL PAGE!!!!!!!!!!!
 function viewReports() {
     // Get current user
     const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
