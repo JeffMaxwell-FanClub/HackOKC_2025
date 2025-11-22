@@ -2816,10 +2816,6 @@
             locationString += ` (${inputSubLocation.value})`
           }
 
-          alert(
-            `Work Order Submitted Successfully!\n\nLocation: ${locationString}\nID: ${inputId.value}\nPhotos Attached: ${fileInput.files.length}`
-          )
-
           btnSubmit.innerText = 'Order Submitted'
           btnSubmit.classList.replace('bg-blue-600', 'bg-green-600')
 
