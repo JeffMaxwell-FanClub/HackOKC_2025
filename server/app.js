@@ -267,6 +267,95 @@ app.get('/API/assignedReports', async (req, res) => {
   }
 });
 
+app.post('/API/assignReport', (req, res) => {
+    const { workerID, reportID } = req.body;
+
+    if (!workerID || !reportID) {
+        return res.status(400).json({ success: false, error: "Missing workerID or reportID." });
+    }
+
+    const sql = `
+        INSERT INTO assignedReports (workerID, reportID)
+        VALUES (@workerID, @reportID)
+    `;
+
+    const request = new Request(sql, (err, rowCount) => {
+        if (err) {
+            // Check for a unique key violation (if a report can only be assigned once)
+            if (err.message.includes('UNIQUE KEY') || err.message.includes('PRIMARY KEY violation')) {
+                 return res.status(409).json({ success: false, error: "This report may already be assigned." });
+            }
+            console.error("Assign report error:", err);
+            return res.status(500).json({ error: "Database insert failed", details: err.message });
+        }
+
+        if (rowCount === 0) {
+            // This is unlikely on an INSERT but good to check
+            return res.status(500).json({ success: false, message: "Insert failed, no rows were affected." });
+        }
+
+        // Success!
+        res.json({
+            success: true,
+            message: `Report ${reportID} successfully assigned to worker ${workerID}.`
+        });
+    });
+
+    // Add parameters, ensuring they are integers
+    request.addParameter("workerID", TYPES.Int, parseInt(workerID, 10));
+    request.addParameter("reportID", TYPES.Int, parseInt(reportID, 10));
+
+    connection.execSql(request);
+});
+
+// API route to mark a report as complete
+// API route to mark a report as complete (using reportID from URL)
+app.put('/API/completeReport/:reportID', (req, res) => {
+    // Get the reportID from the URL parameters
+    const { reportID } = req.params; 
+
+    // Note: Your frontend also sends 'completionTime' in the body.
+    // Since your 'reports' table in the ERD doesn't have a
+    // 'completionTime' column, we will just ignore it and only
+    // update the 'completion' bit.
+
+    if (!reportID) {
+        // This check is almost redundant since the route wouldn't match,
+        // but it's good practice.
+        return res.status(400).json({ success: false, error: "Missing reportID in URL." });
+    }
+
+    // SQL to update the 'completion' column in the reports table
+    const sql = `
+        UPDATE reports
+        SET completion = 1
+        WHERE reportID = @reportID
+    `;
+
+    const request = new Request(sql, (err, rowCount) => {
+        if (err) {
+            console.error("Update error:", err);
+            return res.status(500).json({ error: "Database update failed", details: err });
+        }
+
+        if (rowCount === 0) {
+            // No rows were updated, likely because the reportID does not exist
+            return res.status(404).json({ success: false, message: `Report with ID ${reportID} not found.` });
+        }
+
+        // Successfully updated
+        res.json({
+            success: true,
+            message: `Report ID ${reportID} marked as complete.`,
+            updatedRows: rowCount
+        });
+    });
+
+    // Add SQL parameter for the reportID
+    request.addParameter("reportID", TYPES.Int, parseInt(reportID, 10)); // Ensure it's an integer
+
+    connection.execSql(request);
+});
 app.get('/API/completedReports', async (req, res) => {
   const query = `
     SELECT 
