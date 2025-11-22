@@ -20,6 +20,14 @@ This system simplifies the entire workflow—from submitting a maintenance reque
 
 ---
 
+## UI Images
+
+<img width="1920" height="935" alt="Screenshot from 2025-11-22 10-26-33" src="https://github.com/user-attachments/assets/39f7a044-ebd1-4015-acbd-7d280be0bd8a" />
+<img width="1920" height="935" alt="Screenshot from 2025-11-22 10-27-35" src="https://github.com/user-attachments/assets/165031e6-c2ce-454e-9b76-e5f8d86143b0" />
+<img width="1920" height="935" alt="Screenshot from 2025-11-22 10-25-59" src="https://github.com/user-attachments/assets/d1ad0af5-fa41-45c1-81a6-579986794117" />
+
+---
+
 ## Technology Stack
 
 - **Frontend:** Tailwind CSS
