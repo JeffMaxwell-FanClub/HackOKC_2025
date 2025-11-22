@@ -26,9 +26,10 @@ classifier.defineConfig({ considerOnlyPresence: true, smoothingFactor: 0.5 });
 // 4. ULTRA TRAINING DATA (Expanded Dataset)
 // ==========================================
 
-// --- HIGH PRIORITY (Hazards, Structural, Major Systems, Security) ---
+// 🔴 HIGH PRIORITY (Level 3)
+// Definition: Danger to life/safety, active flooding, total building outage, security breaches.
 const highPriorityData = [
-  // Fire / Electrical Hazards
+  // Fire / Electric / Gas
   'Smoke is coming from the electrical outlet',
   'Sparks are flying from the breaker panel',
   'I smell burning plastic in the dorm hallway',
@@ -44,8 +45,23 @@ const highPriorityData = [
   'The fuse box is smoking',
   'Major power surge destroyed lab equipment',
   'Arcing noise coming from the transformer outside',
+  'Electrical socket is blackened and smells like char',
+  'Light fixture fell and is sparking on the floor',
+  'Extension cord is melting',
+  'There is a small fire in the trash can',
+  'Microwave in the kitchen caught fire',
+  'Smell of ozone and loud buzzing from the wall',
+  'Wires are sparking near the water fountain',
+  'The switch board is smoking',
+  'Electric shock when touching the metal door handle',
+  'Chemical spill in the science hallway',
+  'Biohazard bin overturned in the hallway',
+  'Strong smell of rotten eggs in the basement',
+  'Carbon monoxide detector is chirping',
+  'Unidentified chemical leaking from a drum',
+  'Gas valve is stuck open',
 
-  // Water / Flooding
+  // Active Flooding / Structural Failure
   'Water is gushing out of the pipe',
   'The hallway is completely flooded with water',
   'Major leak in the ceiling above the computer lab',
@@ -60,8 +76,6 @@ const highPriorityData = [
   'Basement is filling up with water rapidly',
   'Steam is shooting out of the radiator',
   'Drinking fountain is stuck on and flooding the floor',
-
-  // Structural / Safety / Security
   'The bathroom ceiling has collapsed',
   'Glass shattered in the main hallway entrance',
   'Elevator is stuck between floors with students inside',
@@ -81,81 +95,193 @@ const highPriorityData = [
   'The gym bleachers collapsed partially',
   'There is a giant hole in the floor',
   'Brick fell off the facade of the building',
-  'Chemical spill in the science hallway',
-  'Biohazard bin overturned in the hallway',
-  'Gas leak alarm is going off in the kitchen',
-  'The fume hood in the lab is not venting fumes'
+  'The master key card reader is not working',
+  'Intruder alarm is sounding',
+  'Security gate is stuck open',
+  'The front door glass is smashed',
+  'Lock is jammed and key broke off inside',
+  'Door hinge is broken and door is falling off',
+  'Window fell out of the frame',
+  'Support beam looks cracked',
+  'Concrete steps are crumbling and unsafe',
+  'Asbestos insulation is exposed',
+  'Roof access door was left broken open'
 ];
 
-// --- LOW PRIORITY (Nuisances, Cosmetic, Minor repairs, IT) ---
+// 🟡 MEDIUM PRIORITY (Level 2)
+// Definition: Broken functionality, localized failure, contained leaks, appliances down, HVAC extremes.
+const mediumPriorityData = [
+  // Appliances / Utilities
+  'The washing machine in the laundry room is not spinning',
+  'Dryer is not heating up',
+  'The dishwasher in the staff kitchen is leaking slowly',
+  'Vending machine took money but didn\'t dispense',
+  'The ice machine is broken',
+  'Water fountain has very low pressure (unusable)',
+  'The stove burner isn\'t lighting',
+  'Microwave turntable is broken',
+  'Refrigerator in the break room is warm',
+  'The oven door won\'t close all the way',
+  'Garbage disposal is jammed and humming',
+  'Hand dryer in the bathroom is dead',
+  'Soap dispenser fell off the wall',
+  'Paper towel dispenser is jammed',
+  'Toilet is running constantly (wasting water)',
+  'One toilet in the stall is clogged',
+  'Shower drain is clogged and draining very slowly',
+  'Sink is draining slowly',
+  'There is no hot water in the showers',
+  'Water tastes metallic',
+  'Urinal is not flushing',
+  'The sink faucet won\'t turn off completely',
+  'Dripping pipe under the sink (contained in bucket)',
+  
+  // HVAC / Environment
+  'It is freezing in the classroom',
+  'The AC is broken and it is 85 degrees inside',
+  'Thermostat is broken and blank',
+  'The heater is blowing cold air',
+  'There is a weird mildew smell in the vents',
+  'Vent is rattling loudly and distracting class',
+  'Humidity is extremely high in the lab',
+  'Draft coming from the window frame',
+  'Air filter looks completely clogged',
+  
+  // Structural / Access (Non-Emergency)
+  'The door handle is loose and hard to turn',
+  'Key card reader takes 5 tries to work',
+  'Window screen is torn',
+  'One elevator is down (but others work)',
+  'Closet door came off the track',
+  'Cabinet door hinge is broken',
+  'Ceiling tile is stained but dry',
+  'Floor tile is cracked and loose',
+  'Carpet is ripped and is a tripping hazard',
+  'Blinds are stuck halfway down',
+  'Projector screen won\'t retract',
+  'Whiteboard is coming loose from the wall',
+  'Desk chair wheel broke off',
+  'Table leg is bent',
+  'Locker door is jammed shut',
+  'Mailbox lock is stuck',
+  'Bike rack is loose',
+  
+  // Pests (Non-Emergency)
+  'I saw a cockroach in the hallway',
+  'Ants are coming in through the window',
+  'There is a mouse trap that needs clearing',
+  'Beehive forming near the entrance',
+  'Flies in the kitchen area'
+];
+
+// 🟢 LOW PRIORITY (Level 1)
+// Definition: Cosmetic, nuisance, minor repairs, requests, IT/General.
 const lowPriorityData = [
-  // Lighting / Minor Electrical
+  // Cosmetic / Minor
   'The light bulb in room 101 burned out',
   'One of the fluorescent lights is flickering',
   'Desk lamp switch is sticky',
-  'We need a new power strip in the lounge',
   'The hallway light is a bit dim',
   'Motion sensor takes too long to turn on',
-  'Need to replace batteries in the clock',
-  'The projector remote is missing',
-  'Tablets in the lab are low on battery',
   'One light in the cluster is out',
   'The exit sign buzzes quietly',
   'The light switch plate is cracked',
   'The lamp needs a new shade',
-
-  // Furniture / Cosmetic / Fixtures
+  'Bulb is dead in the study lounge',
+  'Light is flickering in the bathroom',
+  'Need to replace the bulb in the closet',
+  'The dimmer switch is loose',
+  'A light cover is missing',
+  'The exterior light is out',
   'The chair leg is a bit wobbly',
-  'There is a coffee stain on the carpet',
-  'The paint is chipping off the wall',
   'A drawer handle is loose',
   'The blinds are stuck and wont go down',
   'Curtain rod is slightly bent',
-  'Small scratch on the classroom door',
   'Whiteboard needs to be cleaned better',
   'We need more whiteboard markers',
-  'The soap dispenser is empty',
-  'Paper towel dispenser is jammed',
   'The trash can is missing a lid',
-  'Carpet is fraying at the edge',
-  'Tile in the corner is cracked but safe',
-  'Graffiti on the bathroom stall door',
-  'The desk is uneven',
   'Coat hook is missing from the wall',
   'The mirror in the bathroom is smudged',
   'A screw is loose on the bookshelf',
   'The bulletin board is falling off one side',
   'Room number sign fell off the door',
-  'Vending machine ate my dollar',
   'The couch in the lounge has a small tear',
-
-  // HVAC / Plumbing Nuisances
-  'The air conditioner is making a quiet humming noise',
-  'The room is slightly colder than usual',
+  'Table is uneven',
+  'Chair squeaks loudly',
+  'Cabinet door squeaks',
+  'The rug is bunched up',
+  'Desks are arranged messily',
+  'Missing a knob on the cabinet',
+  'The clock fell off the wall',
+  'Seat cushion is ripped',
+  'Blind slats are bent',
+  'There is a coffee stain on the carpet',
+  'The paint is chipping off the wall',
+  'Small scratch on the classroom door',
+  'Carpet is fraying at the edge',
+  'Tile in the corner is cracked but safe',
+  'Graffiti on the bathroom stall door',
+  'Scuff marks on the floor',
+  'Ceiling tile has a water stain',
+  'Paint is peeling near the window',
+  'Wallpaper is peeling',
+  'Gum stuck under the desk',
+  'The floor is a bit sticky',
+  'Dust bunnies in the corner',
+  'Cobwebs in the ceiling corner',
+  'Carpet tile is loose',
   'The sink faucet drips once every hour',
   'The toilet handle jiggles',
   'Water pressure in the fountain is low',
-  'The radiator makes a clanking sound in the morning',
-  'The fan in the bathroom is dusty',
-  'A weird smell near the trash cans',
   'The drain drains a little slowly',
   'The shower head sprays a bit wide',
   'The toilet seat is loose',
   'The hot water takes a while to warm up',
-  
-  // IT / General Nuisance
+  'Faucet handle is stiff',
+  'Shower head is dripping slightly',
+  'Toilet makes a running sound',
+  'Sink is draining slow',
+  'Soap dispenser is clogged',
+  'One sink in the bathroom is out of order',
+  'Paper towel dispenser is jammed',
+  'The soap dispenser is empty',
+  'Need more toilet paper in stall 2',
+  'Hand dryer is weak',
+  'The air conditioner is making a quiet humming noise',
+  'The room is slightly colder than usual',
+  'The radiator makes a clanking sound in the morning',
+  'The fan in the bathroom is dusty',
+  'A weird smell near the trash cans',
+  'It is a little stuffy in here',
+  'Vent is rattling',
+  'Thermostat display is dim',
+  'Draft coming from the window',
+  'The room is a bit too warm',
+  'AC is blowing directly on my desk',
+  'Heater smells like dust when it turns on',
   'Wifi is really slow in the lobby',
   'The internet connection is lagging',
   'The printer is out of toner',
   'Mouse is missing from the computer lab',
   'Keyboard key is sticky',
+  'Need to replace batteries in the clock',
+  'The projector remote is missing',
+  'Tablets in the lab are low on battery',
   'Grass is getting too long outside',
-  'There are some ants near the kitchen window',
   'The recycling bin is full',
   'The clock in the hall is five minutes slow',
   'Gym locker 45 is stuck shut',
-  'The TV remote needs batteries'
+  'The TV remote needs batteries',
+  'Projector bulb is dim',
+  'Ethernet port is loose',
+  'Monitor stand is broken',
+  'Mouse is double clicking',
+  'Scanner is jammed',
+  'Vending machine is making a buzzing noise',
+  'Elevator buttons are sticky',
+  'Pencil sharpener is full'
 ];
+
 
 // Load data into classifier
 highPriorityData.forEach(text => classifier.learn(text, 'High Priority'));
