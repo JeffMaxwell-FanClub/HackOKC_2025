@@ -41,16 +41,26 @@
       .toast-enter { transform: translateX(100%); opacity: 0; }
       .toast-enter-active { transform: translateX(0); opacity: 1; transition: all 0.3s ease-out; }
 
-      /* Form Styling derived from example */
+      /* Form Styling derived from reference image */
       .detail-input {
         transition: all 0.2s ease;
-        background-color: #f8fafc; /* Slate-50 */
-        border: 1px solid #e2e8f0; /* Slate-200 */
+        background-color: #fff; 
+        border: 1px solid #cbd5e1; /* Slate-300 to match reference border */
       }
       .detail-input:focus {
-        background-color: #fff;
         border-color: #3b82f6;
-        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+        box-shadow: 0 0 0 1px #3b82f6;
+      }
+      
+      /* Photo Placeholder Styling */
+      .photo-placeholder {
+        background-color: #e2e8f0; /* Slate-200/300 ish */
+        color: #64748b;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.5rem;
+        border: 1px solid #cbd5e1;
       }
     </style>
   </head>
@@ -138,35 +148,35 @@
                 </div>
 
                 <!-- Report Header -->
-                <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-white z-10">
+                <div class="px-6 py-5 border-b border-slate-100 flex justify-between items-center bg-white z-10">
                     <div>
-                        <h2 id="display-id" class="text-xl font-bold text-slate-900">---</h2>
-                        <p id="display-date" class="text-xs text-slate-500">---</p>
+                        <h2 id="display-id" class="text-2xl font-bold text-slate-900 tracking-tight">---</h2>
+                        <p id="display-date" class="text-xs text-slate-500 font-medium mt-1">---</p>
                     </div>
                     <div class="flex gap-2">
-                        <span id="display-status" class="hidden px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-full border border-slate-200 uppercase tracking-wider">---</span>
+                        <span id="display-status" class="hidden px-3 py-1 bg-yellow-100 text-yellow-700 text-xs font-bold rounded-full border border-yellow-200 uppercase tracking-wider">---</span>
                     </div>
                 </div>
 
                 <!-- Report Scrollable Content -->
-                <div class="flex-1 overflow-y-auto p-6 space-y-6 no-scrollbar">
+                <div class="flex-1 overflow-y-auto p-6 space-y-8 no-scrollbar pb-20">
                     
                     <!-- Location Section -->
                     <div class="space-y-4">
-                        <h3 class="text-sm font-bold uppercase tracking-wide text-blue-600">1. Location Details</h3>
+                        <h3 class="text-sm font-bold uppercase tracking-wide text-slate-400">1. Location Details</h3>
                         <div class="grid grid-cols-1 gap-4">
                             <div>
-                                <label class="block text-xs font-medium text-slate-500 mb-1">Area / Main Building</label>
-                                <input type="text" id="view-location" readonly class="w-full detail-input rounded-lg px-3 py-2 text-sm text-slate-900 font-semibold focus:outline-none cursor-default" />
+                                <label class="block text-xs font-semibold text-slate-600 mb-1.5">Area / Main Building</label>
+                                <input type="text" id="view-location" readonly class="w-full detail-input rounded-lg px-4 py-2.5 text-sm text-slate-900 font-medium focus:outline-none cursor-default" />
                             </div>
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-xs font-medium text-slate-500 mb-1">Map ID</label>
-                                    <input type="text" id="view-area-id" readonly class="w-full detail-input rounded-lg px-3 py-2 text-slate-600 font-mono text-xs cursor-default" />
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Map ID</label>
+                                    <input type="text" id="view-area-id" readonly class="w-full detail-input rounded-lg px-4 py-2.5 text-slate-600 font-mono text-xs cursor-default" />
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-medium text-slate-500 mb-1">Assigned Worker</label>
-                                    <input type="text" id="view-assigned-to" readonly class="w-full detail-input rounded-lg px-3 py-2 text-slate-600 text-xs cursor-default" />
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Assigned Worker</label>
+                                    <input type="text" id="view-assigned-to" readonly class="w-full detail-input rounded-lg px-4 py-2.5 text-slate-600 text-xs cursor-default" />
                                 </div>
                             </div>
                         </div>
@@ -175,35 +185,48 @@
                     <div class="h-px bg-slate-100"></div>
 
                     <!-- Details Section -->
-                    <div class="space-y-4">
-                        <h3 class="text-sm font-bold uppercase tracking-wide text-slate-400">2. Report Details</h3>
+                    <div class="space-y-6">
+                        <h3 class="text-sm font-bold uppercase tracking-wide text-slate-400">2. Work Order Details</h3>
                         
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Problem Type</label>
-                            <input type="text" id="view-category" readonly class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-700 font-medium focus:outline-none" />
+                            <label class="block text-xs font-semibold text-slate-600 mb-1.5">Problem Type</label>
+                            <input type="text" id="view-category" readonly class="w-full detail-input rounded-lg px-4 py-2.5 text-sm text-slate-800 font-medium focus:outline-none" />
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Urgency</label>
-                            <div class="flex gap-3 mt-1" id="view-urgency-container">
+                            <label class="block text-xs font-semibold text-slate-600 mb-2">Urgency</label>
+                            <div class="flex gap-4" id="view-urgency-container">
                                 <div class="flex items-center gap-2 opacity-30 transition-opacity duration-300" id="urg-1">
-                                    <div class="w-4 h-4 border-2 border-slate-300 rounded-full bg-green-600 border-green-600"></div>
-                                    <span class="text-sm text-slate-600">Low</span>
+                                    <div class="w-5 h-5 border-2 border-slate-300 rounded-full bg-blue-400 border-blue-400"></div>
+                                    <span class="text-sm text-slate-600 font-medium">Low</span>
                                 </div>
                                 <div class="flex items-center gap-2 opacity-30 transition-opacity duration-300" id="urg-2">
-                                    <div class="w-4 h-4 border-2 border-slate-300 rounded-full bg-yellow-500 border-yellow-500"></div>
-                                    <span class="text-sm text-slate-600">Med</span>
+                                    <div class="w-5 h-5 border-2 border-slate-300 rounded-full bg-orange-300 border-orange-300"></div>
+                                    <span class="text-sm text-slate-600 font-medium">Medium</span>
                                 </div>
                                 <div class="flex items-center gap-2 opacity-30 transition-opacity duration-300" id="urg-3">
-                                    <div class="w-4 h-4 border-2 border-slate-300 rounded-full bg-red-600 border-red-600"></div>
-                                    <span class="text-sm text-slate-600">High</span>
+                                    <div class="w-5 h-5 border-2 border-slate-300 rounded-full bg-red-500 border-red-500"></div>
+                                    <span class="text-sm text-slate-600 font-medium">High</span>
                                 </div>
                             </div>
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Description of Issue</label>
-                            <textarea id="view-description" rows="4" readonly class="w-full detail-input rounded-lg px-3 py-2 text-sm outline-none resize-none text-slate-700"></textarea>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1.5">Description of Issue</label>
+                            <textarea id="view-description" rows="4" readonly class="w-full detail-input rounded-lg px-4 py-3 text-sm leading-relaxed outline-none resize-none text-slate-800"></textarea>
+                        </div>
+
+                        <!-- Attached Photos Section -->
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-2">Attached Photos</label>
+                            <div class="flex gap-4 overflow-x-auto pb-2">
+                                <div class="photo-placeholder w-32 h-28 shrink-0">
+                                    <i class="fa-regular fa-image text-2xl opacity-50"></i>
+                                </div>
+                                <div class="photo-placeholder w-32 h-28 shrink-0">
+                                    <i class="fa-regular fa-image text-2xl opacity-50"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -771,15 +794,15 @@
         if (String(report.assignedWorkerID) === String(WORKER_ID)) {
             // It's mine -> I can move it to Final State
             const btn = document.createElement('button');
-            btn.className = `${btnClass} bg-green-600 hover:bg-green-700`;
-            btn.innerHTML = `<i class="fa-solid fa-check"></i> Mark Complete`;
+            btn.className = `${btnClass} bg-blue-600 hover:bg-blue-700`; // Matches style from ref image
+            btn.innerHTML = `Mark Complete`;
             btn.onclick = () => handleComplete(report.reportID);
             footer.appendChild(btn);
         } else if (!report.assignedWorkerID) {
             // Unassigned -> I can move to LoggedIn state
             const btn = document.createElement('button');
             btn.className = `${btnClass} bg-blue-600 hover:bg-blue-700`;
-            btn.innerHTML = `<i class="fa-solid fa-hand-holding-hand"></i> Accept Request`;
+            btn.innerHTML = `Accept Request`; // Removed icon to match ref style closer
             btn.onclick = () => handleAccept(report.reportID);
             footer.appendChild(btn);
         } else {
