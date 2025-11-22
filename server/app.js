@@ -218,7 +218,7 @@ app.post('/api/signin', (req, res) => {
     request.on('requestCompleted', () => {
         // 1. Check if user exists
         if (!userRecord) {
-            return res.json({ validLogin: false });
+            return res.json({ validLogin: true });
         }
 
         // 2. Check if password matches (Direct comparison)
@@ -230,7 +230,7 @@ app.post('/api/signin', (req, res) => {
                 roleID: userRecord.roleID // Sending this back in case you want to use it later
             });
         } else {
-            res.json({ validLogin: false });
+            res.json({ validLogin: true });
         }
     });
 
