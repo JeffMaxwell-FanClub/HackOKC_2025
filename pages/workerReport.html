@@ -37,12 +37,12 @@
 
             <!-- Tabs -->
             <div class="flex gap-3 mb-6">
-                <button onclick="showList('all')" id="tab-all"
+                <button id="tab-all"
                     class="px-4 py-2 bg-blue-700 text-white rounded-lg shadow hover:bg-blue-800">All Requests</button>
-                <button onclick="showList('assigned')" id="tab-assigned"
+                <button id="tab-assigned"
                     class="px-4 py-2 bg-blue-700 text-white rounded-lg shadow hover:bg-blue-800">My Assigned
                     Requests</button>
-                <button onclick="showList('completed')" id="tab-completed"
+                <button id="tab-completed"
                     class="px-4 py-2 bg-blue-700 text-white rounded-lg shadow hover:bg-blue-800">Completed
                     Requests</button>
             </div>
@@ -55,91 +55,51 @@
     </div>
 
     <script>
-        // Check authentication
-        function checkAuth() {
+        async function allReqs(){
+            // console.log("All Requests Clicked");
             try {
-                const currentUserStr = localStorage.getItem('currentUser');
-                if (!currentUserStr) {
-                    alert('Please log in first');
-                    window.location.href = '/';
-                    return null;
-                }
-                
-                const currentUser = JSON.parse(currentUserStr);
-                const users = JSON.parse(localStorage.getItem('campusUsers')) || [];
-                
-                if (!users.find(u => u.email === currentUser.email)) {
-                    alert('User not found. Please log in again.');
-                    window.location.href = '/';
-                    return null;
-                }
-                
-                // Check if user is maintenance staff
-                if (currentUser.role !== 'maintenance') {
-                    alert('Access denied. This page is for maintenance staff only.');
-                    window.location.href = '/';
-                    return null;
-                }
-                
-                // Display worker name
-                document.getElementById('worker-name').textContent = `Logged in as: ${currentUser.name}`;
-                
-                return currentUser;
+                const response = await fetch('/API/allReports', {
+                    method: 'GET'
+                });
+                const data = await response.json();
+                console.log('Response:', data);
             } catch (error) {
-                console.error('Error checking auth:', error);
-                window.location.href = '/';
-                return null;
+                console.error('Error:', error);
             }
         }
-
-        const currentWorker = checkAuth();
-        if (!currentWorker) {
-            // Will redirect, but just in case
-            throw new Error('Authentication failed');
-        }
-
-        // Load reports from localStorage
-        function loadReports() {
-            const reports = JSON.parse(localStorage.getItem('campusReports')) || [];
+        document.getElementById("tab-all").addEventListener("click", allReqs);
             
-            // Convert to the format expected by the UI
-            return reports.map(report => {
-                // Get submitter info from users
-                const users = JSON.parse(localStorage.getItem('campusUsers')) || [];
-                const submitter = users.find(u => u.email === report.userId) || { name: report.userName || 'Unknown', email: report.userId };
-                
-                return {
-                    id: report.id,
-                    category: report.type || 'General',
-                    description: report.description || '',
-                    location: report.location || '',
-                    submitted: report.formattedTime || new Date(report.timestamp).toLocaleString(),
-                    priority: report.priority || 'Medium',
-                    assignedTo: report.assignedTo || null,
-                    completedBy: report.completedBy || null,
-                    completionNotes: report.completionNotes || null,
-                    status: report.status || 'pending',
-                    submitter: {
-                        name: submitter.name,
-                        email: submitter.email || report.userId,
-                        phone: submitter.phone || 'N/A'
-                    },
-                    imageData: report.imageData || null,
-                    imageFileName: report.imageFileName || null
-                };
-            });
+        async function myAssignedReports(){
+        //    console.log("My Assigned Requests Clicked");
+            try {
+                const response = await fetch('/API/assignedReports', {
+                    method: 'GET'
+                });
+                const data = await response.json();
+                console.log('Response:', data);
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
+        document.getElementById("tab-assigned").addEventListener("click", myAssignedReports);
 
-        // Initialize data
-        let requests = loadReports().filter(r => r.status === 'pending' && !r.assignedTo);
-        let assignedRequests = loadReports().filter(r => r.assignedTo === currentWorker.name && r.status !== 'completed');
-        let completedRequests = loadReports().filter(r => r.status === 'completed');
+        async function completedReqs(){
+        //    console.log("Completed Requests Clicked");
+            try {
+                const response = await fetch('/API/completedReports', {
+                    method: 'GET'
+                });
+                const data = await response.json();
+                console.log('Response:', data);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        document.getElementById("tab-completed").addEventListener("click", completedReqs);
+    </script>
 
-        // Renderers
-        function renderCard(req, containerId) {
-            const card = document.createElement("article");
-            card.className = "bg-white rounded-xl shadow-md p-6";
-
+    <!-- <script>
+        
             card.innerHTML = `
         <div class="flex items-start justify-between">
           <h2 class="font-bold text-lg text-gray-800">${req.category} Issue</h2>
@@ -304,106 +264,7 @@
             localStorage.setItem('campusReports', JSON.stringify(reports));
         }
 
-        // Actions
-        function markCompleted(req, notes) {
-            if (!notes.trim()) {
-                alert("Completion notes are required.");
-                return;
-            }
-
-            // Record completion info
-            req.completedBy = req.assignedTo || currentWorker.name;
-            req.completionNotes = notes;
-            req.status = 'completed';
-
-            // Update in localStorage
-            updateReportInStorage(req);
-
-            // Move request into completedRequests
-            completedRequests.push(req);
-
-            // Remove from assignedRequests if present
-            const ai = assignedRequests.findIndex(r => r.id === req.id);
-            if (ai !== -1) {
-                assignedRequests.splice(ai, 1);
-                renderPanel("assignedRequests", assignedRequests, false);
-            }
-
-            // Remove from allRequests if present
-            const ri = requests.findIndex(r => r.id === req.id);
-            if (ri !== -1) {
-                requests.splice(ri, 1);
-                renderPanel("allRequests", requests, true);
-            }
-
-            // Render completedRequests only
-            renderPanel("completedRequests", completedRequests, false);
-
-            // Switch to Completed tab so user sees it
-            showList("completed");
-        }
-
-
-        function assignToMe(req) {
-            req.assignedTo = currentWorker.name;
-            req.status = 'assigned';
-            
-            // Update in localStorage
-            updateReportInStorage(req);
-            
-            // Remove from requests, add to assigned
-            const idx = requests.findIndex(r => r.id === req.id);
-            if (idx !== -1) requests.splice(idx, 1);
-            
-            if (!assignedRequests.some(r => r.id === req.id)) {
-                assignedRequests.push(req);
-            }
-            
-            renderPanel("allRequests", requests, true);
-            renderPanel("assignedRequests", assignedRequests, false);
-            showList("assigned");
-        }
-
-        function releaseRequest(req) {
-            req.assignedTo = null;
-            req.status = 'pending';
-            
-            // Update in localStorage
-            updateReportInStorage(req);
-            
-            const idx = assignedRequests.findIndex(r => r.id === req.id);
-            if (idx !== -1) assignedRequests.splice(idx, 1);
-            if (!requests.some(r => r.id === req.id)) requests.push(req);
-
-            renderPanel("allRequests", requests, true);
-            renderPanel("assignedRequests", assignedRequests, false);
-            showList("all");
-        }
-
-        function handleLogout() {
-            localStorage.removeItem('currentUser');
-            window.location.href = '/';
-        }
-
-        // Refresh reports periodically
-        function refreshReports() {
-            const allReports = loadReports();
-            requests = allReports.filter(r => r.status === 'pending' && !r.assignedTo);
-            assignedRequests = allReports.filter(r => r.assignedTo === currentWorker.name && r.status !== 'completed');
-            completedRequests = allReports.filter(r => r.status === 'completed');
-            
-            renderPanel("allRequests", requests, true);
-            renderPanel("assignedRequests", assignedRequests, false);
-            renderPanel("completedRequests", completedRequests, false);
-        }
-
-        // Initial render
-        refreshReports();
-        showList("all");
-        
-        // Refresh every 30 seconds to catch new reports
-        setInterval(refreshReports, 30000);
-    </script>
+    </script> -->
 </body>
 
 </html>
