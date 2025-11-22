@@ -14,8 +14,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-
     <style>
       body { font-family: 'Inter', sans-serif; }
       .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -66,9 +64,9 @@
     <!-- Header -->
     <header class="h-14 bg-slate-900 text-white flex items-center justify-between px-4 md:px-6 shadow-md z-30 shrink-0">
         <div class="flex items-center gap-3">
-            <!-- <div class="bg-blue-600 p-1.5 rounded text-white"> -->
-                <img src="favicon.ico" alt="My Icon" style="width:24px; height:24px;">
-            <!-- </div> -->
+            <div class="bg-blue-600 p-1.5 rounded text-white">
+                <i class="fa-solid fa-star"></i>
+            </div>
             <h1 class="font-bold text-sm tracking-wide hidden md:block">CAMPUS FIX OPS</h1>
             <h1 class="font-bold text-sm tracking-wide md:hidden">OPS</h1>
         </div>
@@ -531,9 +529,9 @@
 
       async function fetchReports() {
         let url = '';
-        if (currentTab === 'all') url = 'https://jeffmaxwellfanclub.azurewebsites.net//API/allReports';
-        else if (currentTab === 'assigned') url = `https://jeffmaxwellfanclub.azurewebsites.net//API/assignedReports?workerID=${WORKER_ID}`;
-        else if (currentTab === 'completed') url = 'https://jeffmaxwellfanclub.azurewebsites.net//API/completedReports';
+        if (currentTab === 'all') url = '/API/allReports';
+        else if (currentTab === 'assigned') url = `/API/assignedReports?workerID=${WORKER_ID}`;
+        else if (currentTab === 'completed') url = '/API/completedReports';
 
         try {
             const response = await fetch(url);
@@ -574,7 +572,7 @@
         }
 
         try {
-            const response = await fetch('https://jeffmaxwellfanclub.azurewebsites.net//API/assignReport', {
+            const response = await fetch('/API/assignReport', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ workerID: WORKER_ID, reportID: id })
@@ -606,7 +604,7 @@
         const completionTime = new Date().toISOString();
 
         try {
-            const response = await fetch(`https://jeffmaxwellfanclub.azurewebsites.net//API/completeReport/${id}`, {
+            const response = await fetch(`/API/completeReport/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ completionTime })
