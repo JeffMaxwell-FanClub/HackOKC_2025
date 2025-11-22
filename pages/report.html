@@ -232,12 +232,13 @@
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.parse(report)
+                        body: JSON.stringify(report)
                     });
                 } catch(err){
                     console.log(err)
                 }
             }
+            postReport()
 
             // Show success message
             const messageDiv = document.getElementById('message');
