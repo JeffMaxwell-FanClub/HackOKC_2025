@@ -225,6 +225,20 @@
             reports.push(report);
             localStorage.setItem('campusReports', JSON.stringify(reports));
 
+            async function postReport(){
+                try {
+                    const response = await fetch('/API/createReport', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.parse(report)
+                    });
+                } catch(err){
+                    console.log(err)
+                }
+            }
+
             // Show success message
             const messageDiv = document.getElementById('message');
             messageDiv.textContent = 'Report submitted successfully!';
