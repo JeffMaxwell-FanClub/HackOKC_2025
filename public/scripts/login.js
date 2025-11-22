@@ -48,7 +48,7 @@ function handleSignup(e) {
   const msgBox = document.getElementById('signup-message')
   msgBox.textContent = 'Account created! Redirecting to login...'
   msgBox.className = 'mb-4 p-3 bg-green-50 text-green-700 text-sm rounded-lg border border-green-200'
-  msgBox.classList.remove('hidden')
+  msgBox.classList.remove('hidden-section')
 
   setTimeout(() => {
     showLogin()
@@ -95,14 +95,19 @@ async function handleLogin(e) {
       const dashboardActions = document.getElementById('dashboard-actions')
 
       if (role === 'maintenance') {
+        maintenanceActions.classList.remove('hidden-section')
+        dashboardActions.classList.add('hidden-section')
         maintenanceActions.classList.remove('hidden')
         dashboardActions.classList.add('hidden')
       } else {
+        maintenanceActions.classList.add('hidden-section')
+        dashboardActions.classList.remove('hidden-section')
         maintenanceActions.classList.add('hidden')
         dashboardActions.classList.remove('hidden')
       }
     } else {
       errorBox.textContent = 'Invalid email or password.'
+      errorBox.classList.remove('hidden-section')
       errorBox.classList.remove('hidden')
     }
   } catch (error) {
@@ -119,7 +124,7 @@ function hideAllMainSections() {
 function showSignup() {
   hideAllMainSections();
   signupView.classList.remove('hidden-section');
-  document.getElementById('signup-message').classList.add('hidden');
+  document.getElementById('signup-message').classList.add('hidden-section');
 }
 
 function showLogin() {
@@ -127,12 +132,7 @@ function showLogin() {
   loginView.classList.remove('hidden-section');
   document.getElementById('login-email').value = '';
   document.getElementById('login-password').value = '';
-  document.getElementById('login-error').classList.add('hidden');
-}
-
-function handleLogout() {
-  reportsView.innerHTML = '';
-  showLogin();
+  document.getElementById('login-error').classList.add('hidden-section');
 }
 
 function showDashboard() {
@@ -161,8 +161,8 @@ async function fetchReports() {
 
   // UI Reset
   tbody.innerHTML = '';
-  loading.classList.remove('hidden');
-  empty.classList.add('hidden');
+  loading.classList.remove('hidden-section');
+  empty.classList.add('hidden-section');
 
   try {
       // --- API CALL ---
@@ -178,8 +178,8 @@ async function fetchReports() {
       const reports = data.reports || [];
       
       if (reports.length === 0) {
-          loading.classList.add('hidden');
-          empty.classList.remove('hidden');
+          loading.classList.add('hidden-section');
+          empty.classList.remove('hidden-section');
           return;
       }
 
@@ -216,7 +216,7 @@ async function fetchReports() {
       // Remove this block in production if you strictly want real data only
       // renderMockData(tbody); 
   } finally {
-      loading.classList.add('hidden');
+      loading.classList.add('hidden-section');
   }
 }
 
@@ -225,12 +225,14 @@ async function fetchReports() {
 function handleLogout() {
   dashboardView.classList.add('hidden-section')
   loginView.classList.remove('hidden-section')
+  reportsView.innerHTML = '';
+  showLogin();
   clearMessages()
 }
 
 function clearMessages() {
-  document.getElementById('signup-message').classList.add('hidden')
-  document.getElementById('login-error').classList.add('hidden')
+  document.getElementById('signup-message').classList.add('hidden-section')
+  document.getElementById('login-error').classList.add('hidden-section')
 }
 
 function renderRows(data) {
@@ -243,10 +245,10 @@ function renderRows(data) {
   const reports = Array.isArray(data) ? data : (data?.reports || []);
 
   if (reports.length === 0) {
-      if (emptyMsg) emptyMsg.classList.remove('hidden');
+      if (emptyMsg) emptyMsg.classList.remove('hidden-section');
       return;
   } else {
-      if (emptyMsg) emptyMsg.classList.add('hidden');
+      if (emptyMsg) emptyMsg.classList.add('hidden-section');
   }
 
   // Use .map() to build one large string (better performance than innerHTML += in a loop)
