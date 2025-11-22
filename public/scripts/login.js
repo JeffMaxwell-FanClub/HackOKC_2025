@@ -131,7 +131,7 @@ function showLogin() {
 }
 
 function handleLogout() {
-  reportsView.innerHTML = "";
+  reportsView.innerHTML = '';
   showLogin();
 }
 

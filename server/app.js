@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 const path = require('path');
 const { Connection, Request, TYPES } = require('tedious');
 // NLP Libraries (Natural Language Processing)
@@ -428,12 +429,13 @@ classifier.definePrepTasks([prepTask]);
 
 try {
   // Read the file we created with train.js
-  const modelData = fs.readFileSync('../public/nlp/model.json', 'utf-8');
+  const modelData = fs.readFileSync('./public/nlp/model.json', 'utf-8');
   classifier.importJSON(modelData);
   classifier.consolidate();
   console.log('AI Model loaded successfully.');
 } catch (error) {
-  console.error('Error loading model. Did you run "node train.js"?');
+  console.log(error);
+  console.error('Error loading model. Did you run "node nlp.js"?');
   process.exit(1);
 }
 
