@@ -110,7 +110,7 @@ async function handleLogin(e) {
 }
 
 
-
+//logout just leave
 function handleLogout() {
     dashboardView.classList.add('hidden-section');
     loginView.classList.remove('hidden-section');
