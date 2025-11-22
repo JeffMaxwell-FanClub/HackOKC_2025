@@ -64,6 +64,17 @@ app.post('/api/reports', (req, res) => {
   res.json({ success: true, report });
 });
 
+app.post('/api/signup', (req, res) => {
+    console.log(req.body);   
+});
+
+app.post('/api/signin', (req, res) => {
+    console.log(req.body);
+    res.send({
+        validLogin: true
+    });
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
