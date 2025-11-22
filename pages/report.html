@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Maintenance - Submit Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Navigation Header -->
+    <nav class="bg-white shadow-md border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <div class="bg-blue-800 text-white p-2 rounded-lg">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
+                    <span class="font-bold text-xl text-slate-800 tracking-tight">CampusFix</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button onclick="goToDashboard()" class="text-blue-700 hover:text-blue-800 font-medium flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>Back to Dashboard</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div class="flex-grow flex items-center justify-center p-4 py-8">
+        <div class="w-full max-w-2xl bg-white rounded-xl shadow-xl overflow-hidden fade-in">
+            <div class="bg-blue-900 p-6 text-center">
+                <h2 class="text-2xl font-bold text-white">Submit Maintenance Request</h2>
+                <p class="text-blue-200 text-sm mt-1">Report a campus maintenance issue</p>
+            </div>
+
+            <div class="p-8">
+                <form id="maintenanceForm">
+                    <div class="mb-5">
+                        <label for="problemType" class="block text-sm font-medium text-gray-700 mb-2">
+                            Problem Type <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                                <i class="fa-solid fa-wrench"></i>
+                            </span>
+                            <input type="text" id="problemType" name="problemType" required 
+                                class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" 
+                                placeholder="e.g., Electrical, Plumbing, HVAC">
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="location" class="block text-sm font-medium text-gray-700 mb-2">
+                            Location on Campus <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                                <i class="fa-solid fa-map-marker-alt"></i>
+                            </span>
+                            <input type="text" id="location" name="location" required 
+                                class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" 
+                                placeholder="e.g., Student Center, 2nd Floor, Room 205">
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
+                            Problem Description <span class="text-red-500">*</span>
+                        </label>
+                        <textarea id="description" name="description" rows="5" required 
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition resize-none" 
+                            placeholder="Please provide a detailed description of the issue..."></textarea>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="imageUpload" class="block text-sm font-medium text-gray-700 mb-2">
+                            Attach Image (Optional)
+                        </label>
+                        <div class="relative">
+                            <input type="file" id="imageUpload" name="imageUpload" accept="image/*" 
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                        </div>
+                        <div id="imagePreview" class="mt-3 hidden">
+                            <img id="previewImg" src="" alt="Preview" class="max-w-xs rounded-lg border border-gray-300">
+                        </div>
+                    </div>
+
+                    <!-- Success/Error Message -->
+                    <div id="message" class="hidden mb-4 p-3 text-sm rounded-lg border"></div>
+
+                    <div class="flex gap-3">
+                        <button type="submit" class="flex-1 bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-lg transition duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                            <i class="fa-solid fa-paper-plane mr-2"></i>
+                            Submit Request
+                        </button>
+                        <button type="button" onclick="goToDashboard()" class="px-6 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-3 rounded-lg transition duration-200">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Submission Status -->
+                <div id="output" class="mt-6 hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        function checkAuth() {
+            const currentUserStr = localStorage.getItem('currentUser');
+            
+            if (!currentUserStr) {
+                window.location.href = '/';
+                return null;
+            }
+            
+            try {
+                const currentUser = JSON.parse(currentUserStr);
+                const users = JSON.parse(localStorage.getItem('campusUsers')) || [];
+                
+                // Verify user still exists in users list
+                if (!users.find(u => u.email === currentUser.email)) {
+                    window.location.href = '/';
+                    return null;
+                }
+                
+                return currentUser;
+            } catch (error) {
+                console.error('Error parsing current user:', error);
+                window.location.href = '/';
+                return null;
+            }
+        }
+
+        // Get current user on page load
+        const currentUser = checkAuth();
+        if (currentUser) {
+            // Update header with user name if needed
+            console.log('Logged in as:', currentUser.name);
+        }
+
+        // Image preview
+        document.getElementById('imageUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const preview = document.getElementById('imagePreview');
+            const previewImg = document.getElementById('previewImg');
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    preview.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.classList.add('hidden');
+            }
+        });
+
+        // Handle form submission
+        document.getElementById('maintenanceForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const type = document.getElementById('problemType').value;
+            const location = document.getElementById('location').value;
+            const description = document.getElementById('description').value;
+            const fileInput = document.getElementById('imageUpload');
+            const timestamp = new Date().toISOString();
+            const messageDiv = document.getElementById('message');
+            const outputDiv = document.getElementById('output');
+
+            // Get current user
+            const user = currentUser || JSON.parse(localStorage.getItem('currentUser') || '{}');
+
+            // Handle image
+            let imageData = null;
+            let fileName = 'None';
+            
+            if (fileInput.files && fileInput.files[0]) {
+                const file = fileInput.files[0];
+                fileName = file.name;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imageData = e.target.result;
+                    saveReport(type, location, description, fileName, imageData, timestamp, user);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                saveReport(type, location, description, fileName, null, timestamp, user);
+            }
+        });
+
+        function saveReport(type, location, description, fileName, imageData, timestamp, user) {
+            // Create report object
+            const report = {
+                id: Date.now().toString(),
+                userId: user.email || 'unknown',
+                userName: user.name || 'Unknown User',
+                type: type,
+                location: location,
+                description: description,
+                imageFileName: fileName,
+                imageData: imageData,
+                timestamp: timestamp,
+                status: 'pending',
+                formattedTime: new Date(timestamp).toLocaleString()
+            };
+
+            // Save to localStorage
+            const reports = JSON.parse(localStorage.getItem('campusReports')) || [];
+            reports.push(report);
+            localStorage.setItem('campusReports', JSON.stringify(reports));
+
+            // Show success message
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = 'Report submitted successfully!';
+            messageDiv.className = 'mb-4 p-3 bg-green-50 text-green-700 text-sm rounded-lg border border-green-200';
+            messageDiv.classList.remove('hidden');
+
+            // Display submission details
+            const outputDiv = document.getElementById('output');
+            let imageHtml = '<em>No image attached</em>';
+            if (report.imageData) {
+                imageHtml = `<img src="${report.imageData}" alt="Uploaded Image" class="max-w-xs rounded-lg border border-gray-300 mt-2"><br><em>${fileName}</em>`;
+            }
+
+            outputDiv.innerHTML = `
+                <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                    <h3 class="font-bold text-lg mb-4 text-gray-800">Submission Confirmed</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><strong>Report ID:</strong> <span class="text-blue-600">${report.id}</span></li>
+                        <li><strong>Time:</strong> ${report.formattedTime}</li>
+                        <li><strong>Type:</strong> ${type}</li>
+                        <li><strong>Location:</strong> ${location}</li>
+                        <li><strong>Description:</strong> ${description}</li>
+                        <li><strong>Status:</strong> <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-semibold">Pending</span></li>
+                        <li><strong>Image:</strong><br>${imageHtml}</li>
+                    </ul>
+                    <button onclick="goToDashboard()" class="mt-4 bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 px-6 rounded-lg transition">
+                        Return to Dashboard
+                    </button>
+                </div>
+            `;
+            outputDiv.classList.remove('hidden');
+
+            // Reset form
+            document.getElementById('maintenanceForm').reset();
+            document.getElementById('imagePreview').classList.add('hidden');
+
+            // Scroll to output
+            outputDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Navigation
+        function goToDashboard() {
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>
