@@ -1,0 +1,2563 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>OCU Campus Map</name>
+    <description><![CDATA[A guide to the buildings and other things on Oklahoma City University's campus.]]></description>
+    <Style id="icon-1303-labelson">
+      <IconStyle>
+        <scale>1.1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/1303-poi-post-office.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="poly-3F5BA9-1200-77-normal">
+      <LineStyle>
+        <color>ffa95b3f</color>
+        <width>1.2</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4da95b3f</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <Style id="poly-3F5BA9-1200-77-highlight">
+      <LineStyle>
+        <color>ffa95b3f</color>
+        <width>1.8</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4da95b3f</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <StyleMap id="poly-3F5BA9-1200-77">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#poly-3F5BA9-1200-77-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#poly-3F5BA9-1200-77-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="poly-62AF44-1200-77-normal">
+      <LineStyle>
+        <color>ff44af62</color>
+        <width>1.2</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4d44af62</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <Style id="poly-62AF44-1200-77-highlight">
+      <LineStyle>
+        <color>ff44af62</color>
+        <width>1.8</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4d44af62</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <StyleMap id="poly-62AF44-1200-77">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#poly-62AF44-1200-77-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#poly-62AF44-1200-77-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="poly-777777-1200-77-normal">
+      <LineStyle>
+        <color>ff777777</color>
+        <width>1.2</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4d777777</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <Style id="poly-777777-1200-77-highlight">
+      <LineStyle>
+        <color>ff777777</color>
+        <width>1.8</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4d777777</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <StyleMap id="poly-777777-1200-77">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#poly-777777-1200-77-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#poly-777777-1200-77-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="poly-777777-1601-77-normal">
+      <LineStyle>
+        <color>ff777777</color>
+        <width>1.601</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4d777777</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <Style id="poly-777777-1601-77-highlight">
+      <LineStyle>
+        <color>ff777777</color>
+        <width>2.4015</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4d777777</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <StyleMap id="poly-777777-1601-77">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#poly-777777-1601-77-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#poly-777777-1601-77-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="poly-777777-2201-77-normal">
+      <LineStyle>
+        <color>ff777777</color>
+        <width>2.201</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4d777777</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <Style id="poly-777777-2201-77-highlight">
+      <LineStyle>
+        <color>ff777777</color>
+        <width>3.3015</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4d777777</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <StyleMap id="poly-777777-2201-77">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#poly-777777-2201-77-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#poly-777777-2201-77-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="poly-795046-1200-77-normal">
+      <LineStyle>
+        <color>ff465079</color>
+        <width>1.2</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4d465079</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <Style id="poly-795046-1200-77-highlight">
+      <LineStyle>
+        <color>ff465079</color>
+        <width>1.8</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4d465079</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <StyleMap id="poly-795046-1200-77">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#poly-795046-1200-77-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#poly-795046-1200-77-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="poly-93D7E8-1200-77-normal">
+      <LineStyle>
+        <color>ffe8d793</color>
+        <width>1.2</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4de8d793</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <Style id="poly-93D7E8-1200-77-highlight">
+      <LineStyle>
+        <color>ffe8d793</color>
+        <width>1.8</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4de8d793</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <StyleMap id="poly-93D7E8-1200-77">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#poly-93D7E8-1200-77-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#poly-93D7E8-1200-77-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="poly-93D7E8-1200-77-nodesc-normal">
+      <LineStyle>
+        <color>ffe8d793</color>
+        <width>1.2</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4de8d793</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="poly-93D7E8-1200-77-nodesc-highlight">
+      <LineStyle>
+        <color>ffe8d793</color>
+        <width>1.8</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4de8d793</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="poly-93D7E8-1200-77-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#poly-93D7E8-1200-77-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#poly-93D7E8-1200-77-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="poly-EE9C96-1200-77-normal">
+      <LineStyle>
+        <color>ff969cee</color>
+        <width>1.2</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4d969cee</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <Style id="poly-EE9C96-1200-77-highlight">
+      <LineStyle>
+        <color>ff969cee</color>
+        <width>1.8</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4d969cee</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <StyleMap id="poly-EE9C96-1200-77">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#poly-EE9C96-1200-77-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#poly-EE9C96-1200-77-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="poly-F4EB37-1200-77-normal">
+      <LineStyle>
+        <color>ff37ebf4</color>
+        <width>1.2</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4d37ebf4</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <Style id="poly-F4EB37-1200-77-highlight">
+      <LineStyle>
+        <color>ff37ebf4</color>
+        <width>1.8</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4d37ebf4</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <StyleMap id="poly-F4EB37-1200-77">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#poly-F4EB37-1200-77-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#poly-F4EB37-1200-77-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="poly-F8971B-1200-77-normal">
+      <LineStyle>
+        <color>ff1b97f8</color>
+        <width>1.2</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4d1b97f8</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <Style id="poly-F8971B-1200-77-highlight">
+      <LineStyle>
+        <color>ff1b97f8</color>
+        <width>1.8</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4d1b97f8</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+    </Style>
+    <StyleMap id="poly-F8971B-1200-77">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#poly-F8971B-1200-77-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#poly-F8971B-1200-77-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="poly-F8971B-1200-77-nodesc-normal">
+      <LineStyle>
+        <color>ff1b97f8</color>
+        <width>1.2</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4d1b97f8</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="poly-F8971B-1200-77-nodesc-highlight">
+      <LineStyle>
+        <color>ff1b97f8</color>
+        <width>1.8</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>4d1b97f8</color>
+        <fill>1</fill>
+        <outline>1</outline>
+      </PolyStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="poly-F8971B-1200-77-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#poly-F8971B-1200-77-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#poly-F8971B-1200-77-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Folder>
+      <name>Academics</name>
+      <Placemark>
+        <name>Sarkeys Science and Math Center</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTtP5MqDJQSSQV74u1v2_Jom6QUpmG1rbZQVR_AxTpVW5enpyeBDnK0ieu-LZXg_LVWYrQVaPI4IPYfxB-i3AA3kJ-eoVr4Owwh6tJ6p3lnjYeVIvS6o-BvG070InA2pwbAn9p1rHbJVUvxgpFAAMHUKWF8qxiZr91KLjuxmeNQa9W-6q9itjlxvd1xzX4RqS6428e7?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Classroom and office space]]></description>
+        <styleUrl>#poly-3F5BA9-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTtP5MqDJQSSQV74u1v2_Jom6QUpmG1rbZQVR_AxTpVW5enpyeBDnK0ieu-LZXg_LVWYrQVaPI4IPYfxB-i3AA3kJ-eoVr4Owwh6tJ6p3lnjYeVIvS6o-BvG070InA2pwbAn9p1rHbJVUvxgpFAAMHUKWF8qxiZr91KLjuxmeNQa9W-6q9itjlxvd1xzX4RqS6428e7?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.543678,35.4940168,0
+                -97.5437021,35.4935953,0
+                -97.5436619,35.4935735,0
+                -97.5436471,35.4935473,0
+                -97.543155,35.49358,0
+                -97.54299,35.4937176,0
+                -97.5430168,35.4937657,0
+                -97.543108,35.4938115,0
+                -97.5432086,35.4937264,0
+                -97.543332,35.4937143,0
+                -97.5435211,35.4938781,0
+                -97.5435197,35.4939567,0
+                -97.5434071,35.4940474,0
+                -97.5434326,35.4940998,0
+                -97.5435224,35.4941435,0
+                -97.543678,35.4940168,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Gold Star Memorial Building</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRkZ0atQAj7RBVJQqeYF1yRY8IPB1P-Sr8o0E2Uninr8wKYQbw_bc57FcKmVk8KPeLI5anHmybII3ROCK9VZeAh8BtQ1wPxAHiGksbd6gLT0fQFsi2EKik0jTx8baHkZvw-K-XQiIglvtrpwjYkl7YPtacAOsGol7iJAE6p88WmXRzp3n32KGj2hsH1M974fyIgAjw?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Theatre offices, Wimberly School of Religion<br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQxzZBP_3EFslqJYS4Ng2QX1cXxeQKmNoB8eUZ0xTzVL17o9_DQTCrcNKrxeEB4AaRl5yJ40w_GEFILEBTRUFguGjbjfW-_5mRqMYMInSsaOMCFdO0SD6lSYno6V3jJfpr36XpCWy1RKHRA5x1DtAFEg_lGSuMGfyrQdQHULuDDGEwOlgktqYE9VVOxn84YzEaYtQo?authuser=0&fife=s16383" height="200" width="auto" />]]></description>
+        <styleUrl>#poly-3F5BA9-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRkZ0atQAj7RBVJQqeYF1yRY8IPB1P-Sr8o0E2Uninr8wKYQbw_bc57FcKmVk8KPeLI5anHmybII3ROCK9VZeAh8BtQ1wPxAHiGksbd6gLT0fQFsi2EKik0jTx8baHkZvw-K-XQiIglvtrpwjYkl7YPtacAOsGol7iJAE6p88WmXRzp3n32KGj2hsH1M974fyIgAjw?authuser=0&fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQxzZBP_3EFslqJYS4Ng2QX1cXxeQKmNoB8eUZ0xTzVL17o9_DQTCrcNKrxeEB4AaRl5yJ40w_GEFILEBTRUFguGjbjfW-_5mRqMYMInSsaOMCFdO0SD6lSYno6V3jJfpr36XpCWy1RKHRA5x1DtAFEg_lGSuMGfyrQdQHULuDDGEwOlgktqYE9VVOxn84YzEaYtQo?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5420888,35.4945955,0
+                -97.5420861,35.4943302,0
+                -97.5422376,35.4943302,0
+                -97.542239,35.4941871,0
+                -97.5420888,35.4941893,0
+                -97.5420982,35.4939382,0
+                -97.5419024,35.4939393,0
+                -97.5419024,35.4942155,0
+                -97.5418836,35.4942155,0
+                -97.5418836,35.4943258,0
+                -97.5419064,35.4943258,0
+                -97.541905,35.4945966,0
+                -97.5420888,35.4945955,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[Dawson-Loeffler Science & Mathematics Center]]></name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRovDzmbFLTssnwc5sfQEJgfEuj6FPAFQsfSEt3z0wrcn3N1ItDl2cN6yYb1ZdVh5aTQsrpTHaVZ-PtC6k-o5Mueb7CFt0Jeq3lpeRfLi9zl4Oi_XZBFoyAcuYb4Y4U63vdKCiFWKGVLZ4xPcYARh393tAIue2n9M32j8hByWVhwpw2UhitD2KhrOMYkpKGeL99TWc?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Biology & Chemistry labs and classrooms]]></description>
+        <styleUrl>#poly-3F5BA9-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRovDzmbFLTssnwc5sfQEJgfEuj6FPAFQsfSEt3z0wrcn3N1ItDl2cN6yYb1ZdVh5aTQsrpTHaVZ-PtC6k-o5Mueb7CFt0Jeq3lpeRfLi9zl4Oi_XZBFoyAcuYb4Y4U63vdKCiFWKGVLZ4xPcYARh393tAIue2n9M32j8hByWVhwpw2UhitD2KhrOMYkpKGeL99TWc?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5427902,35.4962475,0
+                -97.5427888,35.4961634,0
+                -97.5428183,35.4961634,0
+                -97.5428197,35.4961252,0
+                -97.5427902,35.4961252,0
+                -97.5427915,35.4960226,0
+                -97.5424428,35.4960226,0
+                -97.5424442,35.4959876,0
+                -97.5423369,35.4959866,0
+                -97.5423369,35.4960237,0
+                -97.5420298,35.4960215,0
+                -97.5420298,35.4961241,0
+                -97.5420003,35.4961241,0
+                -97.5420003,35.4961591,0
+                -97.5420298,35.4961602,0
+                -97.5420298,35.4962475,0
+                -97.5427902,35.4962475,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Bishop W. Angie Smith Chapel</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTY-IWElWujVeN-AeLJnzrqI8VEunmGhFSmRQx1x1RaU1G7euFJl5i-CxbFo5MNgxQfyAN_EzPET3tU0om46AEsb8n7nCb3ywP8GWrdXDzz-KRg8xAFxAbY27HRZpYpUNCQa3UQeaNam7oXaSCqaeJP68C1POMjFt132ii-g5_Yxj_Yd7Nqb3GIdqivFB6A-4sWU4c?authuser=0&fife=s16383" height="200" width="auto" /><br><br>St. Paul School of Theology<br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQirXLBdUePDEPfCJZl8ArzyPGUeHllkdbEpImnkjQYohA7Oy_zk-G-oHDnb4UjSJ6fwhwx3dQ5J_UztZFrl_evTfF2MeAUBrR99mN-mgdgFqGlGH3Rw02vhBhq6-gGe3jqH2ORpTlWU-w71W8xciu5n6o8L6gV683qlZwmS4OgBPtHdcp1ZOX8fpe-wRWog-yJ9yY?authuser=0&fife=s16383" height="200" width="auto" /><br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSicjrO_uNWKsqL59W09t7gPmB9EXRiGUyTI19M5-VKIlZm9gqtgmfp6UWr3YC7GJw3D8Imqea2_bMbjSQUqSwqpVGc4kNGwOf_7gUaN-mJM4I6AZTec4gZBugDXzGRbEA1mb4HQU9mmO4Gmf64aMcVkRYwq3sGpKNRaSb1pfe0xk_5UvZ8BXTunQ_HnyX-Zg5J20o?authuser=0&fife=s16383" height="200" width="auto" />]]></description>
+        <styleUrl>#poly-3F5BA9-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTY-IWElWujVeN-AeLJnzrqI8VEunmGhFSmRQx1x1RaU1G7euFJl5i-CxbFo5MNgxQfyAN_EzPET3tU0om46AEsb8n7nCb3ywP8GWrdXDzz-KRg8xAFxAbY27HRZpYpUNCQa3UQeaNam7oXaSCqaeJP68C1POMjFt132ii-g5_Yxj_Yd7Nqb3GIdqivFB6A-4sWU4c?authuser=0&fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQirXLBdUePDEPfCJZl8ArzyPGUeHllkdbEpImnkjQYohA7Oy_zk-G-oHDnb4UjSJ6fwhwx3dQ5J_UztZFrl_evTfF2MeAUBrR99mN-mgdgFqGlGH3Rw02vhBhq6-gGe3jqH2ORpTlWU-w71W8xciu5n6o8L6gV683qlZwmS4OgBPtHdcp1ZOX8fpe-wRWog-yJ9yY?authuser=0&fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSicjrO_uNWKsqL59W09t7gPmB9EXRiGUyTI19M5-VKIlZm9gqtgmfp6UWr3YC7GJw3D8Imqea2_bMbjSQUqSwqpVGc4kNGwOf_7gUaN-mJM4I6AZTec4gZBugDXzGRbEA1mb4HQU9mmO4Gmf64aMcVkRYwq3sGpKNRaSb1pfe0xk_5UvZ8BXTunQ_HnyX-Zg5J20o?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5415973,35.493995,0
+                -97.5415959,35.4938301,0
+                -97.5416469,35.4938306,0
+                -97.5416462,35.4938847,0
+                -97.5417159,35.4938836,0
+                -97.5417166,35.4938317,0
+                -97.541781,35.4938312,0
+                -97.541779,35.4937799,0
+                -97.5417166,35.4937799,0
+                -97.5417173,35.4937274,0
+                -97.5416469,35.4937274,0
+                -97.5416476,35.4937799,0
+                -97.5415966,35.4937804,0
+                -97.5415959,35.4936155,0
+                -97.5414497,35.4936155,0
+                -97.5414511,35.4935844,0
+                -97.5412834,35.4935844,0
+                -97.5412848,35.4936161,0
+                -97.5411339,35.4936172,0
+                -97.5411359,35.4937575,0
+                -97.5410964,35.4937575,0
+                -97.5410977,35.4938552,0
+                -97.5411353,35.4938552,0
+                -97.5411359,35.4939939,0
+                -97.5412881,35.4939944,0
+                -97.5412875,35.4939491,0
+                -97.5414437,35.4939486,0
+                -97.5414437,35.493995,0
+                -97.5415973,35.493995,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Edith Kinney Gaylord Center</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTlQ_X-CN2xqtC_SabYxp901QlNrQyG4jiXRycwOLOu_7TJ_3VGBZUsaIQuLSuauOIKz_BuQecf_Yb2cDc2uRorDZcKpE99vQHRh3-8rBOK5ExlYf0codf3KZznk_q56yw-I7gd_gWkO7gvCdQVpfpJ6eiZJ3_sCUZkukweCO89hSScBu2k_hKLJhLycGbia5hkJps?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Ann Lacy School of Dance & Entertainment]]></description>
+        <styleUrl>#poly-3F5BA9-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTlQ_X-CN2xqtC_SabYxp901QlNrQyG4jiXRycwOLOu_7TJ_3VGBZUsaIQuLSuauOIKz_BuQecf_Yb2cDc2uRorDZcKpE99vQHRh3-8rBOK5ExlYf0codf3KZznk_q56yw-I7gd_gWkO7gvCdQVpfpJ6eiZJ3_sCUZkukweCO89hSScBu2k_hKLJhLycGbia5hkJps?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5408912,35.4939589,0
+                -97.5409006,35.4935375,0
+                -97.5405425,35.4935331,0
+                -97.5405452,35.4936739,0
+                -97.5398478,35.493663,0
+                -97.5398438,35.493948,0
+                -97.5408912,35.4939589,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Dulaney-Browne Library</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRAqugi4osqUjKNuXLRKCz62KSmbPVPbYsRQ2vjyv7xJR_-rkey0Zfv66ia6o_Gwwih08fEAozSOOpElD9Uo2FncyMtaAXj3gR7Tdcih511USrixphQmCnGKs5r5AC4qqnG9AbMEB2rFTyj7_fOva2qswJASQniwx01eRVyP_y5LlENOY8j8jrJWvoNpF33JHLcZUY?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Campus Library<br>Center for Excellence in Teaching & Learning (CETL)<br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSF2xZRFyygY3fmnovmRjWeIvad6VG6KqdV80X2wyGFeukzHzg28qQo9yAn_KOhMWSfd4q2B1NvLJ1szL-1ILwSowW0vmFtEqI2ZdSfA6aDfFRkz_9Zn1X9PE6FG04PEmsZaTcay7dnHNxMiyX43T5FGbT2hf39fl0KrNDht4EOR_ZrhdYEPUZgul6LoVb2plvPS-Y?authuser=0&fife=s16383" height="200" width="auto" /><br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQ_WxJV_T053WLP6Rn4MLAdLmsAvR0oWYpCcpR5t_bCJjsXW0O1qcVHy0SghJGE_hjOMJV3CiYA4jF0oWNbSPQIBuuxUAUca_b5SQvh4HOySsGpW0ZQpsqgwTPwSnZeZTjVM4lVS4qo_CVbmSBSS8Y0JE1Y8poYoSpUX-Fu0UHDZ0tW5QLakR4ARP56HC8D4ZKg1W4?authuser=0&fife=s16383" height="200" width="auto" />]]></description>
+        <styleUrl>#poly-3F5BA9-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRAqugi4osqUjKNuXLRKCz62KSmbPVPbYsRQ2vjyv7xJR_-rkey0Zfv66ia6o_Gwwih08fEAozSOOpElD9Uo2FncyMtaAXj3gR7Tdcih511USrixphQmCnGKs5r5AC4qqnG9AbMEB2rFTyj7_fOva2qswJASQniwx01eRVyP_y5LlENOY8j8jrJWvoNpF33JHLcZUY?authuser=0&fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSF2xZRFyygY3fmnovmRjWeIvad6VG6KqdV80X2wyGFeukzHzg28qQo9yAn_KOhMWSfd4q2B1NvLJ1szL-1ILwSowW0vmFtEqI2ZdSfA6aDfFRkz_9Zn1X9PE6FG04PEmsZaTcay7dnHNxMiyX43T5FGbT2hf39fl0KrNDht4EOR_ZrhdYEPUZgul6LoVb2plvPS-Y?authuser=0&fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQ_WxJV_T053WLP6Rn4MLAdLmsAvR0oWYpCcpR5t_bCJjsXW0O1qcVHy0SghJGE_hjOMJV3CiYA4jF0oWNbSPQIBuuxUAUca_b5SQvh4HOySsGpW0ZQpsqgwTPwSnZeZTjVM4lVS4qo_CVbmSBSS8Y0JE1Y8poYoSpUX-Fu0UHDZ0tW5QLakR4ARP56HC8D4ZKg1W4?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5410065,35.4954002,0
+                -97.5410092,35.4950748,0
+                -97.5409864,35.4950748,0
+                -97.5409877,35.4949657,0
+                -97.5406578,35.49497,0
+                -97.5406565,35.4949405,0
+                -97.5406203,35.4949405,0
+                -97.5406229,35.4950061,0
+                -97.5405371,35.4950061,0
+                -97.5405411,35.4953325,0
+                -97.5407664,35.4953282,0
+                -97.5407651,35.4954035,0
+                -97.5410065,35.4954002,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[Walker Center for Arts & Sciences]]></name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTzIeusOCChsmoO74fHqMELi8MxEToLg0HD-70Ont8oou8GB3DkQ42jQIfjvkHhGOxws4Hc7k45TqmnVLZzwM44BIswFRXFTVbuXx3Ng0_YRAFr_XRFjXa2ARuxJAaZUo_BeWMZKLcNADcOkEDw7gzQN7zbpZ3pAlvAdxg0SRHIfYcA04Q54hzDhe8dk5olICKLeFs?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Petree College of Arts & Sciences]]></description>
+        <styleUrl>#poly-3F5BA9-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTzIeusOCChsmoO74fHqMELi8MxEToLg0HD-70Ont8oou8GB3DkQ42jQIfjvkHhGOxws4Hc7k45TqmnVLZzwM44BIswFRXFTVbuXx3Ng0_YRAFr_XRFjXa2ARuxJAaZUo_BeWMZKLcNADcOkEDw7gzQN7zbpZ3pAlvAdxg0SRHIfYcA04Q54hzDhe8dk5olICKLeFs?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5403011,35.49579,0
+                -97.5403105,35.4954483,0
+                -97.5399993,35.4954428,0
+                -97.5399993,35.4954734,0
+                -97.5395755,35.4954668,0
+                -97.5395728,35.4957846,0
+                -97.5403011,35.49579,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Kirkpatrick Fine Arts Center</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSPrWyFQe3OzFiRK354TnWJM3lmuL0vBcgF-hKXot-PAL-xMnn8iAu9DHXxU7MVw2254GWB3sTA2kiTvMaoIYbLuW-y5yEnGli0TRVwsg4Dmwfm9ZO7iQmjQXaAFNMN38rMOA2u3nro0NXABmP-nJHUwmRli5r8hBO4kGaBMRPs0CpTfiHlr1ynz7Sy973It726Nxk?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Burg Theatre<br>Petree Recital Hall]]></description>
+        <styleUrl>#poly-3F5BA9-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSPrWyFQe3OzFiRK354TnWJM3lmuL0vBcgF-hKXot-PAL-xMnn8iAu9DHXxU7MVw2254GWB3sTA2kiTvMaoIYbLuW-y5yEnGli0TRVwsg4Dmwfm9ZO7iQmjQXaAFNMN38rMOA2u3nro0NXABmP-nJHUwmRli5r8hBO4kGaBMRPs0CpTfiHlr1ynz7Sy973It726Nxk?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5399081,35.4952714,0
+                -97.5399122,35.4946698,0
+                -97.5392309,35.494661,0
+                -97.5392269,35.4948685,0
+                -97.5391692,35.4948696,0
+                -97.5391722,35.4949159,0
+                -97.5390117,35.494912,0
+                -97.5390098,35.4949412,0
+                -97.538939,35.4949408,0
+                -97.5389449,35.4951104,0
+                -97.5390036,35.4951142,0
+                -97.5390016,35.4952278,0
+                -97.5390799,35.4952258,0
+                -97.539083,35.4952523,0
+                -97.5394515,35.495255,0
+                -97.5395112,35.4952561,0
+                -97.5395162,35.4952687,0
+                -97.5397251,35.4952725,0
+                -97.5399081,35.4952714,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Wanda L. Bass Music Center</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTO8-Kr2l-O0uISp8QbHnQvlZZR3MLx4XlkO2OJaeKEVe2yYBEnFcCVnvofmoNZEhfJZ27VnLvuX3rso47dEVKEOKLW4D2bLcSyRrqtUAWsRqAEMQ_HdEgXFCBj3yul2GeIzg4xfxPupHVNcwGt8YpK3lYcrDl6YJzq4XA4pqJDbeTi-XUCQ7r-D6Dbl2QcRbzasC0?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Bass School of Music<br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSscxVgQtdlMeg5ZKUL7bATC4aXDvzCwNXYw9JMjArziGV0p4uDGOS2OGe8n7ocX-YbGsUTzD_ucCazV3iKySC_P6GCWcES8VauXhRE_6PRctwd1Ig3pc8x9ERdDqfzISJ1c29I1kxQ8oshk2HPOlzOrKDQPd8QqDgMV1g8EsBC-vV1GgPT7q9Ud7nJIqf6gu2SidE?authuser=0&fife=s16383" height="200" width="auto" /><br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRPpU0hE0dZJ9uLhdqROgPc5TLExbPhqVO6lXXjwBjt6LRjC8CSJ80nj1NH2MSQ9NPQaPycqH1CuS0ll3r3_wRPqpEwNDtksSgMsWCedSXgoBKvWS98qy6mqzHFGsmfMSttI7k3-K25XS5Ll0jZKWKXsEo7SyEME07tMFay8s7Y-ii30dslB2bFN8QyP5m3jyEVdnUz?authuser=0&fife=s16383" height="200" width="auto" />]]></description>
+        <styleUrl>#poly-3F5BA9-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTO8-Kr2l-O0uISp8QbHnQvlZZR3MLx4XlkO2OJaeKEVe2yYBEnFcCVnvofmoNZEhfJZ27VnLvuX3rso47dEVKEOKLW4D2bLcSyRrqtUAWsRqAEMQ_HdEgXFCBj3yul2GeIzg4xfxPupHVNcwGt8YpK3lYcrDl6YJzq4XA4pqJDbeTi-XUCQ7r-D6Dbl2QcRbzasC0?authuser=0&fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSscxVgQtdlMeg5ZKUL7bATC4aXDvzCwNXYw9JMjArziGV0p4uDGOS2OGe8n7ocX-YbGsUTzD_ucCazV3iKySC_P6GCWcES8VauXhRE_6PRctwd1Ig3pc8x9ERdDqfzISJ1c29I1kxQ8oshk2HPOlzOrKDQPd8QqDgMV1g8EsBC-vV1GgPT7q9Ud7nJIqf6gu2SidE?authuser=0&fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRPpU0hE0dZJ9uLhdqROgPc5TLExbPhqVO6lXXjwBjt6LRjC8CSJ80nj1NH2MSQ9NPQaPycqH1CuS0ll3r3_wRPqpEwNDtksSgMsWCedSXgoBKvWS98qy6mqzHFGsmfMSttI7k3-K25XS5Ll0jZKWKXsEo7SyEME07tMFay8s7Y-ii30dslB2bFN8QyP5m3jyEVdnUz?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5395018,35.4958381,0
+                -97.5395112,35.4952561,0
+                -97.5391129,35.4952539,0
+                -97.5391021,35.4958348,0
+                -97.5395018,35.4958381,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Norick Art Center</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSluA9d-4z1ddPGxzuSjg14z2oqzQWfyRZPs4EIBnPs72rnU8OhlkpQqtwWSs2br138N5neV90HA7VxVkgMXQEAt-ckGDT04qk0CeAB0PB6fuwTSZzQEdNK7Y-PsgQ5EW10JAdi3zF9Dm4hTlpxtGT8ia3MU5a2oPgw0dwxYX4OFXdsqDZno3dJhW36qyJu_HMRWMI?authuser=0&fife=s16383" height="200" width="auto" /><br><br>School of Visual Arts<br>Nona Jean Hulsey Gallery]]></description>
+        <styleUrl>#poly-3F5BA9-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSluA9d-4z1ddPGxzuSjg14z2oqzQWfyRZPs4EIBnPs72rnU8OhlkpQqtwWSs2br138N5neV90HA7VxVkgMXQEAt-ckGDT04qk0CeAB0PB6fuwTSZzQEdNK7Y-PsgQ5EW10JAdi3zF9Dm4hTlpxtGT8ia3MU5a2oPgw0dwxYX4OFXdsqDZno3dJhW36qyJu_HMRWMI?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.539766,35.4962038,0
+                -97.539766,35.4959767,0
+                -97.5397284,35.4959767,0
+                -97.5397298,35.4959101,0
+                -97.5394347,35.495909,0
+                -97.5394347,35.4959593,0
+                -97.5390337,35.4959614,0
+                -97.5390364,35.4961045,0
+                -97.5389922,35.4961034,0
+                -97.5389922,35.496182,0
+                -97.5392175,35.4961798,0
+                -97.5392175,35.4962388,0
+                -97.5393663,35.4962377,0
+                -97.5393663,35.4962038,0
+                -97.539766,35.4962038,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Kramer School of Nursing (East)</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRher-2OCNJx4zWb_Wl7uCiTJ6A5ZWPd41krvma6unqsGR3LLbJAbdaQxpaGIp9ugWD1gXYg278aF_-hmnk9IArqmGMfOZ_WZKio0y0_F5MMNw8wQ1rQFKqszUG_piv9Iju1nLOpH-ph51qoxZZPZo9W1VByJJqTXpaQYsF1fYLKu6XeJQFx27ZgDyUKAsh8NvXVJss?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Nursing classrooms]]></description>
+        <styleUrl>#poly-3F5BA9-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRher-2OCNJx4zWb_Wl7uCiTJ6A5ZWPd41krvma6unqsGR3LLbJAbdaQxpaGIp9ugWD1gXYg278aF_-hmnk9IArqmGMfOZ_WZKio0y0_F5MMNw8wQ1rQFKqszUG_piv9Iju1nLOpH-ph51qoxZZPZo9W1VByJJqTXpaQYsF1fYLKu6XeJQFx27ZgDyUKAsh8NvXVJss?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5392859,35.4972957,0
+                -97.5392926,35.4966701,0
+                -97.5389962,35.4966668,0
+                -97.5389895,35.4972957,0
+                -97.5392859,35.4972957,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Meinders School of Business</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGR5GqGwu92APoKKwTyEsd1d3tcNqiq4HN_cL8DnrZP2Qbh4a4fe1ifbtyYSOPVNJDDt0aPDc4Pg17KIWDc9UBe5tMnGWc3-3tegKeZzpC_mYyJTyXTx2EzqGlprbdWJwmHt8cF6HBSB3kgKpTWQg5W_X8ZQD7ObfFurnj9KJQNEepzzsWJ3Y9GTtGCaEafQl4WdTfo?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Love's Entrepreneurship Center, Meinders Theater]]></description>
+        <styleUrl>#poly-3F5BA9-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGR5GqGwu92APoKKwTyEsd1d3tcNqiq4HN_cL8DnrZP2Qbh4a4fe1ifbtyYSOPVNJDDt0aPDc4Pg17KIWDc9UBe5tMnGWc3-3tegKeZzpC_mYyJTyXTx2EzqGlprbdWJwmHt8cF6HBSB3kgKpTWQg5W_X8ZQD7ObfFurnj9KJQNEepzzsWJ3Y9GTtGCaEafQl4WdTfo?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5379421,35.4966439,0
+                -97.5379421,35.496455,0
+                -97.5377195,35.4964571,0
+                -97.537749,35.496443,0
+                -97.5377718,35.4964266,0
+                -97.5377905,35.4964047,0
+                -97.5378335,35.4964047,0
+                -97.5378348,35.4963261,0
+                -97.5377972,35.4963239,0
+                -97.5377785,35.4962988,0
+                -97.537753,35.4962792,0
+                -97.5377154,35.4962683,0
+                -97.5379542,35.4962715,0
+                -97.5379568,35.4960695,0
+                -97.5373895,35.4960717,0
+                -97.5373949,35.4961754,0
+                -97.5373667,35.496206,0
+                -97.537348,35.4962268,0
+                -97.5373332,35.4962541,0
+                -97.5373212,35.4962956,0
+                -97.5373144,35.4963228,0
+                -97.5372675,35.4963228,0
+                -97.5372688,35.4964026,0
+                -97.5373118,35.4964036,0
+                -97.5373158,35.4964255,0
+                -97.5373359,35.4964692,0
+                -97.5373614,35.4965096,0
+                -97.5373909,35.4965434,0
+                -97.5373909,35.4966449,0
+                -97.5379421,35.4966439,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[Exercise & Sport Science]]></name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRBbhzSCOT_4JAAyeQbiBIEwb9xL7W4zNsOhE_Y_YvtRHzgAGMAl4rbOep-RNtZEr75AwmTZbxfys6HCTigi33e6nB6kIYCOgP5TQNLqmfZ1InWw-vVClskYwvudj4b0ee0wwOmCJosM1TUod4hhqZGf6a7-k8MFN2E3iKzT8orrElrUscUFl2fDFQPNTBoPSsvogw?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Exercise & Sport Science]]></description>
+        <styleUrl>#poly-3F5BA9-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRBbhzSCOT_4JAAyeQbiBIEwb9xL7W4zNsOhE_Y_YvtRHzgAGMAl4rbOep-RNtZEr75AwmTZbxfys6HCTigi33e6nB6kIYCOgP5TQNLqmfZ1InWw-vVClskYwvudj4b0ee0wwOmCJosM1TUod4hhqZGf6a7-k8MFN2E3iKzT8orrElrUscUFl2fDFQPNTBoPSsvogw?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5386985,35.4935964,0
+                -97.5384758,35.4935931,0
+                -97.5384758,35.4936794,0
+                -97.5386998,35.4936772,0
+                -97.5386985,35.4935964,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Mail Center</name>
+        <description><![CDATA[The Mail Center is located inside the double doors on the East side of the Tom & Brenda McDaniel University Center. Vehicles that need to drop off packages can park in the Library parking lot North of the Library on the NE corner of the University Center.]]></description>
+        <styleUrl>#icon-1303-labelson</styleUrl>
+        <Point>
+          <coordinates>
+            -97.5411695,35.495261,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>Residence Halls</name>
+      <Placemark>
+        <name>Harris Hall</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQd54cfOG42Z0VKv9Q5WpmIEygmo2XXVVRgo5eEDy4l3sc0faGRFkjR9jyisemP7fZf6g7JYlE12I71jyeij6HLnSOlko_EuRoLqdhsiHUJmFZ3THFM0MJ2qWkfNnKsWGGK45fOanHCO8Zl7ofUqm-q2_gP8e11w8Klx0LwBfCqZnJNwsrYbq5hwXdmfkxujrEmq8I?authuser=0&fife=s16383" height="200" width="auto" /><br><br>ELS Language Center]]></description>
+        <styleUrl>#poly-62AF44-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQd54cfOG42Z0VKv9Q5WpmIEygmo2XXVVRgo5eEDy4l3sc0faGRFkjR9jyisemP7fZf6g7JYlE12I71jyeij6HLnSOlko_EuRoLqdhsiHUJmFZ3THFM0MJ2qWkfNnKsWGGK45fOanHCO8Zl7ofUqm-q2_gP8e11w8Klx0LwBfCqZnJNwsrYbq5hwXdmfkxujrEmq8I?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5454362,35.4945868,0
+                -97.5454375,35.4944525,0
+                -97.5450633,35.4944546,0
+                -97.545062,35.4944274,0
+                -97.5449923,35.4944284,0
+                -97.5449909,35.4944492,0
+                -97.5448783,35.4944503,0
+                -97.5448783,35.4945868,0
+                -97.5449936,35.4945868,0
+                -97.5449936,35.4946184,0
+                -97.5450607,35.4946184,0
+                -97.5450593,35.494589,0
+                -97.5454362,35.4945868,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Draper Hall</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQGvtOaCoR4rfuCwZLBgLYXKP4pRr0Em5ddY4THNuYq4mZ8C-eVx_zNkAhPK6c69s32btaLu_Z0sd1LHsVHTHdc4bl6c8IqecbcGU3CBumZmO3YKFBdvIrHWIi8oS3Zn0jXtGjS-3uShtFU-oNfEv5NIySTrnXkgEU4ejXDzCv_d4PlPpPiG-qT3fCfZDPnWRZbAsI?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Student Housing]]></description>
+        <styleUrl>#poly-62AF44-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQGvtOaCoR4rfuCwZLBgLYXKP4pRr0Em5ddY4THNuYq4mZ8C-eVx_zNkAhPK6c69s32btaLu_Z0sd1LHsVHTHdc4bl6c8IqecbcGU3CBumZmO3YKFBdvIrHWIi8oS3Zn0jXtGjS-3uShtFU-oNfEv5NIySTrnXkgEU4ejXDzCv_d4PlPpPiG-qT3fCfZDPnWRZbAsI?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5448072,35.494542,0
+                -97.5448085,35.4944645,0
+                -97.5442466,35.4944612,0
+                -97.5442466,35.4946086,0
+                -97.5447401,35.4946119,0
+                -97.5447401,35.4945409,0
+                -97.5448072,35.494542,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Cokesbury Court Apartments</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGShFulTHFjZ22-c87ZDpeU7-INioB8Cn3_EPFnSlYfQappPY761qIASmpeAC0ScTlfkeC9ZXwPkBR4YsViSDMJU3Zv-q7zu3_mDNDtC3KyKgkRl24NdNx9Zqkl5ZnP0s12ht-IE9j6q5eN4PjCr1x7U6bMrjJGD1DTAdc5igtYgOvKrpP8HbAkIbo1aGsNV_JjowGQ?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Student apartments<br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGS0wvqdd_EjuxL7lvWP5n0JOVBXaGnxRnzdDYZ2fEsz90ZSPu9-uw16wXTLZ-DabkB4qFwz-MMyM56DxQA1FmYnum160ToEyC5tlCUesQQRxCkVbDjbMKvBl_z7WDlLrdEca905ku5GH-_g9dEzJnx6UODe3M88CB0ilD6VBmt3HcazQqP6XyN9Xmp2o_H-IaicEfU?authuser=0&fife=s16383" height="200" width="auto" />]]></description>
+        <styleUrl>#poly-62AF44-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGShFulTHFjZ22-c87ZDpeU7-INioB8Cn3_EPFnSlYfQappPY761qIASmpeAC0ScTlfkeC9ZXwPkBR4YsViSDMJU3Zv-q7zu3_mDNDtC3KyKgkRl24NdNx9Zqkl5ZnP0s12ht-IE9j6q5eN4PjCr1x7U6bMrjJGD1DTAdc5igtYgOvKrpP8HbAkIbo1aGsNV_JjowGQ?authuser=0&fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGS0wvqdd_EjuxL7lvWP5n0JOVBXaGnxRnzdDYZ2fEsz90ZSPu9-uw16wXTLZ-DabkB4qFwz-MMyM56DxQA1FmYnum160ToEyC5tlCUesQQRxCkVbDjbMKvBl_z7WDlLrdEca905ku5GH-_g9dEzJnx6UODe3M88CB0ilD6VBmt3HcazQqP6XyN9Xmp2o_H-IaicEfU?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5452994,35.4962333,0
+                -97.5453151,35.4950269,0
+                -97.5448602,35.4950303,0
+                -97.5448595,35.494893,0
+                -97.5442493,35.4948936,0
+                -97.5442439,35.4947506,0
+                -97.5439959,35.4947484,0
+                -97.5439945,35.4962289,0
+                -97.5452994,35.4962333,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Smith Hall</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRhCX3lRTKdSh2o-dhLU5n8ARCQDo7lYHpX9OD8aTBEyPiUrG5JtJ3BVRpXwLvn6_wdeXT24vqaQoTRl5-kuBrPT1KBdVnSR-4Otbk9dTussmGd6ygQ04BPtA6BxusJhTBV3rN0BVgbD3i4WKKsYYG0mZ9d6IXG6cYeUXjrf66TpKAAjM_ZA0tWXHr1L2MtOKhVwjgt?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Student Housing.]]></description>
+        <styleUrl>#poly-62AF44-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRhCX3lRTKdSh2o-dhLU5n8ARCQDo7lYHpX9OD8aTBEyPiUrG5JtJ3BVRpXwLvn6_wdeXT24vqaQoTRl5-kuBrPT1KBdVnSR-4Otbk9dTussmGd6ygQ04BPtA6BxusJhTBV3rN0BVgbD3i4WKKsYYG0mZ9d6IXG6cYeUXjrf66TpKAAjM_ZA0tWXHr1L2MtOKhVwjgt?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5435801,35.4944907,0
+                -97.5435828,35.4943673,0
+                -97.5435345,35.4943673,0
+                -97.5435358,35.4943258,0
+                -97.5434956,35.4943258,0
+                -97.5434956,35.4943662,0
+                -97.5433011,35.4943662,0
+                -97.5433025,35.4943269,0
+                -97.5432609,35.4943269,0
+                -97.5432622,35.4943662,0
+                -97.5431067,35.4943673,0
+                -97.5431067,35.494495,0
+                -97.5431442,35.494495,0
+                -97.5431442,35.49453,0
+                -97.5431925,35.49453,0
+                -97.5431925,35.4944929,0
+                -97.5433789,35.4944918,0
+                -97.5433776,35.49453,0
+                -97.5434232,35.49453,0
+                -97.5434232,35.4944907,0
+                -97.5435801,35.4944907,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Banning Hall</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRTvKd79KE7m0hll_oi08Expu8xCWHn4hDyssgfDl6e4Ed0qNn-6keMjvCY9FxWTm1ZxhM0FPOWvtHeFvsVyMh6Li4dZCpt_uBbXDI8-YVCy0dMAFAmvI0QEpvHJLKYCkSazba1melKox_OMslGFheaVxEiZsS7AZvvS8fwe7DBaXrpj9xN-PC_NaSKvQcYyXQOglJc?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Student housing.<br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTy8z5USOErFAAETUywHcwd2tj_cNaOugxcFilQDuuXLydlpdLHmxB9-7OuazjrJbtoAhmpmI2tI24KMB_Mk_Wr6RJlSZNVbcijDGPMvwGKLs_Sh6VBukbLNQ9ZXaDJYqHjV9BdeUmum0nSjgvwNcW8c8ocgi6RWBYhDseS2vqIphfufArPBJqQiNZFDQR0EmIFh6ue?authuser=0&fife=s16383" height="200" width="auto" />]]></description>
+        <styleUrl>#poly-62AF44-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRTvKd79KE7m0hll_oi08Expu8xCWHn4hDyssgfDl6e4Ed0qNn-6keMjvCY9FxWTm1ZxhM0FPOWvtHeFvsVyMh6Li4dZCpt_uBbXDI8-YVCy0dMAFAmvI0QEpvHJLKYCkSazba1melKox_OMslGFheaVxEiZsS7AZvvS8fwe7DBaXrpj9xN-PC_NaSKvQcYyXQOglJc?authuser=0&fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTy8z5USOErFAAETUywHcwd2tj_cNaOugxcFilQDuuXLydlpdLHmxB9-7OuazjrJbtoAhmpmI2tI24KMB_Mk_Wr6RJlSZNVbcijDGPMvwGKLs_Sh6VBukbLNQ9ZXaDJYqHjV9BdeUmum0nSjgvwNcW8c8ocgi6RWBYhDseS2vqIphfufArPBJqQiNZFDQR0EmIFh6ue?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5429404,35.4944929,0
+                -97.5429444,35.4943695,0
+                -97.5428908,35.4943695,0
+                -97.5428908,35.4943247,0
+                -97.5428559,35.4943247,0
+                -97.5428559,35.4943706,0
+                -97.5426614,35.4943717,0
+                -97.5426614,35.4943334,0
+                -97.5426212,35.4943334,0
+                -97.5426225,35.4943717,0
+                -97.5424576,35.4943717,0
+                -97.5424576,35.4944918,0
+                -97.5425367,35.4944918,0
+                -97.542538,35.4945333,0
+                -97.5425823,35.4945333,0
+                -97.542581,35.4944929,0
+                -97.5427727,35.4944907,0
+                -97.5427727,35.4945311,0
+                -97.5428143,35.4945311,0
+                -97.542813,35.494494,0
+                -97.5429404,35.4944929,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Walker Hall</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSOk9_GWXl3kiyRtYbYrlDY2EDUhSgmlEep95LDIvcKWEgYARwJLjrvdknA7FIofIzPba7yFDNNgh1zgUbCojMC_f32ExNaZslAa7outa0CgKiw9QZy8JzCYlMiv69oUUxTkP6MGRbkTlUgYlX7eZXbAuJbOLpsm1ZBip3a6ekn3b_6r0pzZsPdGWBIufFwUQL5c9k?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Freshman dormitory.]]></description>
+        <styleUrl>#poly-62AF44-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSOk9_GWXl3kiyRtYbYrlDY2EDUhSgmlEep95LDIvcKWEgYARwJLjrvdknA7FIofIzPba7yFDNNgh1zgUbCojMC_f32ExNaZslAa7outa0CgKiw9QZy8JzCYlMiv69oUUxTkP6MGRbkTlUgYlX7eZXbAuJbOLpsm1ZBip3a6ekn3b_6r0pzZsPdGWBIufFwUQL5c9k?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5429122,35.4940113,0
+                -97.5429229,35.4940004,0
+                -97.5427875,35.4938901,0
+                -97.5429136,35.4937941,0
+                -97.5428183,35.4937165,0
+                -97.5427017,35.4938104,0
+                -97.5425836,35.4937122,0
+                -97.5424884,35.4937908,0
+                -97.5426078,35.493889,0
+                -97.5424777,35.4939971,0
+                -97.5425676,35.494067,0
+                -97.5426976,35.4939644,0
+                -97.542825,35.4940779,0
+                -97.5429122,35.4940113,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Methodist Hall</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTxTyRiPY2nyf0taTQneH0FS0WA_U3OKPbmmK7azgnhdFq9qnM-P-8Ko2MkjUMhoV1p11sc0QSMPo2OeASHJ1xxcBGceayQUrV1S-umoe-n_klQ1PEp9azsXMYGzjn5UVHP_XrY98AqXgZeM_73K6XSqaBwrT__gJB18BGIeOQY3pqzTbBwVwZ1k9_RFJZ8OlQyOOw?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Student apartments]]></description>
+        <styleUrl>#poly-62AF44-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTxTyRiPY2nyf0taTQneH0FS0WA_U3OKPbmmK7azgnhdFq9qnM-P-8Ko2MkjUMhoV1p11sc0QSMPo2OeASHJ1xxcBGceayQUrV1S-umoe-n_klQ1PEp9azsXMYGzjn5UVHP_XrY98AqXgZeM_73K6XSqaBwrT__gJB18BGIeOQY3pqzTbBwVwZ1k9_RFJZ8OlQyOOw?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5436256,35.4954559,0
+                -97.543627,35.495077,0
+                -97.5422189,35.4950737,0
+                -97.5422323,35.4954515,0
+                -97.5436256,35.4954559,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>Community Areas</name>
+      <Placemark>
+        <name><![CDATA[Tom & Brenda McDaniel University Center]]></name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRP1vPAP2nVJVVeSx1n4Bcvn3XwFUwu65-kzbzSrRyxglrfn5gBgAcjji3PU6vgjINFLmJKSkAl3zvJSNxVIiWIzzVMnfCvgfkbgFvcqZghnnhmvi6s65_GJiWgssfyyhk-rttVinLnQuDwrTt3jvVnb6YMLd54xT2TlzvuKNxsAOQysLiNfMkPP3GEtl1EjaqiTrg?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Cafeteria, Alvin's, Student Lounges, Campus Technology, Student Life<br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTnHXeOFSP_n2Xc-tlFErP7F7ybMWDEcrX-BU02urVHFL9y3mit73eYCG2SIWDlLG8e5zgfIhpjk6Gw5cb4G1VymZnMW7yy2k3AdlylNeFmsMh50zOLLH2r-4yZYUemOuEbWwzv_YIgHr8Yf_DbZd5bbpkUi6lhdB2EVFtkORSZSLrfVPiaHp3vNhkyUBCscxju4oo?authuser=0&fife=s16383" height="200" width="auto" />]]></description>
+        <styleUrl>#poly-EE9C96-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRP1vPAP2nVJVVeSx1n4Bcvn3XwFUwu65-kzbzSrRyxglrfn5gBgAcjji3PU6vgjINFLmJKSkAl3zvJSNxVIiWIzzVMnfCvgfkbgFvcqZghnnhmvi6s65_GJiWgssfyyhk-rttVinLnQuDwrTt3jvVnb6YMLd54xT2TlzvuKNxsAOQysLiNfMkPP3GEtl1EjaqiTrg?authuser=0&fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTnHXeOFSP_n2Xc-tlFErP7F7ybMWDEcrX-BU02urVHFL9y3mit73eYCG2SIWDlLG8e5zgfIhpjk6Gw5cb4G1VymZnMW7yy2k3AdlylNeFmsMh50zOLLH2r-4yZYUemOuEbWwzv_YIgHr8Yf_DbZd5bbpkUi6lhdB2EVFtkORSZSLrfVPiaHp3vNhkyUBCscxju4oo?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.541905,35.4954581,0
+                -97.541905,35.4949995,0
+                -97.5414973,35.4949929,0
+                -97.5415,35.4950934,0
+                -97.5414115,35.4950956,0
+                -97.5414142,35.4951262,0
+                -97.5410709,35.4951262,0
+                -97.5410789,35.4954384,0
+                -97.5415134,35.4954363,0
+                -97.5415108,35.4954603,0
+                -97.541905,35.4954581,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Ann Lacy Visitor Center</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQtYQBoZIszmqY4iHkY6zdUZo71jb8HTNWw6FKMFevRxQjSaGZjZGv46h4QiLT-9hylkP3yEzLyR3VJul0PCwJuHjj7ufYJJZuTJlAugS2kXKS0UguF4ePb4jmmqouPNK_p46_Vdgdo8SPewUGX0C7rOmQ_2zRlij4RSoGI8L3isgoyU0h3iDYEFyarqGS6FBiqcHg?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Admissions<br>Advancement<br>Marketing & External Communications]]></description>
+        <styleUrl>#poly-EE9C96-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQtYQBoZIszmqY4iHkY6zdUZo71jb8HTNWw6FKMFevRxQjSaGZjZGv46h4QiLT-9hylkP3yEzLyR3VJul0PCwJuHjj7ufYJJZuTJlAugS2kXKS0UguF4ePb4jmmqouPNK_p46_Vdgdo8SPewUGX0C7rOmQ_2zRlij4RSoGI8L3isgoyU0h3iDYEFyarqGS6FBiqcHg?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5385872,35.494138,0
+                -97.5385885,35.4938454,0
+                -97.5383739,35.4938465,0
+                -97.5383686,35.4941369,0
+                -97.5385872,35.494138,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Campus Health Center (Kramer West)</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTOWyqSl6fdKw-wMild8f7HhUMw-zQuTqVNFdW0zTGXOVZpL9XDTe5tooSJwoOzJC_dxKk7Rc2dvjPmp4Wbzr6DBHXp9mjVLK3ZQ01QFkz8pg99sdogwkjkIyUIZIHFZAzk3nVZYrNmo4wqckTqwae_gyEf259yhX7MlCW9cIINmPEh75BWKKtO5pKvezcl9OUpGxM?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Student Health Center<br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGS535Ypr7IY9WCoAh_VG7vUQEHFGALVkuN4MDTEh87bIENq9kn4Ejojn01wRaujsGTGA8jUWjX4osCz_EQvBz0XTImT2J32YzpGSdGDc-OqgZmveMQlY0coR_Xt5BNCb20aOoNBINXAwWn77XYyZ58pG4vrqcfwCjgV-j4NoHJwV_iNrVQgQpGWqd2lw73RwuJF8Ug?authuser=0&fife=s16383" height="200" width="auto" />]]></description>
+        <styleUrl>#poly-EE9C96-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTOWyqSl6fdKw-wMild8f7HhUMw-zQuTqVNFdW0zTGXOVZpL9XDTe5tooSJwoOzJC_dxKk7Rc2dvjPmp4Wbzr6DBHXp9mjVLK3ZQ01QFkz8pg99sdogwkjkIyUIZIHFZAzk3nVZYrNmo4wqckTqwae_gyEf259yhX7MlCW9cIINmPEh75BWKKtO5pKvezcl9OUpGxM?authuser=0&fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGS535Ypr7IY9WCoAh_VG7vUQEHFGALVkuN4MDTEh87bIENq9kn4Ejojn01wRaujsGTGA8jUWjX4osCz_EQvBz0XTImT2J32YzpGSdGDc-OqgZmveMQlY0coR_Xt5BNCb20aOoNBINXAwWn77XYyZ58pG4vrqcfwCjgV-j4NoHJwV_iNrVQgQpGWqd2lw73RwuJF8Ug?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5403494,35.4970817,0
+                -97.54012,35.4968939,0
+                -97.5400007,35.4969911,0
+                -97.5397941,35.49699,0
+                -97.5396359,35.496859,0
+                -97.5394602,35.4968568,0
+                -97.5394629,35.4970282,0
+                -97.5395313,35.4970304,0
+                -97.5394629,35.4970872,0
+                -97.5396855,35.497264,0
+                -97.5398009,35.4971745,0
+                -97.5400154,35.4971756,0
+                -97.54012,35.4972673,0
+                -97.5402287,35.4971745,0
+                -97.5402649,35.4971723,0
+                -97.5402716,35.4971417,0
+                -97.5403494,35.4970817,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Aduddell Fitness Center</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQk5OeP3iNYx-zzOOzR4fvEglRqI-2YoKVTLyx_a2yrSMWQ5vrBVG0Mt7acL8uB8omc2UNDMQvR8zLPXTKJa4FmDbCbgwkYdM_a_P_TKkT6JDAjTr_Am20EU-HRV3JcIMIUWK0rBSA7hoyblI89uAJkVcIgcrimDk45FxORRWQYX-cqMhRVf9Ye9Bq4WsTHybzfW6k?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Fitness center for students, staff, and faculty.]]></description>
+        <styleUrl>#poly-EE9C96-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQk5OeP3iNYx-zzOOzR4fvEglRqI-2YoKVTLyx_a2yrSMWQ5vrBVG0Mt7acL8uB8omc2UNDMQvR8zLPXTKJa4FmDbCbgwkYdM_a_P_TKkT6JDAjTr_Am20EU-HRV3JcIMIUWK0rBSA7hoyblI89uAJkVcIgcrimDk45FxORRWQYX-cqMhRVf9Ye9Bq4WsTHybzfW6k?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5422349,35.4954843,0
+                -97.5422363,35.4957114,0
+                -97.5425836,35.4957092,0
+                -97.5425836,35.4954799,0
+                -97.5422349,35.4954843,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[Henry J. Freede Activity & Wellness Center]]></name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQ9tvMV82nmi4GODcfPHZsgKKU1KQNc3hIfGNNPvQxcloewyFLW2F_-btGeRwyUAaMEe-MjofJeTKShlV7xRE2GKEQNClE8nEcno4gSlehOqUE_lUQbj-NZYjQ1f-WE88lgAVznrBu3M6-Xwt3Eeyg72-UYdm5QkaQ8Efe9WYG7q7n9c4OqFEXZMue3g5msXREVxns?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Abe Lemons Arena, Naifeh Reception Hall, Paul Hansen Fitness Center, Leichter Reunion Center]]></description>
+        <styleUrl>#poly-EE9C96-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQ9tvMV82nmi4GODcfPHZsgKKU1KQNc3hIfGNNPvQxcloewyFLW2F_-btGeRwyUAaMEe-MjofJeTKShlV7xRE2GKEQNClE8nEcno4gSlehOqUE_lUQbj-NZYjQ1f-WE88lgAVznrBu3M6-Xwt3Eeyg72-UYdm5QkaQ8Efe9WYG7q7n9c4OqFEXZMue3g5msXREVxns?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5418112,35.4970369,0
+                -97.5417937,35.4970315,0
+                -97.5417911,35.496895,0
+                -97.5418514,35.4968961,0
+                -97.5418527,35.496836,0
+                -97.5417857,35.496836,0
+                -97.5417857,35.4966187,0
+                -97.5418139,35.4966187,0
+                -97.5418125,35.4965456,0
+                -97.5409153,35.49655,0
+                -97.540918,35.4966198,0
+                -97.5409341,35.4966187,0
+                -97.5409395,35.4970413,0
+                -97.540918,35.4970413,0
+                -97.5409207,35.4971865,0
+                -97.5410561,35.4971854,0
+                -97.5410561,35.4971461,0
+                -97.5412935,35.4971439,0
+                -97.5412935,35.4972171,0
+                -97.541429,35.4972182,0
+                -97.5414276,35.4971428,0
+                -97.541665,35.4971374,0
+                -97.5416623,35.4971854,0
+                -97.5418112,35.4971887,0
+                -97.5418112,35.4970369,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Kerr-McGee Centennial Plaza</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSUxbyNt-0778tdigCa6149fOHg91js4iDib3Iz59ckwjvRXlWi6G1gk2lScLTa0lBYMKuY3_43CmnuKB3g67BxTs0R4MFyQdULZBNubBO4cNk3kdajVcOgYLHC3DYhPn91x3IABQhg6ADAZXZaxYm_vRccYhbK8zxW11R1nMeglcxPOg-K_0brEn155-LrUY5mRYg?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Welcome to Oklahoma City University!]]></description>
+        <styleUrl>#poly-EE9C96-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSUxbyNt-0778tdigCa6149fOHg91js4iDib3Iz59ckwjvRXlWi6G1gk2lScLTa0lBYMKuY3_43CmnuKB3g67BxTs0R4MFyQdULZBNubBO4cNk3kdajVcOgYLHC3DYhPn91x3IABQhg6ADAZXZaxYm_vRccYhbK8zxW11R1nMeglcxPOg-K_0brEn155-LrUY5mRYg?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5397915,35.4937973,0
+                -97.5397955,35.4934796,0
+                -97.5390847,35.4934818,0
+                -97.5390834,35.4937973,0
+                -97.5397915,35.4937973,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>Administration and Operations</name>
+      <Placemark>
+        <name>Clara E. Jones Administration Building</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRHeNsmg0j7hDlGyYHZyoLVBSU-0NZo2OoT7iV0_tpq62C6UzlpEfDSQBmHWkoOCvgLbJdpI1iQCHgeUYp_amFW7I0i6fmSLkvTCQ0caaDQfE1xucRbBN3jixNdaIil1LXrDXjkY9NQr7dgerw3Tvx7zpcA8P5gQuu5ZgwE3DpyV2yEndKl-5pIGqaI3gxldqmVstU?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Student Financial Services, Human Resources, President's Office, Religious Life & Church Relations]]></description>
+        <styleUrl>#poly-F8971B-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRHeNsmg0j7hDlGyYHZyoLVBSU-0NZo2OoT7iV0_tpq62C6UzlpEfDSQBmHWkoOCvgLbJdpI1iQCHgeUYp_amFW7I0i6fmSLkvTCQ0caaDQfE1xucRbBN3jixNdaIil1LXrDXjkY9NQr7dgerw3Tvx7zpcA8P5gQuu5ZgwE3DpyV2yEndKl-5pIGqaI3gxldqmVstU?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5397606,35.4945289,0
+                -97.539762,35.4943356,0
+                -97.5398035,35.4943345,0
+                -97.5398062,35.4942166,0
+                -97.539774,35.4942166,0
+                -97.5397727,35.4940102,0
+                -97.5395742,35.4940113,0
+                -97.5395782,35.4942155,0
+                -97.539534,35.4942166,0
+                -97.5395326,35.49434,0
+                -97.5395729,35.4943378,0
+                -97.5395688,35.49453,0
+                -97.5397606,35.4945289,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Campus Police</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSOAC9zmWWw82Dg_xOrQ-_KXBak4QmWZfla3WBGaKVrMTxgBLwIWuiI_FRLhlp-_wcBdcn78BBvzeh3BaNtif_PdS7b-t0nHCv2y5solvp-yLhbKozkZg_7WhnJsBJ0Ws3dBoa5p_McrIxFOi9QRA3JWjejRou7OXYAbWiVYa0LuWh1E3vtztV5To1Nu5JINprcneVl?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Corner of NW 23rd and Blackwelder Ave.]]></description>
+        <styleUrl>#poly-F8971B-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSOAC9zmWWw82Dg_xOrQ-_KXBak4QmWZfla3WBGaKVrMTxgBLwIWuiI_FRLhlp-_wcBdcn78BBvzeh3BaNtif_PdS7b-t0nHCv2y5solvp-yLhbKozkZg_7WhnJsBJ0Ws3dBoa5p_McrIxFOi9QRA3JWjejRou7OXYAbWiVYa0LuWh1E3vtztV5To1Nu5JINprcneVl?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5384893,35.4935429,0
+                -97.5384906,35.4933911,0
+                -97.5383149,35.49339,0
+                -97.5383149,35.4934687,0
+                -97.5383632,35.4934698,0
+                -97.5383632,35.4935418,0
+                -97.5384893,35.4935429,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Facilities Department</name>
+        <styleUrl>#poly-F8971B-1200-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5420767,35.4957988,0
+                -97.5420807,35.4955269,0
+                -97.5416771,35.4955236,0
+                -97.5416717,35.4957944,0
+                -97.5420767,35.4957988,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Facilities Department Shops</name>
+        <styleUrl>#poly-F8971B-1200-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.541555,35.4956917,0
+                -97.5415564,35.4955323,0
+                -97.541315,35.4955345,0
+                -97.541315,35.4954876,0
+                -97.5411044,35.4954876,0
+                -97.5411017,35.4956874,0
+                -97.541555,35.4956917,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Facilities Department (Housekeeping)</name>
+        <styleUrl>#poly-F8971B-1200-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5430772,35.4978908,0
+                -97.5430772,35.4977335,0
+                -97.5429511,35.4977335,0
+                -97.5429484,35.4978886,0
+                -97.5430772,35.4978908,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Wilson House</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSxhQNyLXM8K1nrW5mDVeX8iwh9wNVoyB0Wnh5Dn-x6sNQK-rQPTUvicKUmqxUoBNBu9FVLavEdwedwWROZTdwQxy6-N964lQoZ6S78nayi1PWrJuxNVeY6MKYeaF0xp9yGimBl2Sh9dN30v_NVZr_9I1_YKsztRnLtrp5AhN7vacR6f46EJxmlWbJl_Zf3oq-k_Qg?authuser=0&fife=s16383" height="200" width="auto" /><br><br>]]></description>
+        <styleUrl>#poly-F8971B-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSxhQNyLXM8K1nrW5mDVeX8iwh9wNVoyB0Wnh5Dn-x6sNQK-rQPTUvicKUmqxUoBNBu9FVLavEdwedwWROZTdwQxy6-N964lQoZ6S78nayi1PWrJuxNVeY6MKYeaF0xp9yGimBl2Sh9dN30v_NVZr_9I1_YKsztRnLtrp5AhN7vacR6f46EJxmlWbJl_Zf3oq-k_Qg?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5385737,35.4946992,0
+                -97.5385778,35.4944678,0
+                -97.5383015,35.4944634,0
+                -97.5383015,35.494697,0
+                -97.5385737,35.4946992,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Performing Arts Storage</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTv-CF8P9VguORcSpE0R6oM7m4qWQFJpc3VBv7BWxEaoCnD4sOfboJXAjnpuyg4HZUZSbSiDnt9SM-qlGGvWV2tCIdm4sR_kUPOR9CeSxkl5LnUaxivb-BzI-Z5LQRAl0HFqn_fFEWo96gaZZ81AQrR2EZ45zObgXUe2EwxUiLCN3Qal7q3TBkZe9XmjAxOEP_ujnE?authuser=0&fife=s16383" height="200" width="auto" /><br><br>]]></description>
+        <styleUrl>#poly-F8971B-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTv-CF8P9VguORcSpE0R6oM7m4qWQFJpc3VBv7BWxEaoCnD4sOfboJXAjnpuyg4HZUZSbSiDnt9SM-qlGGvWV2tCIdm4sR_kUPOR9CeSxkl5LnUaxivb-BzI-Z5LQRAl0HFqn_fFEWo96gaZZ81AQrR2EZ45zObgXUe2EwxUiLCN3Qal7q3TBkZe9XmjAxOEP_ujnE?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.545231,35.4966417,0
+                -97.545239,35.496301,0
+                -97.5450593,35.496301,0
+                -97.5450513,35.4966417,0
+                -97.545231,35.4966417,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[Dance & Entertainment Costume Storage]]></name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRqP4YfzUMgefVSJwlJe50ixj-R1BvKRp36_5X-9K1fAqOf2517T4vRfcOMVZePfe4_RQUIzAONaR03TBLA2JaqyZcOC3z5ZG50xk9TE8ShgwjV4ktS5urs1qN9XR8-KYeBJdiiPqLpPEMhn0u04ETZkdnFqAchKJkV04nzmxEoUOgC6LXPhcQl870ahS9-UWDVhRE?authuser=0&fife=s16383" height="200" width="auto" /><br><br>]]></description>
+        <styleUrl>#poly-F8971B-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRqP4YfzUMgefVSJwlJe50ixj-R1BvKRp36_5X-9K1fAqOf2517T4vRfcOMVZePfe4_RQUIzAONaR03TBLA2JaqyZcOC3z5ZG50xk9TE8ShgwjV4ktS5urs1qN9XR8-KYeBJdiiPqLpPEMhn0u04ETZkdnFqAchKJkV04nzmxEoUOgC6LXPhcQl870ahS9-UWDVhRE?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.537065,35.4941009,0
+                -97.537065,35.4939458,0
+                -97.5369416,35.4939447,0
+                -97.5369416,35.4940987,0
+                -97.537065,35.4941009,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>Athletics</name>
+      <Placemark>
+        <name>Stars Wrestling Facility</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSM8kMNGd6FfjcjKuS_YEwORn8PAaRU7-K7JEJTa-lDq-V8hkPyUwuT-3RHOmYL5lzvnQZVZh3OpJaLfg8aImysZXMTK8b-s3m7nBt3axHwJDlcM83XRCFpMh1N5ui0i6EBpFB_V26MYFdcdBFY87m0pwLNLCQvJAq-7eeDAhdh87ccicXkIdh6h-0g4cFchNOr82Y?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Where Stars go to wrestle]]></description>
+        <styleUrl>#poly-93D7E8-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSM8kMNGd6FfjcjKuS_YEwORn8PAaRU7-K7JEJTa-lDq-V8hkPyUwuT-3RHOmYL5lzvnQZVZh3OpJaLfg8aImysZXMTK8b-s3m7nBt3axHwJDlcM83XRCFpMh1N5ui0i6EBpFB_V26MYFdcdBFY87m0pwLNLCQvJAq-7eeDAhdh87ccicXkIdh6h-0g4cFchNOr82Y?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5378026,35.4937023,0
+                -97.5378039,35.4933649,0
+                -97.5376377,35.4933638,0
+                -97.5376323,35.4937012,0
+                -97.5378026,35.4937023,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>J.R. Homsey Press Box</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRcYt4dij1D13RRS1dFCptjxXCvTEEiwi3Gru5N7OTEZqFhBGmYhyvOzWR1jOSH-DujmEERZAdegBbJQlG_0yvMCdbZ59GvYBZl0PL1i92erraCCbXiwaA8Dpqo2FltAzJXlCFKn5AvJL5YboVqxDFpApgc4JaKkxRnXHKwY_IWOpbgGR2drFROIZeGAHfbZbXWvpw?authuser=0&fife=s16383" height="200" width="auto" /><br><br>For coverage of Jim Wade Stadium]]></description>
+        <styleUrl>#poly-93D7E8-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRcYt4dij1D13RRS1dFCptjxXCvTEEiwi3Gru5N7OTEZqFhBGmYhyvOzWR1jOSH-DujmEERZAdegBbJQlG_0yvMCdbZ59GvYBZl0PL1i92erraCCbXiwaA8Dpqo2FltAzJXlCFKn5AvJL5YboVqxDFpApgc4JaKkxRnXHKwY_IWOpbgGR2drFROIZeGAHfbZbXWvpw?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5436914,35.4962453,0
+                -97.5437665,35.496182,0
+                -97.5436646,35.4960968,0
+                -97.5435881,35.4961558,0
+                -97.5436914,35.4962453,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>C.R. Sutton Baseball Complex</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRibvGTRh1wBZiBiwkuYZWfLDzRaMUvo5NKQF3oQUAPp9MVvFID3d4eAjaB8yE7_-azM9Z_9OxL3cNJ7ZguMEp-vbZLLgcEa7-brA_9NEU9IQL1fXlBTtw3turJBc_y0ttUyP3lLktuIgZyQt7_nO_LVosDHrVD3IPag3SHHeQjpOXrMQJaF_RuajtehxPx7PBxqjk?authuser=0&fife=s16383" height="200" width="auto" /><br><br>]]></description>
+        <styleUrl>#poly-93D7E8-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRibvGTRh1wBZiBiwkuYZWfLDzRaMUvo5NKQF3oQUAPp9MVvFID3d4eAjaB8yE7_-azM9Z_9OxL3cNJ7ZguMEp-vbZLLgcEa7-brA_9NEU9IQL1fXlBTtw3turJBc_y0ttUyP3lLktuIgZyQt7_nO_LVosDHrVD3IPag3SHHeQjpOXrMQJaF_RuajtehxPx7PBxqjk?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.543442,35.4961623,0
+                -97.543446,35.4960477,0
+                -97.5430141,35.4960466,0
+                -97.5430155,35.4961602,0
+                -97.543442,35.4961623,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Jim Wade Stadium</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRhEF-M7G6SkhwcEekdn1eR8iG3rS_rlrdHP9HlaDhCAXzs1wnGnwW41v0uSQD3cn7j27k7mPK1U0If8qK48z1yA3hfXn96NIV_NKidVgGJ09k8RZpAG9s8eO2b-NfY_CuTULZksLK81bjF3NdDyBuUSk4RaYLJ52TrAyzrD1SGJJAxw-Ncb-VA3YsH82ijqYncpko?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Corner of N Kentucky Ave. and JR Homsey Drive. Home of OKCU Baseball.<br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTqsCA5SiOCsexRfzFkP4liLMiSXAdajVTt8Yk3VLITyft3fXEXh7DmyPVYEKWveyszg8s2Fw_6xZBRIvS1n0PM8n_31_VNyjTLhc58qxwQ8MRF5hIotn_pe1hjiXExUVok_QG5E8qgLPcFGT7otLs1da4hPhcD61odCkyDD7ikQzNQho8X-BDBo8pZRsMNuOkGF-M?authuser=0&fife=s16383" height="200" width="auto" /><br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQBeB0HjXbZuj3gtkB58RGTkXgT2_Xmn1vOPOTS6ALxXg5ucXZ8tcP4AW2LE3yIn9tWNqOMDcLTiTzyGF7H3KMwK2RKbblYHhLYE3ONUpMjWtoV6-Enbnr9sgjaReQIm920FfdP9DidZ_AIa4dtlw-zpxyFmZGNBWOdurBY9TR4AqF4iaShBkuiV5B6tt4m7vhwt7A?authuser=0&fife=s16383" height="200" width="auto" />]]></description>
+        <styleUrl>#poly-93D7E8-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRhEF-M7G6SkhwcEekdn1eR8iG3rS_rlrdHP9HlaDhCAXzs1wnGnwW41v0uSQD3cn7j27k7mPK1U0If8qK48z1yA3hfXn96NIV_NKidVgGJ09k8RZpAG9s8eO2b-NfY_CuTULZksLK81bjF3NdDyBuUSk4RaYLJ52TrAyzrD1SGJJAxw-Ncb-VA3YsH82ijqYncpko?authuser=0&fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTqsCA5SiOCsexRfzFkP4liLMiSXAdajVTt8Yk3VLITyft3fXEXh7DmyPVYEKWveyszg8s2Fw_6xZBRIvS1n0PM8n_31_VNyjTLhc58qxwQ8MRF5hIotn_pe1hjiXExUVok_QG5E8qgLPcFGT7otLs1da4hPhcD61odCkyDD7ikQzNQho8X-BDBo8pZRsMNuOkGF-M?authuser=0&fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQBeB0HjXbZuj3gtkB58RGTkXgT2_Xmn1vOPOTS6ALxXg5ucXZ8tcP4AW2LE3yIn9tWNqOMDcLTiTzyGF7H3KMwK2RKbblYHhLYE3ONUpMjWtoV6-Enbnr9sgjaReQIm920FfdP9DidZ_AIa4dtlw-zpxyFmZGNBWOdurBY9TR4AqF4iaShBkuiV5B6tt4m7vhwt7A?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5437303,35.49636,0
+                -97.5436981,35.4962562,0
+                -97.5436552,35.4962235,0
+                -97.5435841,35.4961733,0
+                -97.5434715,35.496146,0
+                -97.5434607,35.4961896,0
+                -97.5433548,35.4961896,0
+                -97.5433548,35.4961733,0
+                -97.543171,35.4961809,0
+                -97.543167,35.4962126,0
+                -97.5424026,35.496348,0
+                -97.5424013,35.4968229,0
+                -97.5424147,35.4969114,0
+                -97.5424375,35.4969801,0
+                -97.5424656,35.4970326,0
+                -97.5424992,35.4970795,0
+                -97.5425461,35.4971308,0
+                -97.542593,35.4971669,0
+                -97.542648,35.4972018,0
+                -97.5426976,35.4972302,0
+                -97.5427406,35.4972487,0
+                -97.5427888,35.4972662,0
+                -97.5428344,35.4972804,0
+                -97.5428934,35.4972946,0
+                -97.5429471,35.4973022,0
+                -97.5430141,35.4973088,0
+                -97.5431027,35.4973055,0
+                -97.5432327,35.4972946,0
+                -97.5433213,35.4972946,0
+                -97.5434218,35.4972913,0
+                -97.5435305,35.4972837,0
+                -97.5436163,35.4972804,0
+                -97.543627,35.4970468,0
+                -97.5436981,35.4970468,0
+                -97.5437088,35.4969747,0
+                -97.543631,35.4969681,0
+                -97.5436391,35.4969015,0
+                -97.5436579,35.4968939,0
+                -97.5436632,35.4967967,0
+                -97.5436445,35.4967923,0
+                -97.5436592,35.4966002,0
+                -97.5436834,35.4966002,0
+                -97.5436834,35.4964517,0
+                -97.5436565,35.4964517,0
+                -97.5436525,35.4963895,0
+                -97.5437303,35.49636,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Ann Lacy Stadium (West Building)</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQrxAEqObPIKME50QMprejuYjfLBqNKv9QLjSNNGAGzaL2Q87nAdqS2X6lyvytHVFXDrsnhgy5Vet7frag3IVKaSvCaD87hNonjKlaPxVRL8bOVTGrUwX-2LQWHWx0SAb2NN_v2G2Yab1TJrWebTT-MZSEunoT74wMfyAsPbHq16P7N-bFO3jw1hjn2wBaYUQawx9o?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Sports Facility]]></description>
+        <styleUrl>#poly-93D7E8-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQrxAEqObPIKME50QMprejuYjfLBqNKv9QLjSNNGAGzaL2Q87nAdqS2X6lyvytHVFXDrsnhgy5Vet7frag3IVKaSvCaD87hNonjKlaPxVRL8bOVTGrUwX-2LQWHWx0SAb2NN_v2G2Yab1TJrWebTT-MZSEunoT74wMfyAsPbHq16P7N-bFO3jw1hjn2wBaYUQawx9o?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5420526,35.4976986,0
+                -97.5420552,35.4975315,0
+                -97.5418232,35.4975315,0
+                -97.5418192,35.4976975,0
+                -97.5420526,35.4976986,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Ann Lacy Stadium (Press Box)</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRFiR6SIXMyy8U96YlFrqEV5N72FtDS_mYrBrrUTlQ8badxpv2_va9KB9HzE3CMXaMuPstfWfbBFH4nBh9eUV0HuTHqKHFmiuKWDfB792s7TAnYFr_Q4KXyhMSXAhPzLHCX_2vjhXr1kZFSLLPvmh68X2Va9esodh2kld2oOXwMH5PNulGonjIds65YFVgQc9zrJIs?authuser=0&fife=s16383" height="200" width="auto" /><br><br>For softball coverage]]></description>
+        <styleUrl>#poly-93D7E8-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGRFiR6SIXMyy8U96YlFrqEV5N72FtDS_mYrBrrUTlQ8badxpv2_va9KB9HzE3CMXaMuPstfWfbBFH4nBh9eUV0HuTHqKHFmiuKWDfB792s7TAnYFr_Q4KXyhMSXAhPzLHCX_2vjhXr1kZFSLLPvmh68X2Va9esodh2kld2oOXwMH5PNulGonjIds65YFVgQc9zrJIs?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5416489,35.4975807,0
+                -97.5415523,35.4975785,0
+                -97.5415537,35.4976069,0
+                -97.5416556,35.4976069,0
+                -97.5416489,35.4975807,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Ann Lacy Stadium (East Building)</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQXiNnMI_lBnXIFl2VUATDlvHCXlDiOJZYeL2vMyAe9R5jSwHgxQfC6D0xEL-7f7vzes7cjsBYBANAXiqsK8q85u0Q5Yh33-s2JRN6h5C3igWPW-NIoF4qWZCQgulz4HdUP2Q5T94W9HahcJ2rRdSIcuqsSjL6PFUETM1b5CYxsLcX1INdILku1GWzre78tVePPMRE?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Athletics facilities]]></description>
+        <styleUrl>#poly-93D7E8-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQXiNnMI_lBnXIFl2VUATDlvHCXlDiOJZYeL2vMyAe9R5jSwHgxQfC6D0xEL-7f7vzes7cjsBYBANAXiqsK8q85u0Q5Yh33-s2JRN6h5C3igWPW-NIoF4qWZCQgulz4HdUP2Q5T94W9HahcJ2rRdSIcuqsSjL6PFUETM1b5CYxsLcX1INdILku1GWzre78tVePPMRE?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5413726,35.4976986,0
+                -97.541374,35.4975315,0
+                -97.5411848,35.4975293,0
+                -97.5411809,35.4977019,0
+                -97.5413726,35.4976986,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Ann Lacy Stadium</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSBmTGBKTjuk6OssIjLCjpk3FLjDLbtUw6ASXQyq0Kjn_Iqss-GNer8leBE_b-eHcQAiYcVyzPuG6L1OjpfbPT07uzZPBrG96-C_iQh_dLZPRu57m0SRG0DULoVhITRGftXKWq2n7BzTUTOzPzdumQV52NMfXBn01WGCgiPS9zGg8Oo4uDz0dzM39IWGV3BgQ2cAh0?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Home of OKCU Softball<br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTLpdAlc4lNKwqXG1lfJTkIl3SPzScIvMATerU8nsRdqviOir-zkj_flBgLmGLFDp51nHPfABlOXbYUpSG8zhogzNs9VYjSuBEk7PRAFFN8hq3krmWc4nMdzBvPZryteEPeS7Q8J0wBfALsE0ltLIYCbZrO8HcY8-iWiSfvHvWQCYOdK8NMYJffLoNQi4kL1-CqCns?authuser=0&fife=s16383" height="200" width="auto" />]]></description>
+        <styleUrl>#poly-93D7E8-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSBmTGBKTjuk6OssIjLCjpk3FLjDLbtUw6ASXQyq0Kjn_Iqss-GNer8leBE_b-eHcQAiYcVyzPuG6L1OjpfbPT07uzZPBrG96-C_iQh_dLZPRu57m0SRG0DULoVhITRGftXKWq2n7BzTUTOzPzdumQV52NMfXBn01WGCgiPS9zGg8Oo4uDz0dzM39IWGV3BgQ2cAh0?authuser=0&fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTLpdAlc4lNKwqXG1lfJTkIl3SPzScIvMATerU8nsRdqviOir-zkj_flBgLmGLFDp51nHPfABlOXbYUpSG8zhogzNs9VYjSuBEk7PRAFFN8hq3krmWc4nMdzBvPZryteEPeS7Q8J0wBfALsE0ltLIYCbZrO8HcY8-iWiSfvHvWQCYOdK8NMYJffLoNQi4kL1-CqCns?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5415322,35.497608,0
+                -97.5414236,35.4976953,0
+                -97.5414424,35.4977073,0
+                -97.5414088,35.4977324,0
+                -97.5412935,35.4978296,0
+                -97.5413109,35.4978416,0
+                -97.5411272,35.497989,0
+                -97.5411272,35.4981124,0
+                -97.541205,35.4981801,0
+                -97.5412653,35.4982292,0
+                -97.5413243,35.4982653,0
+                -97.5414021,35.4982991,0
+                -97.5415161,35.4983253,0
+                -97.5416046,35.4983308,0
+                -97.541669,35.4983275,0
+                -97.5417361,35.4983188,0
+                -97.5418018,35.4982991,0
+                -97.5418608,35.4982794,0
+                -97.5419319,35.4982401,0
+                -97.542015,35.4981812,0
+                -97.5421062,35.4981058,0
+                -97.5421089,35.4980021,0
+                -97.5416878,35.4976101,0
+                -97.5415322,35.497608,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Stars Soccer Ticket Booth</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQkKJf8XfiGj6RWiiR-X8OmsN7hjAfLuKDCeaSwf73t3sn9svvWVoOA6ZkYRmGEJfPs8KzuJIyy5tldDEkwHwvAeWzP81Tw1XeL6Olse4ToM6UuGE9jdcn1oSGssa3faIFziyc1uQzHk69zJIHqYeu-qbOTZL8ygUB5HxfXpzCej9ccceeiGz9HrmVLWU46vlUYvoEF?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Buy tickets to OKCU Soccer here.]]></description>
+        <styleUrl>#poly-93D7E8-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQkKJf8XfiGj6RWiiR-X8OmsN7hjAfLuKDCeaSwf73t3sn9svvWVoOA6ZkYRmGEJfPs8KzuJIyy5tldDEkwHwvAeWzP81Tw1XeL6Olse4ToM6UuGE9jdcn1oSGssa3faIFziyc1uQzHk69zJIHqYeu-qbOTZL8ygUB5HxfXpzCej9ccceeiGz9HrmVLWU46vlUYvoEF?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5403789,35.4975883,0
+                -97.5403816,35.4975501,0
+                -97.5403266,35.4975501,0
+                -97.5403226,35.4975894,0
+                -97.5403789,35.4975883,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Jim Wade Press Box</name>
+        <styleUrl>#poly-93D7E8-1200-77-nodesc</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5397311,35.4974868,0
+                -97.5396091,35.4974846,0
+                -97.5396064,35.4975665,0
+                -97.5397311,35.4975665,0
+                -97.5397311,35.4974868,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Stars Soccer Field</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSR5gfc4u9WgDP2EkI0Rk3PCtJHJqpcxot0Okk4k39hpmUa4d2UVIQ-1Got2BqDPhaIFy4qjMHVXnIMTZ1ocoTW6W63EV2UOdvZrUs2rU5G9zd-P3G4j2AF_yC6jv8Vb91964wozK2AxMe53O9EPYfDdmYyUhjXauxDn9oJSKe8YqycX9U3kjG7z8KS4jF6XLCd238?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Home of OKCU Stars soccer.<br><br><img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTVymUA-FX2N2jlr2qacFbXEA8_vR3UwzERHvsc0eaF1eBGcAwA3IX2fHkLQiqpezigoN1B9n0lqlAXR1wCIViX4rB6vWnEtXgBrcU0opf6DVZuEoKh-nBo8qwRkxF9ZKbFztU6u8cbJxFrj6Ahn5QmLxsceWVqiwkbqDhgUR9d2vjadrMFvQt2fsMNhJPaCDz4rHs?authuser=0&fife=s16383" height="200" width="auto" />]]></description>
+        <styleUrl>#poly-93D7E8-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSR5gfc4u9WgDP2EkI0Rk3PCtJHJqpcxot0Okk4k39hpmUa4d2UVIQ-1Got2BqDPhaIFy4qjMHVXnIMTZ1ocoTW6W63EV2UOdvZrUs2rU5G9zd-P3G4j2AF_yC6jv8Vb91964wozK2AxMe53O9EPYfDdmYyUhjXauxDn9oJSKe8YqycX9U3kjG7z8KS4jF6XLCd238?authuser=0&fife=s16383 https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTVymUA-FX2N2jlr2qacFbXEA8_vR3UwzERHvsc0eaF1eBGcAwA3IX2fHkLQiqpezigoN1B9n0lqlAXR1wCIViX4rB6vWnEtXgBrcU0opf6DVZuEoKh-nBo8qwRkxF9ZKbFztU6u8cbJxFrj6Ahn5QmLxsceWVqiwkbqDhgUR9d2vjadrMFvQt2fsMNhJPaCDz4rHs?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5390297,35.497597,0
+                -97.539019,35.4983537,0
+                -97.5403641,35.4983537,0
+                -97.5403681,35.4976112,0
+                -97.5390297,35.497597,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>Greek Housing</name>
+      <Placemark>
+        <name>Lambda Chi Alpha</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSDbsQSEiAc_JutOJnU2OssP8RuP2z71wteIJ7lnOGMXrUFtf7xq5ISx_2X1qyXWjwn9ciSw6p8nyNMwh54zZFzQAsFGUy3ofGUyUKHyuzUiRsHHD5xhKJWUWawbqbOVfJg0KgrcKTJrQ9BtQlnASUoN67DpDTLMowaARQ7sQ_VyxFmy6sQDvniHbaADF6Kiqg4Fqo?authuser=0&fife=s16383" height="200" width="auto" /><br><br>The Lambda Chi Alpha house.]]></description>
+        <styleUrl>#poly-795046-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSDbsQSEiAc_JutOJnU2OssP8RuP2z71wteIJ7lnOGMXrUFtf7xq5ISx_2X1qyXWjwn9ciSw6p8nyNMwh54zZFzQAsFGUy3ofGUyUKHyuzUiRsHHD5xhKJWUWawbqbOVfJg0KgrcKTJrQ9BtQlnASUoN67DpDTLMowaARQ7sQ_VyxFmy6sQDvniHbaADF6Kiqg4Fqo?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5459337,35.495124,0
+                -97.5459445,35.4948357,0
+                -97.5457567,35.4948313,0
+                -97.545746,35.495124,0
+                -97.5459337,35.495124,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Kappa Sigma</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQw-WzobcXcioL75_lTlXIYfmY2WY4Q4hq0B8iluD0AMh5iaAkWxi7pzj7M2TIrI_Llz7suLsGn8Q5Z2HcFWDHTo6_tKEpPm6SpmxnC9-0voojwH74NTtXc0bXjnBrCbsOLeiyG5LO3MH-a29uHbqpqpZ_CJWtwclXZjdRBGPgZrYyZMyjRFya-_JFHZbOBkymp9BM?authuser=0&fife=s16383" height="200" width="auto" /><br><br>OKCU's Kappa Sigma house]]></description>
+        <styleUrl>#poly-795046-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQw-WzobcXcioL75_lTlXIYfmY2WY4Q4hq0B8iluD0AMh5iaAkWxi7pzj7M2TIrI_Llz7suLsGn8Q5Z2HcFWDHTo6_tKEpPm6SpmxnC9-0voojwH74NTtXc0bXjnBrCbsOLeiyG5LO3MH-a29uHbqpqpZ_CJWtwclXZjdRBGPgZrYyZMyjRFya-_JFHZbOBkymp9BM?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5454938,35.4939513,0
+                -97.5454992,35.4938312,0
+                -97.5453383,35.4938312,0
+                -97.5453383,35.4939513,0
+                -97.5454938,35.4939513,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Gamma Phi Beta</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTNFhQyLJ-qOsYE2dw8bmOeLYgYA6-AgywzkQA9bWOxoJpHxtVwyfAsPOF1t-CkQ1JTCURXyHVP5ywTb_ltRAcuGmiPklfdcP0IdbJ6MFBg78Jo9vDzbj3SgfG7aT0m-npnE_JjxM5GoEp5cWmw1b5AXJMFs_U0xC4bKhAArpEEUMlQ7NGNtuwTIBSfuzF-tC986ek?authuser=0&fife=s16383" height="200" width="auto" /><br><br>OKCU's Gamma Phi Beta house.]]></description>
+        <styleUrl>#poly-795046-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTNFhQyLJ-qOsYE2dw8bmOeLYgYA6-AgywzkQA9bWOxoJpHxtVwyfAsPOF1t-CkQ1JTCURXyHVP5ywTb_ltRAcuGmiPklfdcP0IdbJ6MFBg78Jo9vDzbj3SgfG7aT0m-npnE_JjxM5GoEp5cWmw1b5AXJMFs_U0xC4bKhAArpEEUMlQ7NGNtuwTIBSfuzF-tC986ek?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5438108,35.4956393,0
+                -97.5438188,35.495516,0
+                -97.5435854,35.4955061,0
+                -97.5435774,35.4956295,0
+                -97.5438108,35.4956393,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Phi Mu</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSdU9bPff7nVNefQEBBiVNsFt604WP3fi31Vm4_h1029Jclv9lQHRpcWUQLGQyYG67SzrcE51XPiHFGmoZELTLJQ_VVW2FommIf6RmYXyeTXwsWdVmY14r6aiWaQv7RWq8Hyp3Vdr0GGW8bIq8XiaMtIDuWv1-XAns24uY2jJGK4w60W8mGWsFraxrHlZNFToaDDBg?authuser=0&fife=s16383" height="200" width="auto" /><br><br>OKCU's Phi Mu house.]]></description>
+        <styleUrl>#poly-795046-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSdU9bPff7nVNefQEBBiVNsFt604WP3fi31Vm4_h1029Jclv9lQHRpcWUQLGQyYG67SzrcE51XPiHFGmoZELTLJQ_VVW2FommIf6RmYXyeTXwsWdVmY14r6aiWaQv7RWq8Hyp3Vdr0GGW8bIq8XiaMtIDuWv1-XAns24uY2jJGK4w60W8mGWsFraxrHlZNFToaDDBg?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5434996,35.4956372,0
+                -97.543501,35.495516,0
+                -97.5433226,35.495516,0
+                -97.5433239,35.4956372,0
+                -97.5434996,35.4956372,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Alpha Phi</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTy76UxhgffYutQTjXsLp-vxcjQ_YxsVKQG7VjUv_4amXa-oXAYrxC6l9tQ_VE0JX9HWXTTxnAEJiArG_uHIjou_KJhwxQkF01K5w8SjQ3w61fP14maDFJdFOFqGGOaEA4QeHbUTmcfaZhjuRcdpBbQf9ebi688gsrYR9CxFofdnVDBVgCQGkO1ljRIyFj87B9tQNc?authuser=0&fife=s16383" height="200" width="auto" /><br><br>OKCU's Alpha Phi house]]></description>
+        <styleUrl>#poly-795046-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTy76UxhgffYutQTjXsLp-vxcjQ_YxsVKQG7VjUv_4amXa-oXAYrxC6l9tQ_VE0JX9HWXTTxnAEJiArG_uHIjou_KJhwxQkF01K5w8SjQ3w61fP14maDFJdFOFqGGOaEA4QeHbUTmcfaZhjuRcdpBbQf9ebi688gsrYR9CxFofdnVDBVgCQGkO1ljRIyFj87B9tQNc?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5437906,35.4958053,0
+                -97.5437906,35.4956852,0
+                -97.5435868,35.4956852,0
+                -97.5435854,35.4958042,0
+                -97.5437906,35.4958053,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Alpha Chi Omega</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQ_B7vUitT9YiU9-PZhVdXqBo_HjQD6DooZYRd7AP4U-9lqOA4Pv2CTb6K-8lFyeJVtr2xrtN4KgXMfODjT4nNUT-aILLOyMgpv-f85hLhFjy6DKcjIvyDzapR7xM6IDCxPs-Lck4C4YlmByUuuuMvGfFQzIF1utq_0l1raDJr1rqkphfglcgvQhZ3hYV1-oVwERpI?authuser=0&fife=s16383" height="200" width="auto" /><br><br>OKCU's Alpha Chi Omega house.]]></description>
+        <styleUrl>#poly-795046-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGQ_B7vUitT9YiU9-PZhVdXqBo_HjQD6DooZYRd7AP4U-9lqOA4Pv2CTb6K-8lFyeJVtr2xrtN4KgXMfODjT4nNUT-aILLOyMgpv-f85hLhFjy6DKcjIvyDzapR7xM6IDCxPs-Lck4C4YlmByUuuuMvGfFQzIF1utq_0l1raDJr1rqkphfglcgvQhZ3hYV1-oVwERpI?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5435063,35.4958097,0
+                -97.5435077,35.4956874,0
+                -97.5433266,35.4956863,0
+                -97.5433266,35.4958086,0
+                -97.5435063,35.4958097,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>Affiliated Buildings</name>
+      <Placemark>
+        <name><![CDATA[Oklahoma Children's Theatre]]></name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTszE0ZBpgUFy_vt8AQHMfTmBgvthHqdxBIF3OyuJ---QpF0st6j3H9hxzkInBwnIVnXz52HqgL6B0kbf9Z0tFurLJBsCDJ5Okr0HYqQ_f1xLFdsLZS6xk49NEEEF-G1DRNRoZhQRrIRVUu_fCvmmyW_s-L981a7BDaG3j0LYWjlZiwUCnuwNvM228jOyWaiP2WLQ8?authuser=0&fife=s16383" height="200" width="auto" /><br><br>Oklahoma Children's Theatre, NW 25th and Blackwelder Ave.]]></description>
+        <styleUrl>#poly-F4EB37-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGTszE0ZBpgUFy_vt8AQHMfTmBgvthHqdxBIF3OyuJ---QpF0st6j3H9hxzkInBwnIVnXz52HqgL6B0kbf9Z0tFurLJBsCDJ5Okr0HYqQ_f1xLFdsLZS6xk49NEEEF-G1DRNRoZhQRrIRVUu_fCvmmyW_s-L981a7BDaG3j0LYWjlZiwUCnuwNvM228jOyWaiP2WLQ8?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5385644,35.4950683,0
+                -97.538567,35.4949285,0
+                -97.538496,35.4949274,0
+                -97.538496,35.4949482,0
+                -97.5383873,35.494946,0
+                -97.5383873,35.4949078,0
+                -97.5382344,35.4949045,0
+                -97.5382318,35.4951152,0
+                -97.538386,35.4951163,0
+                -97.538386,35.4950683,0
+                -97.5385644,35.4950683,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Oklahoma United Methodist Conference Center</name>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSXXkGKKsV6V3TREtuxMRrvv9B1ckLt3u7J0rLDW2-j4KfKIaYBDVVb-wS9XVq8VBY9-5DFcsa9LlHTV6M5uiM6AiNgGeJNXGOwZOgPstTdLeRi2qL0HlLcliSCAZngA-yoByD9Xg1BxbrbUJIhF2rSqopRvVolmETH6DlRhls6xkEf-lRmUBfK60oCHMdqS1faEZo?authuser=0&fife=s16383" height="200" width="auto" /><br><br>The Oklahoma United Methodist Conference Center on the OKCU campus.]]></description>
+        <styleUrl>#poly-F4EB37-1200-77</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AKcrxGSXXkGKKsV6V3TREtuxMRrvv9B1ckLt3u7J0rLDW2-j4KfKIaYBDVVb-wS9XVq8VBY9-5DFcsa9LlHTV6M5uiM6AiNgGeJNXGOwZOgPstTdLeRi2qL0HlLcliSCAZngA-yoByD9Xg1BxbrbUJIhF2rSqopRvVolmETH6DlRhls6xkEf-lRmUBfK60oCHMdqS1faEZo?authuser=0&fife=s16383]]></value>
+          </Data>
+        </ExtendedData>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5374848,35.4950028,0
+                -97.5373976,35.4949394,0
+                -97.5373989,35.4946938,0
+                -97.5369389,35.4946981,0
+                -97.5369336,35.4950705,0
+                -97.5372367,35.4950694,0
+                -97.5372769,35.4951021,0
+                -97.5372769,35.4951338,0
+                -97.537352,35.4951338,0
+                -97.5373507,35.4951109,0
+                -97.5374848,35.4950028,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>Parking</name>
+      <Placemark>
+        <name>Noble Drive Parking</name>
+        <description>General Permit Parking</description>
+        <styleUrl>#poly-777777-1601-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5438577,35.4934512,0
+                -97.543847,35.4933376,0
+                -97.5390834,35.4933507,0
+                -97.5390995,35.4934556,0
+                -97.5438577,35.4934512,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Kerr-McGee/Administration Lot</name>
+        <description>Faculty and Staff Only</description>
+        <styleUrl>#poly-777777-2201-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5388862,35.4940638,0
+                -97.5390552,35.4940638,0
+                -97.5390539,35.4935047,0
+                -97.5389412,35.4935014,0
+                -97.5389452,35.4940059,0
+                -97.5388862,35.4940059,0
+                -97.5388862,35.4940638,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Kirkpatrick/Bass Parking</name>
+        <description>Faculty/Staff Only</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5390552,35.4948674,0
+                -97.5390472,35.4944754,0
+                -97.5388313,35.4944787,0
+                -97.5388232,35.4952059,0
+                -97.5388893,35.4952037,0
+                -97.5388829,35.4948685,0
+                -97.5390552,35.4948674,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>26th / Blackwelder Street Parking</name>
+        <description>General Permit Parking</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5388487,35.4955411,0
+                -97.5387816,35.49554,0
+                -97.5387709,35.4973121,0
+                -97.5388379,35.4973121,0
+                -97.538846,35.4963851,0
+                -97.540454,35.4963895,0
+                -97.5404553,35.4963196,0
+                -97.5388446,35.4963218,0
+                -97.5388487,35.4955411,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Norick Art Center Parking</name>
+        <description>General Permit Parking</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5403896,35.4962377,0
+                -97.5403936,35.4958905,0
+                -97.53988,35.4958959,0
+                -97.5398746,35.4962377,0
+                -97.5403896,35.4962377,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Kramer Parking</name>
+        <description>General Permit Parking</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5403628,35.4968415,0
+                -97.5403722,35.4963949,0
+                -97.5388581,35.4963938,0
+                -97.5388607,35.4965674,0
+                -97.5394884,35.4965674,0
+                -97.5394844,35.4968437,0
+                -97.5403628,35.4968415,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Meinders North Lot</name>
+        <description>General Permit Parking</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5379515,35.4972913,0
+                -97.5379515,35.496967,0
+                -97.5378415,35.496967,0
+                -97.5378442,35.4968983,0
+                -97.5369282,35.4969026,0
+                -97.5369282,35.4972913,0
+                -97.5379515,35.4972913,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Meinders South Lot</name>
+        <description>General Permit Parking</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5379461,35.4958064,0
+                -97.5379515,35.4954188,0
+                -97.5368826,35.4954242,0
+                -97.536884,35.4957485,0
+                -97.5370999,35.4957474,0
+                -97.5371012,35.4958086,0
+                -97.5379461,35.4958064,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name><![CDATA[Children's Theatre / Wilson House Parking]]></name>
+        <description>General Permit Parking</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5382304,35.4952135,0
+                -97.5382318,35.4944437,0
+                -97.5381795,35.4943913,0
+                -97.5381312,35.4943913,0
+                -97.5380668,35.4944459,0
+                -97.5380655,35.4948215,0
+                -97.5379045,35.4948215,0
+                -97.5379112,35.495219,0
+                -97.5382304,35.4952135,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Visitor Center/Police Parking</name>
+        <description>General Permit Parking</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.538158,35.4941686,0
+                -97.5381593,35.4937646,0
+                -97.5380024,35.4937657,0
+                -97.5379997,35.4937143,0
+                -97.5382626,35.4937154,0
+                -97.5382613,35.4934053,0
+                -97.5378482,35.4934075,0
+                -97.5378536,35.49371,0
+                -97.537922,35.4937111,0
+                -97.5379233,35.4937668,0
+                -97.5376564,35.4937689,0
+                -97.5376578,35.4941664,0
+                -97.538158,35.4941686,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Visitor Parking</name>
+        <description>Visitor Parking only</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5383685,35.4941697,0
+                -97.5383726,35.4937657,0
+                -97.5381593,35.4937646,0
+                -97.538158,35.4941686,0
+                -97.5383685,35.4941697,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Walker Center Parking</name>
+        <description>Faculty/Staff Parking Only</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5399081,35.4952714,0
+                -97.5399095,35.4953544,0
+                -97.5405264,35.4953565,0
+                -97.5405224,35.495101,0
+                -97.5405224,35.4950705,0
+                -97.5405103,35.4950377,0
+                -97.5404848,35.4950126,0
+                -97.5404513,35.4949886,0
+                -97.5404124,35.4949624,0
+                -97.5403601,35.494946,0
+                -97.5402018,35.4949438,0
+                -97.5402085,35.4945464,0
+                -97.5399108,35.4945518,0
+                -97.5399081,35.4952714,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Library Lot</name>
+        <description>General Permit Parking</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5410615,35.4958992,0
+                -97.5410642,35.495409,0
+                -97.5406243,35.4954155,0
+                -97.5406243,35.4958948,0
+                -97.5410615,35.4958992,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Freede Lot</name>
+        <description>General Permit Parking</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5423664,35.497109,0
+                -97.5423811,35.4963829,0
+                -97.541838,35.4963862,0
+                -97.5418434,35.4959975,0
+                -97.5412479,35.4959997,0
+                -97.5412479,35.4965019,0
+                -97.5418943,35.4964997,0
+                -97.5418997,35.497109,0
+                -97.5423664,35.497109,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Aduddell Lot</name>
+        <description>General Permit Parking</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5422564,35.4958271,0
+                -97.5432569,35.4958315,0
+                -97.5432569,35.4956535,0
+                -97.5429323,35.4956524,0
+                -97.5429337,35.4957136,0
+                -97.5422551,35.4957169,0
+                -97.5422564,35.4958271,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Dawson-Loeffler Lot</name>
+        <description>General Permit Parking</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5436378,35.4960346,0
+                -97.5436458,35.4959243,0
+                -97.5427754,35.4959276,0
+                -97.5427781,35.4959745,0
+                -97.5428572,35.4960379,0
+                -97.5436378,35.4960346,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Methodist Hall Parking Garage</name>
+        <description>Methodist Hall Residents Only</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5438201,35.4954559,0
+                -97.5438255,35.4950781,0
+                -97.543627,35.495077,0
+                -97.5436256,35.4954559,0
+                -97.5438201,35.4954559,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Sarkeys Lot</name>
+        <description>Faculty/Staff Parking Only</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5438845,35.4942428,0
+                -97.5438899,35.4935877,0
+                -97.5437732,35.493675,0
+                -97.5437813,35.4942417,0
+                -97.5438845,35.4942428,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Harris/Draper Lot</name>
+        <description>General Permit Parking</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5452591,35.4943662,0
+                -97.5452578,35.4942133,0
+                -97.5451787,35.4941631,0
+                -97.5451814,35.4939851,0
+                -97.5451197,35.4939851,0
+                -97.5451237,35.4939426,0
+                -97.5450996,35.4939032,0
+                -97.5451022,35.4937951,0
+                -97.5439838,35.4937897,0
+                -97.5439851,35.494293,0
+                -97.5440454,35.4942909,0
+                -97.5441393,35.4943684,0
+                -97.5452591,35.4943662,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Cokesbury Court Resident Lot</name>
+        <description>Cokesbury Court Resident parking only</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5450137,35.4947025,0
+                -97.5442426,35.4947047,0
+                -97.5442493,35.4948936,0
+                -97.5448595,35.494893,0
+                -97.5448602,35.4950303,0
+                -97.5453151,35.4950269,0
+                -97.5452994,35.4962333,0
+                -97.545573,35.4962322,0
+                -97.5455676,35.4947637,0
+                -97.5450137,35.4947669,0
+                -97.5450137,35.4947025,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Cokesbury Court Visitor Parking</name>
+        <description>Visitor Parking Only</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5455515,35.4946981,0
+                -97.5450137,35.4947025,0
+                -97.5450137,35.4947669,0
+                -97.5455542,35.4947647,0
+                -97.5455515,35.4946981,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Commuter Lot West</name>
+        <description>Value Commuter Parking Pass Holders</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.544425,35.496336,0
+                -97.5439797,35.4963392,0
+                -97.5439703,35.497371,0
+                -97.544378,35.4973699,0
+                -97.544378,35.4968491,0
+                -97.544433,35.4968469,0
+                -97.544425,35.496336,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Value Commuter North Lot 1</name>
+        <description>For Value Commuter Parking Pass holders</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5431938,35.4974486,0
+                -97.5431804,35.4980349,0
+                -97.5438845,35.4980381,0
+                -97.5438845,35.4974409,0
+                -97.5431938,35.4974486,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Value Commuter North Lot 2</name>
+        <description>For Value Commuter parking pass holders</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.542872,35.4974453,0
+                -97.5422537,35.4974442,0
+                -97.5422578,35.4980381,0
+                -97.542872,35.4980392,0
+                -97.542872,35.4974453,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Indiana Ave. Street Parking</name>
+        <description>General Permit Parking</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5421746,35.4984148,0
+                -97.5422645,35.4984148,0
+                -97.5422537,35.4974442,0
+                -97.5421733,35.497442,0
+                -97.5421746,35.4984148,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Ann Lacy Stadium Parking</name>
+        <description>For Value Commuter Parking Pass holders</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5411661,35.4978951,0
+                -97.5411715,35.4975337,0
+                -97.5406189,35.4975359,0
+                -97.5406203,35.4983646,0
+                -97.5411715,35.4983635,0
+                -97.5411715,35.4982521,0
+                -97.5410374,35.4982511,0
+                -97.5410387,35.4979453,0
+                -97.5410964,35.4979443,0
+                -97.5411353,35.4979311,0
+                -97.5411661,35.4978951,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+      <Placemark>
+        <name>Florida Ave. Street Parking</name>
+        <description>General Permit Parking</description>
+        <styleUrl>#poly-777777-1200-77</styleUrl>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <tessellate>1</tessellate>
+              <coordinates>
+                -97.5404459,35.4984225,0
+                -97.5405492,35.4984225,0
+                -97.5405478,35.4974486,0
+                -97.5404459,35.4974486,0
+                -97.5404459,35.4984225,0
+              </coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>
