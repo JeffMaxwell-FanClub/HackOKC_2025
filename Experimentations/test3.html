@@ -1,0 +1,2803 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Campus Maintenance Work Orders</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+
+      /* Hide scrollbar */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      /* Form states */
+      .form-input {
+        transition: all 0.2s ease;
+      }
+      .form-disabled {
+        opacity: 0.6;
+        pointer-events: none;
+        background-color: #f3f4f6;
+      }
+
+      /* Error state for validation */
+      .input-error {
+        border-color: #ef4444 !important;
+        ring: 2px solid #ef4444 !important;
+      }
+
+      /* Fix for map glitches */
+      path.leaflet-interactive {
+        transition: fill-opacity 0.2s, fill 0.2s, stroke 0.2s, stroke-width 0.2s;
+      }
+    </style>
+  </head>
+  <body class="h-screen w-screen overflow-hidden bg-white flex flex-col md:flex-row">
+    <div class="relative w-full md:w-[60%] h-[50vh] md:h-full border-r border-slate-200 bg-slate-50">
+      <div id="map" class="h-full w-full z-0"></div>
+
+      <div
+        class="absolute top-4 left-4 z-[1000] bg-white/90 backdrop-blur shadow-sm px-4 py-2 rounded-lg border border-slate-200 pointer-events-none"
+      >
+        <p class="text-sm font-semibold text-slate-700 flex items-center gap-2">
+          <span class="flex h-2 w-2 rounded-full bg-blue-500 animate-pulse"></span>
+          Click an area to start a Work Order
+        </p>
+      </div>
+    </div>
+
+    <div class="w-full md:w-[40%] h-[50vh] md:h-full bg-white flex flex-col shadow-xl z-10">
+      <div class="p-6 border-b border-slate-100 bg-white z-10">
+        <h2 class="text-xl font-bold text-slate-900">Maintenance Help Desk</h2>
+        <p class="text-sm text-slate-500">Submit a new work order request.</p>
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-6 space-y-6 no-scrollbar relative bg-white">
+        <div
+          id="empty-state"
+          class="absolute inset-0 bg-white/90 backdrop-blur-[1px] z-20 flex flex-col items-center justify-center text-center p-8 transition-opacity duration-300"
+        >
+          <div class="bg-blue-50 p-4 rounded-full mb-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-8 w-8 text-blue-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+              />
+            </svg>
+          </div>
+          <h3 class="text-lg font-medium text-slate-900">Select an Area</h3>
+          <p class="text-slate-500 max-w-xs mt-1">Please click on a building/area on the map to begin.</p>
+        </div>
+
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold uppercase tracking-wide text-blue-600">1. Location Details</h3>
+            <span id="status-badge" class="hidden px-2 py-1 bg-green-100 text-green-700 text-xs font-bold rounded"
+              >Area Selected</span
+            >
+          </div>
+
+          <div class="grid grid-cols-1 gap-4">
+            <div>
+              <label class="block text-xs font-medium text-slate-500 mb-1">Area / Main Building</label>
+              <input
+                type="text"
+                id="input-building-name"
+                readonly
+                class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-900 font-semibold focus:outline-none cursor-default"
+                placeholder="No area selected..."
+              />
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium text-slate-700 mb-1">Specific Building / Room (Optional)</label>
+              <input
+                type="text"
+                id="input-sub-location"
+                class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                placeholder="e.g. Building B, Apt 204, or Room 101"
+              />
+              <p class="text-[10px] text-slate-400 mt-1">
+                Useful for areas with multiple buildings like Cokesbury Court.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-medium text-slate-500 mb-1">Area ID</label>
+                <input
+                  type="text"
+                  id="input-building-id"
+                  readonly
+                  class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-600 font-mono text-sm"
+                  placeholder="---"
+                />
+              </div>
+              <div>
+                <label class="block text-xs font-medium text-slate-500 mb-1">Type</label>
+                <input
+                  type="text"
+                  id="input-building-type"
+                  readonly
+                  class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-600 text-sm"
+                  placeholder="---"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="h-px bg-slate-100"></div>
+
+        <form id="report-form" class="space-y-4 form-disabled transition-opacity duration-300">
+          <h3 class="text-sm font-bold uppercase tracking-wide text-slate-400">2. Work Order Details</h3>
+
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1">Problem Type</label>
+            <div class="relative">
+              <select
+                class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-slate-700"
+              >
+                <option value="" disabled selected>Select a category...</option>
+
+                <optgroup label="General & Custodial">
+                  <option>General Maintenance</option>
+                  <option>Custodial / Cleaning</option>
+                  <option>Trash Removal</option>
+                  <option>Recycling</option>
+                  <option>Pest Control</option>
+                  <option>Indoor Air Quality</option>
+                  <option>Soap/Sanitizer Dispenser</option>
+                </optgroup>
+
+                <optgroup label="Mechanical & Electrical">
+                  <option>Electrical</option>
+                  <option>Lighting</option>
+                  <option>Power Outage</option>
+                  <option>Plumbing</option>
+                  <option>Water Leaks</option>
+                  <option>Climate Control (HVAC)</option>
+                  <option>Filters</option>
+                  <option>Elevators</option>
+                </optgroup>
+
+                <optgroup label="Structural & Interior">
+                  <option>Carpentry</option>
+                  <option>Drywall</option>
+                  <option>Painting</option>
+                  <option>Ceilings / Ceiling Tile</option>
+                  <option>Flooring</option>
+                  <option>Carpet Repair / Cleaning</option>
+                  <option>Ceramic Tile</option>
+                  <option>Windows / Glass Repair</option>
+                  <option>Doors and Hardware</option>
+                  <option>Cabinetry</option>
+                  <option>Remodeling</option>
+                </optgroup>
+
+                <optgroup label="Safety & Security">
+                  <option>Fire Alarm System</option>
+                  <option>Fire Extinguishers</option>
+                  <option>Fire Sprinkler System</option>
+                  <option>Smoke Detector</option>
+                  <option>Key and Lock</option>
+                  <option>Key Duplication</option>
+                </optgroup>
+
+                <optgroup label="Furniture & Fixtures">
+                  <option>Appliance Repair</option>
+                  <option>Furniture Repair</option>
+                  <option>Desk Repair</option>
+                  <option>Shades/Blinds</option>
+                  <option>Locker Repair</option>
+                  <option>Bleachers</option>
+                </optgroup>
+
+                <optgroup label="Exterior & Grounds">
+                  <option>Grounds / Landscaping</option>
+                  <option>Roof</option>
+                  <option>Concrete / Paving</option>
+                  <option>Parking Lot Striping</option>
+                  <option>Sidewalk / Walkway</option>
+                  <option>Graffiti</option>
+                  <option>Signage</option>
+                </optgroup>
+
+                <optgroup label="Events & Logistics">
+                  <option>Event Setup</option>
+                  <option>Event Break Down</option>
+                  <option>Special Events</option>
+                  <option>Moving</option>
+                  <option>Transportation (Bus/Van)</option>
+                  <option>Vehicle Maintenance</option>
+                  <option>Special Projects</option>
+                </optgroup>
+              </select>
+
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1">Urgency</label>
+            <div class="flex gap-4 mt-2">
+              <label class="flex items-center gap-2 cursor-pointer group">
+                <div class="relative flex items-center">
+                  <input type="radio" name="urgency" class="peer sr-only" checked />
+                  <div
+                    class="w-4 h-4 border-2 border-slate-300 rounded-full peer-checked:border-blue-600 peer-checked:bg-blue-600 transition-all"
+                  ></div>
+                </div>
+                <span class="text-sm text-slate-600 group-hover:text-slate-900">Low</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer group">
+                <div class="relative flex items-center">
+                  <input type="radio" name="urgency" class="peer sr-only" />
+                  <div
+                    class="w-4 h-4 border-2 border-slate-300 rounded-full peer-checked:border-orange-500 peer-checked:bg-orange-500 transition-all"
+                  ></div>
+                </div>
+                <span class="text-sm text-slate-600 group-hover:text-slate-900">Medium</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer group">
+                <div class="relative flex items-center">
+                  <input type="radio" name="urgency" class="peer sr-only" />
+                  <div
+                    class="w-4 h-4 border-2 border-slate-300 rounded-full peer-checked:border-red-600 peer-checked:bg-red-600 transition-all"
+                  ></div>
+                </div>
+                <span class="text-sm text-slate-600 group-hover:text-slate-900">High</span>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1">
+              Description of Issue <span class="text-red-500">*</span>
+            </label>
+            <textarea
+              id="input-description"
+              rows="4"
+              class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none resize-none text-slate-700"
+              placeholder="Please describe the issue in detail..."
+            ></textarea>
+            <p id="error-desc" class="text-xs text-red-500 mt-1 hidden">
+              This field is required to submit a work order.
+            </p>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1">Upload Photos</label>
+            <div class="flex items-center justify-center w-full">
+              <label
+                for="dropzone-file"
+                class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-lg cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors"
+              >
+                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                  <svg
+                    class="w-8 h-8 mb-3 text-slate-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                    ></path>
+                  </svg>
+                  <p class="mb-2 text-sm text-slate-500">
+                    <span class="font-semibold">Click to upload</span> or drag and drop
+                  </p>
+                  <p class="text-xs text-slate-500">SVG, PNG, JPG (MAX. 3 files)</p>
+                </div>
+                <input id="dropzone-file" type="file" class="hidden" accept="image/*" multiple />
+              </label>
+            </div>
+            <p id="file-count" class="text-xs text-slate-500 mt-1 font-medium text-center h-4"></p>
+          </div>
+        </form>
+      </div>
+
+      <div class="p-6 border-t border-slate-100 bg-slate-50 z-10">
+        <button
+          id="btn-submit"
+          disabled
+          class="w-full py-3 px-4 bg-slate-300 text-white font-semibold rounded-xl transition-colors flex items-center justify-center gap-2 cursor-not-allowed"
+        >
+          Submit Work Order
+        </button>
+      </div>
+    </div>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+
+    <script>
+      // --- 1. Map Setup (With Zoom Limits) ---
+      const map = L.map('map', {
+        zoomControl: false,
+        minZoom: 15, // Restricted Zoom Out
+        maxZoom: 18, // Restricted Zoom In
+      }).setView([35.49539, -97.54089], 17)
+
+      L.control.zoom({ position: 'topright' }).addTo(map)
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap &copy; CARTO',
+        subdomains: 'abcd',
+        maxZoom: 20,
+      }).addTo(map)
+
+      // --- 2. Data ---
+      const buildingsData = {
+        type: 'FeatureCollection',
+        features: [
+          {
+            type: 'Feature',
+            properties: {
+              id: 'ACAD-001',
+              name: 'Sarkeys Science and Math Center',
+              type: 'Academics',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Classroom and office space',
+              color: '#3b82f6',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.543678, 35.4940168],
+                  [-97.5437021, 35.4935953],
+                  [-97.5436619, 35.4935735],
+                  [-97.5436471, 35.4935473],
+                  [-97.543155, 35.49358],
+                  [-97.54299, 35.4937176],
+                  [-97.5430168, 35.4937657],
+                  [-97.543108, 35.4938115],
+                  [-97.5432086, 35.4937264],
+                  [-97.543332, 35.4937143],
+                  [-97.5435211, 35.4938781],
+                  [-97.5435197, 35.4939567],
+                  [-97.5434071, 35.4940474],
+                  [-97.5434326, 35.4940998],
+                  [-97.5435224, 35.4941435],
+                  [-97.543678, 35.4940168],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'ACAD-002',
+              name: 'Gold Star Memorial Building',
+              type: 'Academics',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Theatre offices, Wimberly School of Religion',
+              color: '#3b82f6',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5420888, 35.4945955],
+                  [-97.5420861, 35.4943302],
+                  [-97.5422376, 35.4943302],
+                  [-97.542239, 35.4941871],
+                  [-97.5420888, 35.4941893],
+                  [-97.5420982, 35.4939382],
+                  [-97.5419024, 35.4939393],
+                  [-97.5419024, 35.4942155],
+                  [-97.5418836, 35.4942155],
+                  [-97.5418836, 35.4943258],
+                  [-97.5419064, 35.4943258],
+                  [-97.541905, 35.4945966],
+                  [-97.5420888, 35.4945955],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'ACAD-003',
+              name: 'Dawson-Loeffler Science & Mathematics Center',
+              type: 'Academics',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Biology & Chemistry labs and classrooms',
+              color: '#3b82f6',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5427902, 35.4962475],
+                  [-97.5427888, 35.4961634],
+                  [-97.5428183, 35.4961634],
+                  [-97.5428197, 35.4961252],
+                  [-97.5427902, 35.4961252],
+                  [-97.5427915, 35.4960226],
+                  [-97.5424428, 35.4960226],
+                  [-97.5424442, 35.4959876],
+                  [-97.5423369, 35.4959866],
+                  [-97.5423369, 35.4960237],
+                  [-97.5420298, 35.4960215],
+                  [-97.5420298, 35.4961241],
+                  [-97.5420003, 35.4961241],
+                  [-97.5420003, 35.4961591],
+                  [-97.5420298, 35.4961602],
+                  [-97.5420298, 35.4962475],
+                  [-97.5427902, 35.4962475],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'ACAD-004',
+              name: 'Bishop W. Angie Smith Chapel',
+              type: 'Academics',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'St. Paul School of Theology',
+              color: '#3b82f6',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5415973, 35.493995],
+                  [-97.5415959, 35.4938301],
+                  [-97.5416469, 35.4938306],
+                  [-97.5416462, 35.4938847],
+                  [-97.5417159, 35.4938836],
+                  [-97.5417166, 35.4938317],
+                  [-97.541781, 35.4938312],
+                  [-97.541779, 35.4937799],
+                  [-97.5417166, 35.4937799],
+                  [-97.5417173, 35.4937274],
+                  [-97.5416469, 35.4937274],
+                  [-97.5416476, 35.4937799],
+                  [-97.5415966, 35.4937804],
+                  [-97.5415959, 35.4936155],
+                  [-97.5414497, 35.4936155],
+                  [-97.5414511, 35.4935844],
+                  [-97.5412834, 35.4935844],
+                  [-97.5412848, 35.4936161],
+                  [-97.5411339, 35.4936172],
+                  [-97.5411359, 35.4937575],
+                  [-97.5410964, 35.4937575],
+                  [-97.5410977, 35.4938552],
+                  [-97.5411353, 35.4938552],
+                  [-97.5411359, 35.4939939],
+                  [-97.5412881, 35.4939944],
+                  [-97.5412875, 35.4939491],
+                  [-97.5414437, 35.4939486],
+                  [-97.5414437, 35.493995],
+                  [-97.5415973, 35.493995],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'ACAD-005',
+              name: 'Edith Kinney Gaylord Center',
+              type: 'Academics',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Ann Lacy School of Dance & Entertainment',
+              color: '#3b82f6',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5408912, 35.4939589],
+                  [-97.5409006, 35.4935375],
+                  [-97.5405425, 35.4935331],
+                  [-97.5405452, 35.4936739],
+                  [-97.5398478, 35.493663],
+                  [-97.5398438, 35.493948],
+                  [-97.5408912, 35.4939589],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'ACAD-006',
+              name: 'Dulaney-Browne Library',
+              type: 'Academics',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Campus Library Center for Excellence in Teaching & Learning (CETL)',
+              color: '#3b82f6',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5410065, 35.4954002],
+                  [-97.5410092, 35.4950748],
+                  [-97.5409864, 35.4950748],
+                  [-97.5409877, 35.4949657],
+                  [-97.5406578, 35.49497],
+                  [-97.5406565, 35.4949405],
+                  [-97.5406203, 35.4949405],
+                  [-97.5406229, 35.4950061],
+                  [-97.5405371, 35.4950061],
+                  [-97.5405411, 35.4953325],
+                  [-97.5407664, 35.4953282],
+                  [-97.5407651, 35.4954035],
+                  [-97.5410065, 35.4954002],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'ACAD-007',
+              name: 'Walker Center for Arts & Sciences',
+              type: 'Academics',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Petree College of Arts & Sciences',
+              color: '#3b82f6',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5403011, 35.49579],
+                  [-97.5403105, 35.4954483],
+                  [-97.5399993, 35.4954428],
+                  [-97.5399993, 35.4954734],
+                  [-97.5395755, 35.4954668],
+                  [-97.5395728, 35.4957846],
+                  [-97.5403011, 35.49579],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'ACAD-008',
+              name: 'Kirkpatrick Fine Arts Center',
+              type: 'Academics',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Burg Theatre Petree Recital Hall',
+              color: '#3b82f6',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5399081, 35.4952714],
+                  [-97.5399122, 35.4946698],
+                  [-97.5392309, 35.494661],
+                  [-97.5392269, 35.4948685],
+                  [-97.5391692, 35.4948696],
+                  [-97.5391722, 35.4949159],
+                  [-97.5390117, 35.494912],
+                  [-97.5390098, 35.4949412],
+                  [-97.538939, 35.4949408],
+                  [-97.5389449, 35.4951104],
+                  [-97.5390036, 35.4951142],
+                  [-97.5390016, 35.4952278],
+                  [-97.5390799, 35.4952258],
+                  [-97.539083, 35.4952523],
+                  [-97.5394515, 35.495255],
+                  [-97.5395112, 35.4952561],
+                  [-97.5395162, 35.4952687],
+                  [-97.5397251, 35.4952725],
+                  [-97.5399081, 35.4952714],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'ACAD-009',
+              name: 'Wanda L. Bass Music Center',
+              type: 'Academics',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Bass School of Music',
+              color: '#3b82f6',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5395018, 35.4958381],
+                  [-97.5395112, 35.4952561],
+                  [-97.5391129, 35.4952539],
+                  [-97.5391021, 35.4958348],
+                  [-97.5395018, 35.4958381],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'ACAD-010',
+              name: 'Norick Art Center',
+              type: 'Academics',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'School of Visual Arts Nona Jean Hulsey Gallery',
+              color: '#3b82f6',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.539766, 35.4962038],
+                  [-97.539766, 35.4959767],
+                  [-97.5397284, 35.4959767],
+                  [-97.5397298, 35.4959101],
+                  [-97.5394347, 35.495909],
+                  [-97.5394347, 35.4959593],
+                  [-97.5390337, 35.4959614],
+                  [-97.5390364, 35.4961045],
+                  [-97.5389922, 35.4961034],
+                  [-97.5389922, 35.496182],
+                  [-97.5392175, 35.4961798],
+                  [-97.5392175, 35.4962388],
+                  [-97.5393663, 35.4962377],
+                  [-97.5393663, 35.4962038],
+                  [-97.539766, 35.4962038],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'ACAD-011',
+              name: 'Kramer School of Nursing (East)',
+              type: 'Academics',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Nursing classrooms',
+              color: '#3b82f6',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5392859, 35.4972957],
+                  [-97.5392926, 35.4966701],
+                  [-97.5389962, 35.4966668],
+                  [-97.5389895, 35.4972957],
+                  [-97.5392859, 35.4972957],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'ACAD-012',
+              name: 'Meinders School of Business',
+              type: 'Academics',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: "Love's Entrepreneurship Center, Meinders Theater",
+              color: '#3b82f6',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5379421, 35.4966439],
+                  [-97.5379421, 35.496455],
+                  [-97.5377195, 35.4964571],
+                  [-97.537749, 35.496443],
+                  [-97.5377718, 35.4964266],
+                  [-97.5377905, 35.4964047],
+                  [-97.5378335, 35.4964047],
+                  [-97.5378348, 35.4963261],
+                  [-97.5377972, 35.4963239],
+                  [-97.5377785, 35.4962988],
+                  [-97.537753, 35.4962792],
+                  [-97.5377154, 35.4962683],
+                  [-97.5379542, 35.4962715],
+                  [-97.5379568, 35.4960695],
+                  [-97.5373895, 35.4960717],
+                  [-97.5373949, 35.4961754],
+                  [-97.5373667, 35.496206],
+                  [-97.537348, 35.4962268],
+                  [-97.5373332, 35.4962541],
+                  [-97.5373212, 35.4962956],
+                  [-97.5373144, 35.4963228],
+                  [-97.5372675, 35.4963228],
+                  [-97.5372688, 35.4964026],
+                  [-97.5373118, 35.4964036],
+                  [-97.5373158, 35.4964255],
+                  [-97.5373359, 35.4964692],
+                  [-97.5373614, 35.4965096],
+                  [-97.5373909, 35.4965434],
+                  [-97.5373909, 35.4966449],
+                  [-97.5379421, 35.4966439],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'ACAD-013',
+              name: 'Exercise & Sport Science',
+              type: 'Academics',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Exercise & Sport Science',
+              color: '#3b82f6',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5386985, 35.4935964],
+                  [-97.5384758, 35.4935931],
+                  [-97.5384758, 35.4936794],
+                  [-97.5386998, 35.4936772],
+                  [-97.5386985, 35.4935964],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'RES-001',
+              name: 'Harris Hall',
+              type: 'Residence Halls',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'ELS Language Center',
+              color: '#f59e0b',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5454362, 35.4945868],
+                  [-97.5454375, 35.4944525],
+                  [-97.5450633, 35.4944546],
+                  [-97.545062, 35.4944274],
+                  [-97.5449923, 35.4944284],
+                  [-97.5449909, 35.4944492],
+                  [-97.5448783, 35.4944503],
+                  [-97.5448783, 35.4945868],
+                  [-97.5449936, 35.4945868],
+                  [-97.5449936, 35.4946184],
+                  [-97.5450607, 35.4946184],
+                  [-97.5450593, 35.494589],
+                  [-97.5454362, 35.4945868],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'RES-002',
+              name: 'Draper Hall',
+              type: 'Residence Halls',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Student Housing',
+              color: '#f59e0b',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5448072, 35.494542],
+                  [-97.5448085, 35.4944645],
+                  [-97.5442466, 35.4944612],
+                  [-97.5442466, 35.4946086],
+                  [-97.5447401, 35.4946119],
+                  [-97.5447401, 35.4945409],
+                  [-97.5448072, 35.494542],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'RES-003',
+              name: 'Cokesbury Court Apartments',
+              type: 'Residence Halls',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Student apartments',
+              color: '#f59e0b',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5452994, 35.4962333],
+                  [-97.5453151, 35.4950269],
+                  [-97.5448602, 35.4950303],
+                  [-97.5448595, 35.494893],
+                  [-97.5442493, 35.4948936],
+                  [-97.5442439, 35.4947506],
+                  [-97.5439959, 35.4947484],
+                  [-97.5439945, 35.4962289],
+                  [-97.5452994, 35.4962333],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'RES-004',
+              name: 'Smith Hall',
+              type: 'Residence Halls',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Student Housing.',
+              color: '#f59e0b',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5435801, 35.4944907],
+                  [-97.5435828, 35.4943673],
+                  [-97.5435345, 35.4943673],
+                  [-97.5435358, 35.4943258],
+                  [-97.5434956, 35.4943258],
+                  [-97.5434956, 35.4943662],
+                  [-97.5433011, 35.4943662],
+                  [-97.5433025, 35.4943269],
+                  [-97.5432609, 35.4943269],
+                  [-97.5432622, 35.4943662],
+                  [-97.5431067, 35.4943673],
+                  [-97.5431067, 35.494495],
+                  [-97.5431442, 35.494495],
+                  [-97.5431442, 35.49453],
+                  [-97.5431925, 35.49453],
+                  [-97.5431925, 35.4944929],
+                  [-97.5433789, 35.4944918],
+                  [-97.5433776, 35.49453],
+                  [-97.5434232, 35.49453],
+                  [-97.5434232, 35.4944907],
+                  [-97.5435801, 35.4944907],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'RES-005',
+              name: 'Banning Hall',
+              type: 'Residence Halls',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Student housing.',
+              color: '#f59e0b',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5429404, 35.4944929],
+                  [-97.5429444, 35.4943695],
+                  [-97.5428908, 35.4943695],
+                  [-97.5428908, 35.4943247],
+                  [-97.5428559, 35.4943247],
+                  [-97.5428559, 35.4943706],
+                  [-97.5426614, 35.4943717],
+                  [-97.5426614, 35.4943334],
+                  [-97.5426212, 35.4943334],
+                  [-97.5426225, 35.4943717],
+                  [-97.5424576, 35.4943717],
+                  [-97.5424576, 35.4944918],
+                  [-97.5425367, 35.4944918],
+                  [-97.542538, 35.4945333],
+                  [-97.5425823, 35.4945333],
+                  [-97.542581, 35.4944929],
+                  [-97.5427727, 35.4944907],
+                  [-97.5427727, 35.4945311],
+                  [-97.5428143, 35.4945311],
+                  [-97.542813, 35.494494],
+                  [-97.5429404, 35.4944929],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'RES-006',
+              name: 'Walker Hall',
+              type: 'Residence Halls',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Freshman dormitory.',
+              color: '#f59e0b',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5429122, 35.4940113],
+                  [-97.5429229, 35.4940004],
+                  [-97.5427875, 35.4938901],
+                  [-97.5429136, 35.4937941],
+                  [-97.5428183, 35.4937165],
+                  [-97.5427017, 35.4938104],
+                  [-97.5425836, 35.4937122],
+                  [-97.5424884, 35.4937908],
+                  [-97.5426078, 35.493889],
+                  [-97.5424777, 35.4939971],
+                  [-97.5425676, 35.494067],
+                  [-97.5426976, 35.4939644],
+                  [-97.542825, 35.4940779],
+                  [-97.5429122, 35.4940113],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'RES-007',
+              name: 'Methodist Hall',
+              type: 'Residence Halls',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Student apartments',
+              color: '#f59e0b',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5436256, 35.4954559],
+                  [-97.543627, 35.495077],
+                  [-97.5422189, 35.4950737],
+                  [-97.5422323, 35.4954515],
+                  [-97.5436256, 35.4954559],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'COMM-001',
+              name: 'Tom & Brenda McDaniel University Center',
+              type: 'Community Areas',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: "Cafeteria, Alvin's, Student Lounges, Campus Technology, Student Life",
+              color: '#10b981',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.541905, 35.4954581],
+                  [-97.541905, 35.4949995],
+                  [-97.5414973, 35.4949929],
+                  [-97.5415, 35.4950934],
+                  [-97.5414115, 35.4950956],
+                  [-97.5414142, 35.4951262],
+                  [-97.5410709, 35.4951262],
+                  [-97.5410789, 35.4954384],
+                  [-97.5415134, 35.4954363],
+                  [-97.5415108, 35.4954603],
+                  [-97.541905, 35.4954581],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'COMM-002',
+              name: 'Ann Lacy Visitor Center',
+              type: 'Community Areas',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Admissions Advancement Marketing & External Communications',
+              color: '#10b981',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5385872, 35.494138],
+                  [-97.5385885, 35.4938454],
+                  [-97.5383739, 35.4938465],
+                  [-97.5383686, 35.4941369],
+                  [-97.5385872, 35.494138],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'COMM-003',
+              name: 'Campus Health Center (Kramer West)',
+              type: 'Community Areas',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Student Health Center',
+              color: '#10b981',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5403494, 35.4970817],
+                  [-97.54012, 35.4968939],
+                  [-97.5400007, 35.4969911],
+                  [-97.5397941, 35.49699],
+                  [-97.5396359, 35.496859],
+                  [-97.5394602, 35.4968568],
+                  [-97.5394629, 35.4970282],
+                  [-97.5395313, 35.4970304],
+                  [-97.5394629, 35.4970872],
+                  [-97.5396855, 35.497264],
+                  [-97.5398009, 35.4971745],
+                  [-97.5400154, 35.4971756],
+                  [-97.54012, 35.4972673],
+                  [-97.5402287, 35.4971745],
+                  [-97.5402649, 35.4971723],
+                  [-97.5402716, 35.4971417],
+                  [-97.5403494, 35.4970817],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'COMM-004',
+              name: 'Aduddell Fitness Center',
+              type: 'Community Areas',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Fitness center for students, staff, and faculty.',
+              color: '#10b981',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5422349, 35.4954843],
+                  [-97.5422363, 35.4957114],
+                  [-97.5425836, 35.4957092],
+                  [-97.5425836, 35.4954799],
+                  [-97.5422349, 35.4954843],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'COMM-005',
+              name: 'Henry J. Freede Activity & Wellness Center',
+              type: 'Community Areas',
+              floors: 1,
+              occupancy: 'Unknown',
+              description:
+                'Abe Lemons Arena, Naifeh Reception Hall, Paul Hansen Fitness Center, Leichter Reunion Center',
+              color: '#10b981',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5418112, 35.4970369],
+                  [-97.5417937, 35.4970315],
+                  [-97.5417911, 35.496895],
+                  [-97.5418514, 35.4968961],
+                  [-97.5418527, 35.496836],
+                  [-97.5417857, 35.496836],
+                  [-97.5417857, 35.4966187],
+                  [-97.5418139, 35.4966187],
+                  [-97.5418125, 35.4965456],
+                  [-97.5409153, 35.49655],
+                  [-97.540918, 35.4966198],
+                  [-97.5409341, 35.4966187],
+                  [-97.5409395, 35.4970413],
+                  [-97.540918, 35.4970413],
+                  [-97.5409207, 35.4971865],
+                  [-97.5410561, 35.4971854],
+                  [-97.5410561, 35.4971461],
+                  [-97.5412935, 35.4971439],
+                  [-97.5412935, 35.4972171],
+                  [-97.541429, 35.4972182],
+                  [-97.5414276, 35.4971428],
+                  [-97.541665, 35.4971374],
+                  [-97.5416623, 35.4971854],
+                  [-97.5418112, 35.4971887],
+                  [-97.5418112, 35.4970369],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'COMM-006',
+              name: 'Kerr-McGee Centennial Plaza',
+              type: 'Community Areas',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Welcome to Oklahoma City University!',
+              color: '#10b981',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5397915, 35.4937973],
+                  [-97.5397955, 35.4934796],
+                  [-97.5390847, 35.4934818],
+                  [-97.5390834, 35.4937973],
+                  [-97.5397915, 35.4937973],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'BLDG-001',
+              name: 'Clara E. Jones Administration Building',
+              type: 'Administration and Operations',
+              floors: 1,
+              occupancy: 'Unknown',
+              description:
+                "Student Financial Services, Human Resources, President's Office, Religious Life & Church Relations",
+              color: '#6366f1',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5397606, 35.4945289],
+                  [-97.539762, 35.4943356],
+                  [-97.5398035, 35.4943345],
+                  [-97.5398062, 35.4942166],
+                  [-97.539774, 35.4942166],
+                  [-97.5397727, 35.4940102],
+                  [-97.5395742, 35.4940113],
+                  [-97.5395782, 35.4942155],
+                  [-97.539534, 35.4942166],
+                  [-97.5395326, 35.49434],
+                  [-97.5395729, 35.4943378],
+                  [-97.5395688, 35.49453],
+                  [-97.5397606, 35.4945289],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'BLDG-002',
+              name: 'Campus Police',
+              type: 'Administration and Operations',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Corner of NW 23rd and Blackwelder Ave.',
+              color: '#6366f1',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5384893, 35.4935429],
+                  [-97.5384906, 35.4933911],
+                  [-97.5383149, 35.49339],
+                  [-97.5383149, 35.4934687],
+                  [-97.5383632, 35.4934698],
+                  [-97.5383632, 35.4935418],
+                  [-97.5384893, 35.4935429],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'BLDG-003',
+              name: 'Facilities Department',
+              type: 'Administration and Operations',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: '',
+              color: '#6366f1',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5420767, 35.4957988],
+                  [-97.5420807, 35.4955269],
+                  [-97.5416771, 35.4955236],
+                  [-97.5416717, 35.4957944],
+                  [-97.5420767, 35.4957988],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'BLDG-004',
+              name: 'Facilities Department Shops',
+              type: 'Administration and Operations',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: '',
+              color: '#6366f1',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.541555, 35.4956917],
+                  [-97.5415564, 35.4955323],
+                  [-97.541315, 35.4955345],
+                  [-97.541315, 35.4954876],
+                  [-97.5411044, 35.4954876],
+                  [-97.5411017, 35.4956874],
+                  [-97.541555, 35.4956917],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'BLDG-005',
+              name: 'Facilities Department (Housekeeping)',
+              type: 'Administration and Operations',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: '',
+              color: '#6366f1',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5430772, 35.4978908],
+                  [-97.5430772, 35.4977335],
+                  [-97.5429511, 35.4977335],
+                  [-97.5429484, 35.4978886],
+                  [-97.5430772, 35.4978908],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'BLDG-006',
+              name: 'Wilson House',
+              type: 'Administration and Operations',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: '',
+              color: '#6366f1',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5385737, 35.4946992],
+                  [-97.5385778, 35.4944678],
+                  [-97.5383015, 35.4944634],
+                  [-97.5383015, 35.494697],
+                  [-97.5385737, 35.4946992],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'BLDG-007',
+              name: 'Performing Arts Storage',
+              type: 'Administration and Operations',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: '',
+              color: '#6366f1',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.545231, 35.4966417],
+                  [-97.545239, 35.496301],
+                  [-97.5450593, 35.496301],
+                  [-97.5450513, 35.4966417],
+                  [-97.545231, 35.4966417],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'BLDG-008',
+              name: 'Dance & Entertainment Costume Storage',
+              type: 'Administration and Operations',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: '',
+              color: '#6366f1',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.537065, 35.4941009],
+                  [-97.537065, 35.4939458],
+                  [-97.5369416, 35.4939447],
+                  [-97.5369416, 35.4940987],
+                  [-97.537065, 35.4941009],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'ATHL-001',
+              name: 'Stars Wrestling Facility',
+              type: 'Athletics',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Where Stars go to wrestle',
+              color: '#ef4444',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5378026, 35.4937023],
+                  [-97.5378039, 35.4933649],
+                  [-97.5376377, 35.4933638],
+                  [-97.5376323, 35.4937012],
+                  [-97.5378026, 35.4937023],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'ATHL-002',
+              name: 'J.R. Homsey Press Box',
+              type: 'Athletics',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'For coverage of Jim Wade Stadium',
+              color: '#ef4444',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5436914, 35.4962453],
+                  [-97.5437665, 35.496182],
+                  [-97.5436646, 35.4960968],
+                  [-97.5435881, 35.4961558],
+                  [-97.5436914, 35.4962453],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'ATHL-003',
+              name: 'C.R. Sutton Baseball Complex',
+              type: 'Athletics',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: '',
+              color: '#ef4444',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.543442, 35.4961623],
+                  [-97.543446, 35.4960477],
+                  [-97.5430141, 35.4960466],
+                  [-97.5430155, 35.4961602],
+                  [-97.543442, 35.4961623],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'ATHL-004',
+              name: 'Jim Wade Stadium',
+              type: 'Athletics',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Corner of N Kentucky Ave. and JR Homsey Drive. Home of OKCU Baseball.',
+              color: '#ef4444',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5437303, 35.49636],
+                  [-97.5436981, 35.4962562],
+                  [-97.5436552, 35.4962235],
+                  [-97.5435841, 35.4961733],
+                  [-97.5434715, 35.496146],
+                  [-97.5434607, 35.4961896],
+                  [-97.5433548, 35.4961896],
+                  [-97.5433548, 35.4961733],
+                  [-97.543171, 35.4961809],
+                  [-97.543167, 35.4962126],
+                  [-97.5424026, 35.496348],
+                  [-97.5424013, 35.4968229],
+                  [-97.5424147, 35.4969114],
+                  [-97.5424375, 35.4969801],
+                  [-97.5424656, 35.4970326],
+                  [-97.5424992, 35.4970795],
+                  [-97.5425461, 35.4971308],
+                  [-97.542593, 35.4971669],
+                  [-97.542648, 35.4972018],
+                  [-97.5426976, 35.4972302],
+                  [-97.5427406, 35.4972487],
+                  [-97.5427888, 35.4972662],
+                  [-97.5428344, 35.4972804],
+                  [-97.5428934, 35.4972946],
+                  [-97.5429471, 35.4973022],
+                  [-97.5430141, 35.4973088],
+                  [-97.5431027, 35.4973055],
+                  [-97.5432327, 35.4972946],
+                  [-97.5433213, 35.4972946],
+                  [-97.5434218, 35.4972913],
+                  [-97.5435305, 35.4972837],
+                  [-97.5436163, 35.4972804],
+                  [-97.543627, 35.4970468],
+                  [-97.5436981, 35.4970468],
+                  [-97.5437088, 35.4969747],
+                  [-97.543631, 35.4969681],
+                  [-97.5436391, 35.4969015],
+                  [-97.5436579, 35.4968939],
+                  [-97.5436632, 35.4967967],
+                  [-97.5436445, 35.4967923],
+                  [-97.5436592, 35.4966002],
+                  [-97.5436834, 35.4966002],
+                  [-97.5436834, 35.4964517],
+                  [-97.5436565, 35.4964517],
+                  [-97.5436525, 35.4963895],
+                  [-97.5437303, 35.49636],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'ATHL-005',
+              name: 'Ann Lacy Stadium (West Building)',
+              type: 'Athletics',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Sports Facility',
+              color: '#ef4444',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5420526, 35.4976986],
+                  [-97.5420552, 35.4975315],
+                  [-97.5418232, 35.4975315],
+                  [-97.5418192, 35.4976975],
+                  [-97.5420526, 35.4976986],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'ATHL-006',
+              name: 'Ann Lacy Stadium (Press Box)',
+              type: 'Athletics',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'For softball coverage',
+              color: '#ef4444',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5416489, 35.4975807],
+                  [-97.5415523, 35.4975785],
+                  [-97.5415537, 35.4976069],
+                  [-97.5416556, 35.4976069],
+                  [-97.5416489, 35.4975807],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'ATHL-007',
+              name: 'Ann Lacy Stadium (East Building)',
+              type: 'Athletics',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Athletics facilities',
+              color: '#ef4444',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5413726, 35.4976986],
+                  [-97.541374, 35.4975315],
+                  [-97.5411848, 35.4975293],
+                  [-97.5411809, 35.4977019],
+                  [-97.5413726, 35.4976986],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'ATHL-008',
+              name: 'Ann Lacy Stadium',
+              type: 'Athletics',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Home of OKCU Softball',
+              color: '#ef4444',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5415322, 35.497608],
+                  [-97.5414236, 35.4976953],
+                  [-97.5414424, 35.4977073],
+                  [-97.5414088, 35.4977324],
+                  [-97.5412935, 35.4978296],
+                  [-97.5413109, 35.4978416],
+                  [-97.5411272, 35.497989],
+                  [-97.5411272, 35.4981124],
+                  [-97.541205, 35.4981801],
+                  [-97.5412653, 35.4982292],
+                  [-97.5413243, 35.4982653],
+                  [-97.5414021, 35.4982991],
+                  [-97.5415161, 35.4983253],
+                  [-97.5416046, 35.4983308],
+                  [-97.541669, 35.4983275],
+                  [-97.5417361, 35.4983188],
+                  [-97.5418018, 35.4982991],
+                  [-97.5418608, 35.4982794],
+                  [-97.5419319, 35.4982401],
+                  [-97.542015, 35.4981812],
+                  [-97.5421062, 35.4981058],
+                  [-97.5421089, 35.4980021],
+                  [-97.5416878, 35.4976101],
+                  [-97.5415322, 35.497608],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'ATHL-009',
+              name: 'Stars Soccer Ticket Booth',
+              type: 'Athletics',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Buy tickets to OKCU Soccer here.',
+              color: '#ef4444',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5403789, 35.4975883],
+                  [-97.5403816, 35.4975501],
+                  [-97.5403266, 35.4975501],
+                  [-97.5403226, 35.4975894],
+                  [-97.5403789, 35.4975883],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'ATHL-010',
+              name: 'Jim Wade Press Box',
+              type: 'Athletics',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: '',
+              color: '#ef4444',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5397311, 35.4974868],
+                  [-97.5396091, 35.4974846],
+                  [-97.5396064, 35.4975665],
+                  [-97.5397311, 35.4975665],
+                  [-97.5397311, 35.4974868],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'ATHL-011',
+              name: 'Stars Soccer Field',
+              type: 'Athletics',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Home of OKCU Stars soccer.',
+              color: '#ef4444',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5390297, 35.497597],
+                  [-97.539019, 35.4983537],
+                  [-97.5403641, 35.4983537],
+                  [-97.5403681, 35.4976112],
+                  [-97.5390297, 35.497597],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'GRK-001',
+              name: 'Lambda Chi Alpha',
+              type: 'Greek Housing',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'The Lambda Chi Alpha house.',
+              color: '#8b5cf6',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5459337, 35.495124],
+                  [-97.5459445, 35.4948357],
+                  [-97.5457567, 35.4948313],
+                  [-97.545746, 35.495124],
+                  [-97.5459337, 35.495124],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'GRK-002',
+              name: 'Kappa Sigma',
+              type: 'Greek Housing',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: "OKCU's Kappa Sigma house",
+              color: '#8b5cf6',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5454938, 35.4939513],
+                  [-97.5454992, 35.4938312],
+                  [-97.5453383, 35.4938312],
+                  [-97.5453383, 35.4939513],
+                  [-97.5454938, 35.4939513],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'GRK-003',
+              name: 'Gamma Phi Beta',
+              type: 'Greek Housing',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: "OKCU's Gamma Phi Beta house.",
+              color: '#8b5cf6',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5438108, 35.4956393],
+                  [-97.5438188, 35.495516],
+                  [-97.5435854, 35.4955061],
+                  [-97.5435774, 35.4956295],
+                  [-97.5438108, 35.4956393],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'GRK-004',
+              name: 'Phi Mu',
+              type: 'Greek Housing',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: "OKCU's Phi Mu house.",
+              color: '#8b5cf6',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5434996, 35.4956372],
+                  [-97.543501, 35.495516],
+                  [-97.5433226, 35.495516],
+                  [-97.5433239, 35.4956372],
+                  [-97.5434996, 35.4956372],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'GRK-005',
+              name: 'Alpha Phi',
+              type: 'Greek Housing',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: "OKCU's Alpha Phi house",
+              color: '#8b5cf6',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5437906, 35.4958053],
+                  [-97.5437906, 35.4956852],
+                  [-97.5435868, 35.4956852],
+                  [-97.5435854, 35.4958042],
+                  [-97.5437906, 35.4958053],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'GRK-006',
+              name: 'Alpha Chi Omega',
+              type: 'Greek Housing',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: "OKCU's Alpha Chi Omega house.",
+              color: '#8b5cf6',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5435063, 35.4958097],
+                  [-97.5435077, 35.4956874],
+                  [-97.5433266, 35.4956863],
+                  [-97.5433266, 35.4958086],
+                  [-97.5435063, 35.4958097],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'BLDG-009',
+              name: "Oklahoma Children's Theatre",
+              type: 'Affiliated Buildings',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: "Oklahoma Children's Theatre, NW 25th and Blackwelder Ave.",
+              color: '#6366f1',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5385644, 35.4950683],
+                  [-97.538567, 35.4949285],
+                  [-97.538496, 35.4949274],
+                  [-97.538496, 35.4949482],
+                  [-97.5383873, 35.494946],
+                  [-97.5383873, 35.4949078],
+                  [-97.5382344, 35.4949045],
+                  [-97.5382318, 35.4951152],
+                  [-97.538386, 35.4951163],
+                  [-97.538386, 35.4950683],
+                  [-97.5385644, 35.4950683],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'BLDG-010',
+              name: 'Oklahoma United Methodist Conference Center',
+              type: 'Affiliated Buildings',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'The Oklahoma United Methodist Conference Center on the OKCU campus.',
+              color: '#6366f1',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5374848, 35.4950028],
+                  [-97.5373976, 35.4949394],
+                  [-97.5373989, 35.4946938],
+                  [-97.5369389, 35.4946981],
+                  [-97.5369336, 35.4950705],
+                  [-97.5372367, 35.4950694],
+                  [-97.5372769, 35.4951021],
+                  [-97.5372769, 35.4951338],
+                  [-97.537352, 35.4951338],
+                  [-97.5373507, 35.4951109],
+                  [-97.5374848, 35.4950028],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-001',
+              name: 'Noble Drive Parking',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'General Permit Parking',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5438577, 35.4934512],
+                  [-97.543847, 35.4933376],
+                  [-97.5390834, 35.4933507],
+                  [-97.5390995, 35.4934556],
+                  [-97.5438577, 35.4934512],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-002',
+              name: 'Kerr-McGee/Administration Lot',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Faculty and Staff Only',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5388862, 35.4940638],
+                  [-97.5390552, 35.4940638],
+                  [-97.5390539, 35.4935047],
+                  [-97.5389412, 35.4935014],
+                  [-97.5389452, 35.4940059],
+                  [-97.5388862, 35.4940059],
+                  [-97.5388862, 35.4940638],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-003',
+              name: 'Kirkpatrick/Bass Parking',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Faculty/Staff Only',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5390552, 35.4948674],
+                  [-97.5390472, 35.4944754],
+                  [-97.5388313, 35.4944787],
+                  [-97.5388232, 35.4952059],
+                  [-97.5388893, 35.4952037],
+                  [-97.5388829, 35.4948685],
+                  [-97.5390552, 35.4948674],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-004',
+              name: '26th / Blackwelder Street Parking',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'General Permit Parking',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5388487, 35.4955411],
+                  [-97.5387816, 35.49554],
+                  [-97.5387709, 35.4973121],
+                  [-97.5388379, 35.4973121],
+                  [-97.538846, 35.4963851],
+                  [-97.540454, 35.4963895],
+                  [-97.5404553, 35.4963196],
+                  [-97.5388446, 35.4963218],
+                  [-97.5388487, 35.4955411],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-005',
+              name: 'Norick Art Center Parking',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'General Permit Parking',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5403896, 35.4962377],
+                  [-97.5403936, 35.4958905],
+                  [-97.53988, 35.4958959],
+                  [-97.5398746, 35.4962377],
+                  [-97.5403896, 35.4962377],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-006',
+              name: 'Kramer Parking',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'General Permit Parking',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5403628, 35.4968415],
+                  [-97.5403722, 35.4963949],
+                  [-97.5388581, 35.4963938],
+                  [-97.5388607, 35.4965674],
+                  [-97.5394884, 35.4965674],
+                  [-97.5394844, 35.4968437],
+                  [-97.5403628, 35.4968415],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-007',
+              name: 'Meinders North Lot',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'General Permit Parking',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5379515, 35.4972913],
+                  [-97.5379515, 35.496967],
+                  [-97.5378415, 35.496967],
+                  [-97.5378442, 35.4968983],
+                  [-97.5369282, 35.4969026],
+                  [-97.5369282, 35.4972913],
+                  [-97.5379515, 35.4972913],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-008',
+              name: 'Meinders South Lot',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'General Permit Parking',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5379461, 35.4958064],
+                  [-97.5379515, 35.4954188],
+                  [-97.5368826, 35.4954242],
+                  [-97.536884, 35.4957485],
+                  [-97.5370999, 35.4957474],
+                  [-97.5371012, 35.4958086],
+                  [-97.5379461, 35.4958064],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-009',
+              name: "Children's Theatre / Wilson House Parking",
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'General Permit Parking',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5382304, 35.4952135],
+                  [-97.5382318, 35.4944437],
+                  [-97.5381795, 35.4943913],
+                  [-97.5381312, 35.4943913],
+                  [-97.5380668, 35.4944459],
+                  [-97.5380655, 35.4948215],
+                  [-97.5379045, 35.4948215],
+                  [-97.5379112, 35.495219],
+                  [-97.5382304, 35.4952135],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-010',
+              name: 'Visitor Center/Police Parking',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'General Permit Parking',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.538158, 35.4941686],
+                  [-97.5381593, 35.4937646],
+                  [-97.5380024, 35.4937657],
+                  [-97.5379997, 35.4937143],
+                  [-97.5382626, 35.4937154],
+                  [-97.5382613, 35.4934053],
+                  [-97.5378482, 35.4934075],
+                  [-97.5378536, 35.49371],
+                  [-97.537922, 35.4937111],
+                  [-97.5379233, 35.4937668],
+                  [-97.5376564, 35.4937689],
+                  [-97.5376578, 35.4941664],
+                  [-97.538158, 35.4941686],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-011',
+              name: 'Visitor Parking',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Visitor Parking only',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5383685, 35.4941697],
+                  [-97.5383726, 35.4937657],
+                  [-97.5381593, 35.4937646],
+                  [-97.538158, 35.4941686],
+                  [-97.5383685, 35.4941697],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-012',
+              name: 'Walker Center Parking',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Faculty/Staff Parking Only',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5399081, 35.4952714],
+                  [-97.5399095, 35.4953544],
+                  [-97.5405264, 35.4953565],
+                  [-97.5405224, 35.495101],
+                  [-97.5405224, 35.4950705],
+                  [-97.5405103, 35.4950377],
+                  [-97.5404848, 35.4950126],
+                  [-97.5404513, 35.4949886],
+                  [-97.5404124, 35.4949624],
+                  [-97.5403601, 35.494946],
+                  [-97.5402018, 35.4949438],
+                  [-97.5402085, 35.4945464],
+                  [-97.5399108, 35.4945518],
+                  [-97.5399081, 35.4952714],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-013',
+              name: 'Library Lot',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'General Permit Parking',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5410615, 35.4958992],
+                  [-97.5410642, 35.495409],
+                  [-97.5406243, 35.4954155],
+                  [-97.5406243, 35.4958948],
+                  [-97.5410615, 35.4958992],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-014',
+              name: 'Freede Lot',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'General Permit Parking',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5423664, 35.497109],
+                  [-97.5423811, 35.4963829],
+                  [-97.541838, 35.4963862],
+                  [-97.5418434, 35.4959975],
+                  [-97.5412479, 35.4959997],
+                  [-97.5412479, 35.4965019],
+                  [-97.5418943, 35.4964997],
+                  [-97.5418997, 35.497109],
+                  [-97.5423664, 35.497109],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-015',
+              name: 'Aduddell Lot',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'General Permit Parking',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5422564, 35.4958271],
+                  [-97.5432569, 35.4958315],
+                  [-97.5432569, 35.4956535],
+                  [-97.5429323, 35.4956524],
+                  [-97.5429337, 35.4957136],
+                  [-97.5422551, 35.4957169],
+                  [-97.5422564, 35.4958271],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-016',
+              name: 'Dawson-Loeffler Lot',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'General Permit Parking',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5436378, 35.4960346],
+                  [-97.5436458, 35.4959243],
+                  [-97.5427754, 35.4959276],
+                  [-97.5427781, 35.4959745],
+                  [-97.5428572, 35.4960379],
+                  [-97.5436378, 35.4960346],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-017',
+              name: 'Methodist Hall Parking Garage',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Methodist Hall Residents Only',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5438201, 35.4954559],
+                  [-97.5438255, 35.4950781],
+                  [-97.543627, 35.495077],
+                  [-97.5436256, 35.4954559],
+                  [-97.5438201, 35.4954559],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-018',
+              name: 'Sarkeys Lot',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Faculty/Staff Parking Only',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5438845, 35.4942428],
+                  [-97.5438899, 35.4935877],
+                  [-97.5437732, 35.493675],
+                  [-97.5437813, 35.4942417],
+                  [-97.5438845, 35.4942428],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-019',
+              name: 'Harris/Draper Lot',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'General Permit Parking',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5452591, 35.4943662],
+                  [-97.5452578, 35.4942133],
+                  [-97.5451787, 35.4941631],
+                  [-97.5451814, 35.4939851],
+                  [-97.5451197, 35.4939851],
+                  [-97.5451237, 35.4939426],
+                  [-97.5450996, 35.4939032],
+                  [-97.5451022, 35.4937951],
+                  [-97.5439838, 35.4937897],
+                  [-97.5439851, 35.494293],
+                  [-97.5440454, 35.4942909],
+                  [-97.5441393, 35.4943684],
+                  [-97.5452591, 35.4943662],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-020',
+              name: 'Cokesbury Court Resident Lot',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Cokesbury Court Resident parking only',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5450137, 35.4947025],
+                  [-97.5442426, 35.4947047],
+                  [-97.5442493, 35.4948936],
+                  [-97.5448595, 35.494893],
+                  [-97.5448602, 35.4950303],
+                  [-97.5453151, 35.4950269],
+                  [-97.5452994, 35.4962333],
+                  [-97.545573, 35.4962322],
+                  [-97.5455676, 35.4947637],
+                  [-97.5450137, 35.4947669],
+                  [-97.5450137, 35.4947025],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-021',
+              name: 'Cokesbury Court Visitor Parking',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Visitor Parking Only',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5455515, 35.4946981],
+                  [-97.5450137, 35.4947025],
+                  [-97.5450137, 35.4947669],
+                  [-97.5455542, 35.4947647],
+                  [-97.5455515, 35.4946981],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-022',
+              name: 'Commuter Lot West',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'Value Commuter Parking Pass Holders',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.544425, 35.496336],
+                  [-97.5439797, 35.4963392],
+                  [-97.5439703, 35.497371],
+                  [-97.544378, 35.4973699],
+                  [-97.544378, 35.4968491],
+                  [-97.544433, 35.4968469],
+                  [-97.544425, 35.496336],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-023',
+              name: 'Value Commuter North Lot 1',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'For Value Commuter Parking Pass holders',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5431938, 35.4974486],
+                  [-97.5431804, 35.4980349],
+                  [-97.5438845, 35.4980381],
+                  [-97.5438845, 35.4974409],
+                  [-97.5431938, 35.4974486],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-024',
+              name: 'Value Commuter North Lot 2',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'For Value Commuter parking pass holders',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.542872, 35.4974453],
+                  [-97.5422537, 35.4974442],
+                  [-97.5422578, 35.4980381],
+                  [-97.542872, 35.4980392],
+                  [-97.542872, 35.4974453],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-025',
+              name: 'Indiana Ave. Street Parking',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'General Permit Parking',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5421746, 35.4984148],
+                  [-97.5422645, 35.4984148],
+                  [-97.5422537, 35.4974442],
+                  [-97.5421733, 35.497442],
+                  [-97.5421746, 35.4984148],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-026',
+              name: 'Ann Lacy Stadium Parking',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'For Value Commuter Parking Pass holders',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5411661, 35.4978951],
+                  [-97.5411715, 35.4975337],
+                  [-97.5406189, 35.4975359],
+                  [-97.5406203, 35.4983646],
+                  [-97.5411715, 35.4983635],
+                  [-97.5411715, 35.4982521],
+                  [-97.5410374, 35.4982511],
+                  [-97.5410387, 35.4979453],
+                  [-97.5410964, 35.4979443],
+                  [-97.5411353, 35.4979311],
+                  [-97.5411661, 35.4978951],
+                ],
+              ],
+            },
+          },
+          {
+            type: 'Feature',
+            properties: {
+              id: 'PRK-027',
+              name: 'Florida Ave. Street Parking',
+              type: 'Parking',
+              floors: 1,
+              occupancy: 'Unknown',
+              description: 'General Permit Parking',
+              color: '#6b7280',
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [
+                [
+                  [-97.5404459, 35.4984225],
+                  [-97.5405492, 35.4984225],
+                  [-97.5405478, 35.4974486],
+                  [-97.5404459, 35.4974486],
+                  [-97.5404459, 35.4984225],
+                ],
+              ],
+            },
+          },
+        ],
+      }
+
+      // --- 3. UI References ---
+      const emptyState = document.getElementById('empty-state')
+      const reportForm = document.getElementById('report-form')
+      const btnSubmit = document.getElementById('btn-submit')
+      const inputName = document.getElementById('input-building-name')
+      const inputId = document.getElementById('input-building-id')
+      const inputType = document.getElementById('input-building-type')
+      const inputSubLocation = document.getElementById('input-sub-location') // New Input
+      const statusBadge = document.getElementById('status-badge')
+
+      // Validation References
+      const inputDescription = document.getElementById('input-description')
+      const errorDesc = document.getElementById('error-desc')
+      const fileInput = document.getElementById('dropzone-file')
+      const fileCount = document.getElementById('file-count')
+
+      let geojsonLayer
+      let selectedLayer = null
+
+      // --- 4. Logic ---
+      function style(feature) {
+        return {
+          fillColor: feature.properties.color,
+          weight: 1,
+          opacity: 1,
+          color: 'white',
+          fillOpacity: 0.6,
+          className: 'transition-all duration-200',
+        }
+      }
+
+      function highlightFeature(e) {
+        const layer = e.target
+        if (layer === selectedLayer) return
+        layer.setStyle({ weight: 3, fillOpacity: 0.8, color: '#cbd5e1' })
+        layer.bringToFront()
+      }
+
+      function resetHighlight(e) {
+        const layer = e.target
+        if (layer !== selectedLayer) geojsonLayer.resetStyle(layer)
+      }
+
+      function selectBuilding(e) {
+        const layer = e.target
+        const props = layer.feature.properties
+
+        if (selectedLayer) geojsonLayer.resetStyle(selectedLayer)
+        selectedLayer = layer
+
+        layer.setStyle({ weight: 4, color: '#2563eb', fillOpacity: 0.9 })
+        layer.bringToFront()
+
+        emptyState.style.opacity = '0'
+        setTimeout(() => (emptyState.style.display = 'none'), 300)
+
+        reportForm.classList.remove('form-disabled')
+
+        inputName.value = props.name
+        inputId.value = props.id
+        inputType.value = props.type
+        // Clear optional field when switching buildings
+        inputSubLocation.value = ''
+        statusBadge.classList.remove('hidden')
+
+        btnSubmit.disabled = false
+        btnSubmit.classList.remove('bg-slate-300', 'cursor-not-allowed')
+        btnSubmit.classList.add('bg-blue-600', 'hover:bg-blue-700', 'shadow-lg')
+
+        // Adjust padding for split screen
+        map.flyToBounds(layer.getBounds(), { padding: [50, 50], maxZoom: 18, duration: 0.8 })
+      }
+
+      // --- File Upload Logic ---
+      fileInput.addEventListener('change', (e) => {
+        const count = e.target.files.length
+        if (count > 0) {
+          fileCount.innerText = `${count} photo(s) selected`
+          fileCount.classList.add('text-blue-600')
+        } else {
+          fileCount.innerText = ''
+        }
+      })
+
+      // --- Submit Logic with Validation ---
+      btnSubmit.addEventListener('click', function () {
+        // Reset errors
+        inputDescription.classList.remove('border-red-500', 'ring-2', 'ring-red-500')
+        errorDesc.classList.add('hidden')
+
+        // Validate Description
+        if (!inputDescription.value.trim()) {
+          inputDescription.classList.add('border-red-500', 'ring-2', 'ring-red-500')
+          errorDesc.classList.remove('hidden')
+          // Shake animation effect
+          reportForm.classList.add('animate-pulse')
+          setTimeout(() => reportForm.classList.remove('animate-pulse'), 200)
+          return // Stop submission
+        }
+
+        // Success State
+        const originalText = btnSubmit.innerText
+        btnSubmit.innerText = 'Submitting...'
+        btnSubmit.classList.add('opacity-75')
+
+        setTimeout(() => {
+          // Construct summary including the new Sub-Location field
+          let locationString = inputName.value
+          if (inputSubLocation.value.trim()) {
+            locationString += ` (${inputSubLocation.value})`
+          }
+
+          alert(
+            `Work Order Submitted Successfully!\n\nLocation: ${locationString}\nID: ${inputId.value}\nPhotos Attached: ${fileInput.files.length}`
+          )
+
+          btnSubmit.innerText = 'Order Submitted'
+          btnSubmit.classList.replace('bg-blue-600', 'bg-green-600')
+
+          // Reset form optional
+          inputDescription.value = ''
+          inputSubLocation.value = ''
+          fileInput.value = ''
+          fileCount.innerText = ''
+
+          setTimeout(() => {
+            btnSubmit.innerText = originalText
+            btnSubmit.classList.replace('bg-green-600', 'bg-blue-600')
+            btnSubmit.classList.remove('opacity-75')
+          }, 2000)
+        }, 1000)
+      })
+
+      // --- Init Map ---
+      geojsonLayer = L.geoJson(buildingsData, {
+        style: style,
+        onEachFeature: function (feature, layer) {
+          layer.on({
+            mouseover: highlightFeature,
+            mouseout: resetHighlight,
+            click: selectBuilding,
+          })
+          layer.bindTooltip(feature.properties.name, {
+            direction: 'center',
+            className:
+              'font-bold text-xs bg-white/90 backdrop-blur px-2 py-1 rounded shadow-sm border border-slate-200 text-slate-700',
+          })
+        },
+      }).addTo(map)
+    </script>
+  </body>
+</html>

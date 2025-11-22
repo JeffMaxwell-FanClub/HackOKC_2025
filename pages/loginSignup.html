@@ -126,7 +126,7 @@
             </div>
         </div>
 
-        <!-- DASHBOARD VIEW (Placeholder after login) -->
+        <!-- DASHBOARD VIEW -->
         <div id="dashboard-view" class="hidden-section w-full max-w-4xl fade-in">
             <div class="bg-white rounded-xl shadow-lg p-8 text-center">
                 <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl">
@@ -135,6 +135,7 @@
                 <h2 class="text-3xl font-bold text-gray-800 mb-2">Login Successful!</h2>
                 <p id="welcome-msg" class="text-lg text-gray-600 mb-8">Welcome back, User.</p>
                 
+                <!-- ACTIONS GRID (This gets hidden when viewing reports) -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto" id="dashboard-actions">
                     <!-- Student/Faculty Actions -->
                     <button type="button" onclick="viewReports()" class="p-6 border rounded-xl hover:shadow-md transition bg-gray-50 text-left cursor-pointer hover:bg-gray-100 w-full">
@@ -142,11 +143,55 @@
                         <h3 class="font-bold text-lg mb-2">View Reports</h3>
                         <p class="text-sm text-gray-500">Check status of existing maintenance requests.</p>
                     </button>
-                    <a href="/report" class="p-6 border rounded-xl hover:shadow-md transition bg-gray-50 text-left cursor-pointer hover:bg-gray-100 w-full block no-underline text-inherit">
+                    <a href="/report" onclick="alert('New request form would open here'); return false;" class="p-6 border rounded-xl hover:shadow-md transition bg-gray-50 text-left cursor-pointer hover:bg-gray-100 w-full block no-underline text-inherit">
                         <i class="fa-solid fa-plus-circle text-3xl text-blue-600 mb-4"></i>
                         <h3 class="font-bold text-lg mb-2">New Request</h3>
                         <p class="text-sm text-gray-500">Submit a new campus maintenance issue.</p>
                     </a>
+                </div>
+
+                <!-- REPORTS VIEW (Nested inside dashboard, shown on click) -->
+                <div id="reports-view" class="hidden-section w-full max-w-5xl fade-in mt-4">
+                    <div class="bg-white rounded-xl shadow-lg flex flex-col h-[80vh] md:h-auto">
+                        <!-- Header -->
+                        <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-50 rounded-t-xl">
+                            <div class="text-left">
+                                <h2 class="text-xl font-bold text-gray-800">Maintenance Reports</h2>
+                                <p class="text-sm text-gray-500">Your Reported Maintence Issues</p>
+                            </div>
+                        </div>
+        
+                        <!-- Content -->
+                        <div class="p-0 overflow-hidden">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left text-sm text-gray-600">
+                                    <thead class="bg-gray-100 text-gray-700 uppercase font-semibold text-xs">
+                                        <tr>
+                                            <th class="px-6 py-4">ID</th>
+                                            <th class="px-6 py-4">Issue</th>
+                                            <th class="px-6 py-4">Location</th>
+                                            <th class="px-6 py-4">Status</th>
+                                            <th class="px-6 py-4">Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="reports-table-body" class="divide-y divide-gray-200 bg-white">
+                                        <!-- Rows injected by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <!-- Empty State -->
+                            <div id="reports-empty" class="hidden p-10 text-center">
+                                <p class="text-gray-500">No reports found.</p>
+                            </div>
+                            
+                            <!-- Loading State -->
+                            <div id="reports-loading" class="hidden p-10 text-center">
+                                <i class="fa-solid fa-circle-notch fa-spin text-blue-600 text-2xl"></i>
+                                <p class="text-gray-500 mt-2">Loading reports...</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- Maintenance Staff Actions (shown conditionally) -->
@@ -162,7 +207,6 @@
 
                 <button onclick="handleLogout()" class="mt-10 text-red-600 hover:text-red-700 font-medium underline">Log Out</button>
             </div>
-        </div>
 
     </div>
 

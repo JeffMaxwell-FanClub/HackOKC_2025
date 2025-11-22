@@ -1,6 +1,11 @@
 const express = require('express');
 const path = require('path');
 const { Connection, Request, TYPES } = require('tedious');
+// NLP Libraries (Natural Language Processing)
+const Classifier = require('wink-naive-bayes-text-classifier');
+const winkNLP = require('wink-nlp');
+const model = require('wink-eng-lite-web-model');
+
 
 const app = express();
 const PORT = 3000;
@@ -95,6 +100,25 @@ app.get('/worker-reports', (req, res) => {
     }
   });
 });
+
+app.get('/worker-reports2', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'pages', 'workerReport2.html'), (err) => {
+    if (err) {
+      console.error('Error serving worker reports2 page:', err);
+      res.status(500).send('Error loading page');
+    }
+  });
+});
+
+app.get('/worker-reports3', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'pages', 'workerReport3.html'), (err) => {
+    if (err) {
+      console.error('Error serving worker reports2 page:', err);
+      res.status(500).send('Error loading page');
+    }
+  });
+});
+
 
 // API route to handle report submissions
 app.post('/api/reports', (req, res) => {
@@ -383,6 +407,56 @@ app.get('/API/completedReports', async (req, res) => {
   }
 });
 
+// NLP PROCESSING (I DONT KNOW)
+
+// --- 1. Load the Brain ---
+const classifier = Classifier();
+const nlp = winkNLP(model);
+const its = nlp.its;
+
+const prepTask = function (text) {
+  const tokens = [];
+  nlp.readDoc(text)
+    .tokens()
+    .filter((t) => (t.out(its.type) === 'word' && !t.out(its.stopWordFlag)))
+    .each((t) => tokens.push(t.out(its.stem)));
+  return tokens;
+};
+
+// Crucial: Must define prepTasks BEFORE importing
+classifier.definePrepTasks([prepTask]);
+
+try {
+  // Read the file we created with train.js
+  const modelData = fs.readFileSync('../public/nlp/model.json', 'utf-8');
+  classifier.importJSON(modelData);
+  classifier.consolidate();
+  console.log('AI Model loaded successfully.');
+} catch (error) {
+  console.error('Error loading model. Did you run "node train.js"?');
+  process.exit(1);
+}
+
+// --- 2. API Endpoint ---
+app.post('/api/triage', (req, res) => {
+  const { description } = req.body;
+
+  if (!description) {
+    return res.status(400).json({ error: 'Description is required' });
+  }
+
+  // Predict
+  const prediction = classifier.predict(description);
+  
+  // Optional: Get detailed probability stats if you want them
+  // const metrics = classifier.computeOdds(description);
+
+  res.json({
+    original_text: description,
+    priority: prediction,
+  });
+});
+
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
     console.log(`Visit http://localhost:${PORT} to view the application`);
@@ -394,3 +468,4 @@ app.listen(PORT, () => {
     }
     process.exit(1);
 });
+
