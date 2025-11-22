@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const { Connection, Request } = require('tedious');
+const { Connection, Request, TYPES } = require('tedious');
 
 const app = express();
 const PORT = 3000;
@@ -115,9 +115,73 @@ app.post('/api/signup', (req, res) => {
 });
 
 app.post('/API/createReport', (req, res) => {
-    console.log(req.body);
-    console.log('working2')
-    res.json({ status: 'ok' });
+    const {
+        location,
+        category,
+        description,
+        priority,
+        submissionTime,
+        completion,
+        deleted,
+        img,        // base64 string from frontend
+        userID
+    } = req.body;
+
+    console.log("Incoming report:", req.body);
+
+    // Convert base64 → buffer (VARBINARY)
+    const imageBuffer = img ? Buffer.from(img, 'base64') : null;
+
+    const sql = `
+        INSERT INTO reports (
+            location,
+            category,
+            description,
+            priority,
+            submissionTime,
+            completion,
+            deleted,
+            img,
+            userID
+        )
+        OUTPUT INSERTED.reportID
+        VALUES (@location, @category, @description, @priority,
+                @submissionTime, @completion, @deleted, @img, @userID)
+    `;
+
+    const request = new Request(sql, (err) => {
+        if (err) {
+            console.error("Insert error:", err);
+            return res.status(500).json({ error: "Database insert failed", details: err });
+        }
+    });
+
+    // Add SQL parameters
+    request.addParameter("location", TYPES.VarChar, location);
+    request.addParameter("category", TYPES.VarChar, category);
+    request.addParameter("description", TYPES.VarChar, description);
+    request.addParameter("priority", TYPES.Int, priority);
+    request.addParameter("submissionTime", TYPES.DateTime, new Date(submissionTime));
+    request.addParameter("completion", TYPES.Bit, completion);
+    request.addParameter("deleted", TYPES.Bit, deleted);
+    request.addParameter("img", TYPES.VarBinary, imageBuffer);
+    request.addParameter("userID", TYPES.Int, userID);
+
+    // Capture the inserted reportID
+    let insertedID = null;
+
+    request.on('row', columns => {
+        insertedID = columns[0].value;  // result of OUTPUT INSERTED.reportID
+    });
+
+    request.on('requestCompleted', () => {
+        res.json({
+            success: true,
+            reportID: insertedID
+        });
+    });
+
+    connection.execSql(request);
 });
 
 app.listen(PORT, () => {
