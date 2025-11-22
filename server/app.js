@@ -112,6 +112,22 @@ app.get('/API/allReports', async (req, res) => {
 });
 
 
+app.post('/API/assignReport', async (req, res) => {
+  const { workerID, reportID } = req.body;
+
+  const query = `
+    INSERT INTO assignedReports (workerID, reportID)
+    VALUES (${workerID}, ${reportID});
+  `;
+
+  try {
+    await runQuery(query);
+    res.json({ success: true, message: "Report assigned successfully." });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 app.get('/API/assignedReports', async (req, res) => {
   const { workerID } = req.query;
 
@@ -141,7 +157,6 @@ app.get('/API/assignedReports', async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 });
-
 
 app.get('/API/completedReports', async (req, res) => {
   const query = `
