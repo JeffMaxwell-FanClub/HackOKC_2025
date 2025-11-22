@@ -57,5 +57,7 @@ npm start
 ---
 
 ### Planned Features
-- **AITVC** – AI Tashfeen video chat integration allowing for seamless blockchain Tashcoin™ and Maxcoin™ purchase in-app
-- **TWVMLIW** – TashWoker™ Vibe M.L. Integration Webflow
+- **Work Order Processing Unit** – Allow for seamless selection of location for maintenance workers!
+- **Images** – We have images in the database, but they're not loading on the frontend yet!
+- **AITVC** – AI Tashfeen video chat integration allowing for seamless blockchain Tashcoin™ and Maxcoin™ purchase in-app!
+- **TWVMLIW** – TashWoker™ Vibe M.L. Integration Webflow!
