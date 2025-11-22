@@ -38,7 +38,7 @@
         </div>
     </nav>
 
-    <!-- Main Content Area -->
+    <!-- Main Content -->
     <div class="flex-grow flex items-center justify-center p-4 py-8">
         <div class="w-full max-w-2xl bg-white rounded-xl shadow-xl overflow-hidden fade-in">
             <div class="bg-blue-900 p-6 text-center">
@@ -48,227 +48,176 @@
 
             <div class="p-8">
                 <form id="maintenanceForm">
+
+                    <!-- CATEGORY -->
                     <div class="mb-5">
-                        <label for="problemType" class="block text-sm font-medium text-gray-700 mb-2">
-                            Problem Type <span class="text-red-500">*</span>
-                        </label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Issue Category *</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
                                 <i class="fa-solid fa-wrench"></i>
                             </span>
-                            <input type="text" id="problemType" name="problemType" required 
-                                class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" 
+                            <input type="text" id="category" required
+                                class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                                 placeholder="e.g., Electrical, Plumbing, HVAC">
                         </div>
                     </div>
 
+                    <!-- LOCATION -->
                     <div class="mb-5">
-                        <label for="location" class="block text-sm font-medium text-gray-700 mb-2">
-                            Location on Campus <span class="text-red-500">*</span>
-                        </label>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Location *</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
                                 <i class="fa-solid fa-map-marker-alt"></i>
                             </span>
-                            <input type="text" id="location" name="location" required 
-                                class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition" 
-                                placeholder="e.g., Student Center, 2nd Floor, Room 205">
+                            <input type="text" id="location" required
+                                class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                placeholder="e.g., Student Center, Room 205">
                         </div>
                     </div>
 
+                    <!-- DESCRIPTION -->
                     <div class="mb-5">
-                        <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
-                            Problem Description <span class="text-red-500">*</span>
-                        </label>
-                        <textarea id="description" name="description" rows="5" required 
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition resize-none" 
-                            placeholder="Please provide a detailed description of the issue..."></textarea>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Description *</label>
+                        <textarea id="description" rows="5" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 resize-none"
+                            placeholder="Describe the issue..."></textarea>
                     </div>
 
-                    <div class="mb-6">
-                        <label for="imageUpload" class="block text-sm font-medium text-gray-700 mb-2">
-                            Attach Image (Optional)
-                        </label>
-                        <div class="relative">
-                            <input type="file" id="imageUpload" name="imageUpload" accept="image/*" 
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                        </div>
+                    <!-- PRIORITY -->
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Priority *</label>
+                        <select id="priority" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="1">Low</option>
+                            <option value="2">Medium</option>
+                            <option value="3">High</option>
+                        </select>
+                    </div>
+
+                    <!-- IMAGE UPLOAD -->
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Attach Image (Optional)</label>
+                        <input type="file" id="imageUpload" accept="image/*"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg file:bg-blue-50 file:text-blue-700" >
                         <div id="imagePreview" class="mt-3 hidden">
-                            <img id="previewImg" src="" alt="Preview" class="max-w-xs rounded-lg border border-gray-300">
+                            <img id="previewImg" class="max-w-xs rounded-lg border">
                         </div>
                     </div>
 
-                    <!-- Success/Error Message -->
+                    <!-- Message -->
                     <div id="message" class="hidden mb-4 p-3 text-sm rounded-lg border"></div>
 
+                    <!-- Actions -->
                     <div class="flex gap-3">
-                        <button type="submit" class="flex-1 bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-lg transition duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                        <button type="submit"
+                            class="flex-1 bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-lg shadow-md">
                             <i class="fa-solid fa-paper-plane mr-2"></i>
                             Submit Request
                         </button>
-                        <button type="button" onclick="goToDashboard()" class="px-6 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-3 rounded-lg transition duration-200">
+                        <button type="button" onclick="goToDashboard()"
+                            class="px-6 bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-3 rounded-lg">
                             Cancel
                         </button>
                     </div>
-                </form>
 
-                <!-- Submission Status -->
-                <div id="output" class="mt-6 hidden"></div>
+                </form>
             </div>
         </div>
     </div>
 
-    <script>
-        // Check if user is logged in
-        function checkAuth() {
-            const currentUserStr = localStorage.getItem('currentUser');
-            
-            if (!currentUserStr) {
-                window.location.href = '/';
-                return null;
-            }
-            
-            try {
-                const currentUser = JSON.parse(currentUserStr);
-                const users = JSON.parse(localStorage.getItem('campusUsers')) || [];
-                
-                // Verify user still exists in users list
-                if (!users.find(u => u.email === currentUser.email)) {
-                    window.location.href = '/';
-                    return null;
-                }
-                
-                return currentUser;
-            } catch (error) {
-                console.error('Error parsing current user:', error);
-                window.location.href = '/';
-                return null;
-            }
-        }
+<script>
+/* ---------------- AUTH CHECK ---------------- */
+function checkAuth() {
+    const currentUserStr = localStorage.getItem('currentUser');
+    if (!currentUserStr) return window.location.href = '/';
 
-        // Get current user on page load
-        const currentUser = checkAuth();
-        if (currentUser) {
-            // Update header with user name if needed
-            console.log('Logged in as:', currentUser.name);
-        }
+    try {
+        const currentUser = JSON.parse(currentUserStr);
+        return currentUser;
+    } catch {
+        return window.location.href = '/';
+    }
+}
 
-        // Image preview
-        document.getElementById('imageUpload').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            const preview = document.getElementById('imagePreview');
-            const previewImg = document.getElementById('previewImg');
-            
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    previewImg.src = e.target.result;
-                    preview.classList.remove('hidden');
-                };
-                reader.readAsDataURL(file);
-            } else {
-                preview.classList.add('hidden');
-            }
-        });
+const currentUser = checkAuth();
 
-        // Handle form submission
-        document.getElementById('maintenanceForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+/* ---------------- IMAGE PREVIEW ---------------- */
+document.getElementById('imageUpload').addEventListener('change', e => {
+    const file = e.target.files[0];
+    const preview = document.getElementById('imagePreview');
+    const img = document.getElementById('previewImg');
 
-            const type = document.getElementById('problemType').value;
-            const location = document.getElementById('location').value;
-            const description = document.getElementById('description').value;
-            const fileInput = document.getElementById('imageUpload');
-            const timestamp = new Date().toISOString();
-            const messageDiv = document.getElementById('message');
-            const outputDiv = document.getElementById('output');
+    if (!file) return preview.classList.add('hidden');
 
-            // Get current user
-            const user = currentUser || JSON.parse(localStorage.getItem('currentUser') || '{}');
+    const reader = new FileReader();
+    reader.onload = ev => {
+        img.src = ev.target.result;
+        preview.classList.remove('hidden');
+    };
+    reader.readAsDataURL(file);
+});
 
-            // Handle image
-            let imageData = null;
-            let fileName = 'None';
-            
-            if (fileInput.files && fileInput.files[0]) {
-                const file = fileInput.files[0];
-                fileName = file.name;
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    imageData = e.target.result;
-                    saveReport(type, location, description, fileName, imageData, timestamp, user);
-                };
-                reader.readAsDataURL(file);
-            } else {
-                saveReport(type, location, description, fileName, null, timestamp, user);
-            }
-        });
+/* ---------------- FORM SUBMIT ---------------- */
+document.getElementById('maintenanceForm').addEventListener('submit', e => {
+    e.preventDefault();
 
-        function saveReport(type, location, description, fileName, imageData, timestamp, user) {
-            // Create report object
-            const report = {
-                id: Date.now().toString(),
-                userId: user.email || 'unknown',
-                userName: user.name || 'Unknown User',
-                type: type,
-                location: location,
-                description: description,
-                imageFileName: fileName,
-                imageData: imageData,
-                timestamp: timestamp,
-                status: 'pending',
-                formattedTime: new Date(timestamp).toLocaleString()
-            };
+    const category = document.getElementById('category').value;
+    const location = document.getElementById('location').value;
+    const description = document.getElementById('description').value;
+    const priority = parseInt(document.getElementById('priority').value);
+    const fileInput = document.getElementById('imageUpload');
+    const timestamp = new Date().toISOString();
 
-            // Save to localStorage
-            const reports = JSON.parse(localStorage.getItem('campusReports')) || [];
-            reports.push(report);
-            localStorage.setItem('campusReports', JSON.stringify(reports));
+    if (fileInput.files.length > 0) {
+        const reader = new FileReader();
+        reader.onload = ev => {
+            const base64 = ev.target.result.split(',')[1];
+            saveReport(category, location, description, priority, timestamp, base64);
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+    } else {
+        saveReport(category, location, description, priority, timestamp, null);
+    }
+});
 
-            // Show success message
-            const messageDiv = document.getElementById('message');
-            messageDiv.textContent = 'Report submitted successfully!';
-            messageDiv.className = 'mb-4 p-3 bg-green-50 text-green-700 text-sm rounded-lg border border-green-200';
-            messageDiv.classList.remove('hidden');
+/* ---------------- SAVE REPORT (DB ALIGNED) ---------------- */
+function saveReport(category, location, description, priority, timestamp, imageBinary) {
+    console.log("test")
+    const report = {
+        location: location,
+        category: category,
+        description: description,
+        priority: priority,
+        submissionTime: timestamp,
+        completion: 0,
+        deleted: 0,
+        img: imageBinary,
+        userID: currentUser.id
+    };
 
-            // Display submission details
-            const outputDiv = document.getElementById('output');
-            let imageHtml = '<em>No image attached</em>';
-            if (report.imageData) {
-                imageHtml = `<img src="${report.imageData}" alt="Uploaded Image" class="max-w-xs rounded-lg border border-gray-300 mt-2"><br><em>${fileName}</em>`;
-            }
+    fetch('/API/createReport', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(report)
+    })
+    .then(res => res.json())
+    .then(data => {
+        const msg = document.getElementById('message');
+        msg.textContent = "Report submitted successfully!";
+        msg.className = "mb-4 p-3 bg-green-50 text-green-700 rounded-lg border border-green-200";
+        msg.classList.remove('hidden');
 
-            outputDiv.innerHTML = `
-                <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
-                    <h3 class="font-bold text-lg mb-4 text-gray-800">Submission Confirmed</h3>
-                    <ul class="space-y-2 text-sm">
-                        <li><strong>Report ID:</strong> <span class="text-blue-600">${report.id}</span></li>
-                        <li><strong>Time:</strong> ${report.formattedTime}</li>
-                        <li><strong>Type:</strong> ${type}</li>
-                        <li><strong>Location:</strong> ${location}</li>
-                        <li><strong>Description:</strong> ${description}</li>
-                        <li><strong>Status:</strong> <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-semibold">Pending</span></li>
-                        <li><strong>Image:</strong><br>${imageHtml}</li>
-                    </ul>
-                    <button onclick="goToDashboard()" class="mt-4 bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 px-6 rounded-lg transition">
-                        Return to Dashboard
-                    </button>
-                </div>
-            `;
-            outputDiv.classList.remove('hidden');
+        document.getElementById('maintenanceForm').reset();
+        document.getElementById('imagePreview').classList.add('hidden');
+    })
+    .catch(err => console.error(err));
+}
 
-            // Reset form
-            document.getElementById('maintenanceForm').reset();
-            document.getElementById('imagePreview').classList.add('hidden');
+/* ---------------- NAVIGATION ---------------- */
+function goToDashboard() {
+    window.location.href = '/';
+}
+</script>
 
-            // Scroll to output
-            outputDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-
-        // Navigation
-        function goToDashboard() {
-            window.location.href = '/';
-        }
-    </script>
 </body>
 </html>
