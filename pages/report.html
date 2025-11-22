@@ -2692,7 +2692,7 @@
 
         try {
           // 3. Call your new backend endpoint
-          const response = await fetch('/api/triage', {
+          const response = await fetch('https://jeffmaxwellfanclub.azurewebsites.net//api/triage', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -2856,7 +2856,7 @@
                 userID: 1
             };
 
-            fetch('/API/createReport', {
+            fetch('https://jeffmaxwellfanclub.azurewebsites.net//API/createReport', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(report)

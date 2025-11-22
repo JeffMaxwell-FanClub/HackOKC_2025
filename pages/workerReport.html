@@ -114,7 +114,7 @@
       const workerID = getWorkerID();
 
       try {
-        const response = await fetch('/API/assignReport', {
+        const response = await fetch('https://jeffmaxwellfanclub.azurewebsites.net//API/assignReport', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ workerID, reportID })
@@ -144,7 +144,7 @@
 
         try {
             const completionTime = new Date().toISOString();
-            const response = await fetch(`/API/completeReport/${reportID}`, {
+            const response = await fetch(`https://jeffmaxwellfanclub.azurewebsites.net//API/completeReport/${reportID}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ completionTime }) // Send current time
@@ -171,7 +171,7 @@
     // Load all reports
     async function allReqs() {
       try {
-        const response = await fetch('/API/allReports');
+        const response = await fetch('https://jeffmaxwellfanclub.azurewebsites.net//API/allReports');
         const data = await response.json();
         const container = document.getElementById("allRequests");
         container.innerHTML = "";
@@ -201,7 +201,7 @@
     async function myAssignedReports() {
       const workerID = getWorkerID();
       try {
-        const response = await fetch(`/API/assignedReports?workerID=${workerID}`);
+        const response = await fetch(`https://jeffmaxwellfanclub.azurewebsites.net//API/assignedReports?workerID=${workerID}`);
         const data = await response.json();
         const container = document.getElementById("assignedRequests");
         container.innerHTML = "";
@@ -228,7 +228,7 @@
     // Load completed reports
     async function completedReqs() {
       try {
-        const response = await fetch('/API/completedReports');
+        const response = await fetch('https://jeffmaxwellfanclub.azurewebsites.net//API/completedReports');
         const data = await response.json();
 
         const container = document.getElementById("completedRequests");
