@@ -161,6 +161,7 @@
             <label class="block text-sm font-medium text-slate-700 mb-1">Problem Type</label>
             <div class="relative">
               <select
+                id="input-category"
                 class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-slate-700"
               >
                 <option value="" disabled selected>Select a category...</option>
@@ -252,7 +253,7 @@
             <div class="flex gap-4 mt-2">
               <label class="flex items-center gap-2 cursor-pointer group">
                 <div class="relative flex items-center">
-                  <input type="radio" name="urgency" class="peer sr-only" checked />
+                  <input type="radio" id="priority" name="urgency" value="1" class="peer sr-only" checked />
                   <div
                     class="w-4 h-4 border-2 border-slate-300 rounded-full peer-checked:border-blue-600 peer-checked:bg-blue-600 transition-all"
                   ></div>
@@ -261,7 +262,7 @@
               </label>
               <label class="flex items-center gap-2 cursor-pointer group">
                 <div class="relative flex items-center">
-                  <input type="radio" name="urgency" class="peer sr-only" />
+                  <input type="radio" id="priority" name="urgency" value="2" class="peer sr-only" />
                   <div
                     class="w-4 h-4 border-2 border-slate-300 rounded-full peer-checked:border-orange-500 peer-checked:bg-orange-500 transition-all"
                   ></div>
@@ -270,7 +271,7 @@
               </label>
               <label class="flex items-center gap-2 cursor-pointer group">
                 <div class="relative flex items-center">
-                  <input type="radio" name="urgency" class="peer sr-only" />
+                  <input type="radio" id="priority" name="urgency" value="3" class="peer sr-only" />
                   <div
                     class="w-4 h-4 border-2 border-slate-300 rounded-full peer-checked:border-red-600 peer-checked:bg-red-600 transition-all"
                   ></div>
@@ -2754,6 +2755,60 @@
         btnSubmit.innerText = 'Submitting...'
         btnSubmit.classList.add('opacity-75')
 
+        const category = document.getElementById('input-category').value;
+        const location = `${document.querySelector('#input-building-name').value} ${document.querySelector('#input-sub-location').value}`;
+        const description = document.getElementById('input-description').value;
+        const priority = parseInt(document.getElementById('priority').value);
+        const fileInput = document.getElementById('dropzone-file');
+        const timestamp = new Date().toISOString();
+
+        if (fileInput.files.length > 0) {
+            const reader = new FileReader();
+            reader.onload = ev => {
+                const base64 = ev.target.result.split(',')[1];
+                saveReport(category, location, description, priority, timestamp, base64);
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+        } else {
+            saveReport(category, location, description, priority, timestamp, null);
+        }
+
+        function saveReport(category, location, description, priority, timestamp, imageBinary) {
+            console.log("test")
+            const report = {
+                location: location,
+                category: category,
+                description: description,
+                priority: priority,
+                submissionTime: timestamp,
+                completion: 0,
+                deleted: 0,
+                img: imageBinary,
+                userID: 1
+            };
+
+            fetch('/API/createReport', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(report)
+            })
+            .then(res => res.json())
+            .then(data => {
+                const msg = document.getElementById('message');
+                msg.textContent = "Report submitted successfully!";
+                msg.className = "mb-4 p-3 bg-green-50 text-green-700 rounded-lg border border-green-200";
+                msg.classList.remove('hidden');
+
+                document.getElementById('maintenanceForm').reset();
+                document.getElementById('imagePreview').classList.add('hidden');
+            })
+            .catch(err => console.error(err));
+        }
+
+        function goToDashboard() {
+            window.location.href = '/';
+        }
+
         setTimeout(() => {
           // Construct summary including the new Sub-Location field
           let locationString = inputName.value
@@ -2778,6 +2833,7 @@
             btnSubmit.innerText = originalText
             btnSubmit.classList.replace('bg-green-600', 'bg-blue-600')
             btnSubmit.classList.remove('opacity-75')
+            //goToDashboard()
           }, 2000)
         }, 1000)
       })
