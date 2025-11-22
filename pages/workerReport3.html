@@ -21,7 +21,6 @@
       .no-scrollbar::-webkit-scrollbar { display: none; }
       .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
       
-      /* List Item Interactions */
       .report-item { 
         transition: all 0.2s ease; 
         border-left: 3px solid transparent; 
@@ -34,29 +33,25 @@
         border-left-color: #3b82f6; 
       }
 
-      /* Smooth Map Transitions */
       path.leaflet-interactive {
         transition: fill 0.5s ease, fill-opacity 0.5s ease, stroke 0.5s ease; 
       }
 
-      /* Toast Notifications */
       .toast-enter { transform: translateX(100%); opacity: 0; }
       .toast-enter-active { transform: translateX(0); opacity: 1; transition: all 0.3s ease-out; }
 
-      /* Form Styling derived from reference image */
       .detail-input {
         transition: all 0.2s ease;
         background-color: #fff; 
-        border: 1px solid #cbd5e1; /* Slate-300 to match reference border */
+        border: 1px solid #cbd5e1;
       }
       .detail-input:focus {
         border-color: #3b82f6;
         box-shadow: 0 0 0 1px #3b82f6;
       }
       
-      /* Photo Placeholder Styling */
       .photo-placeholder {
-        background-color: #e2e8f0; /* Slate-200/300 ish */
+        background-color: #e2e8f0;
         color: #64748b;
         display: flex;
         align-items: center;
@@ -109,7 +104,6 @@
             
             <!-- List Container -->
             <div id="report-list-container" class="flex-1 overflow-y-auto no-scrollbar relative bg-slate-50">
-                <!-- Items injected via JS -->
                 <div class="text-center p-8 text-slate-400 text-sm">Loading data...</div>
             </div>
         </aside>
@@ -247,8 +241,8 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
     <script>
-      // --- 1. CONFIGURATION ---
-      const WORKER_ID = 1; // Fixed ID for this view
+      // --- CONFIGURATION ---
+      const WORKER_ID = 1;
       document.getElementById('display-worker-id').textContent = WORKER_ID;
       
       const BUILDING_MAPPINGS = {
@@ -337,13 +331,12 @@
           "Florida Ave. Street Parking": "PRK-027"
       };
 
-      // --- 3. STATE MANAGEMENT ---
-      let currentReports = []; // Holds data for current tab
+      // --- STATE MANAGEMENT ---
+      let currentReports = [];
       let currentTab = 'all'; 
       let selectedReportId = null;
       let activeBuildingIds = new Set(); 
 
-      // --- 4. MAP DATA ---
       const buildingsData = {
         type: 'FeatureCollection',
         features: [
@@ -430,7 +423,7 @@
         ]
       }
 
-      // --- 5. MAP INITIALIZATION ---
+      // --- MAP INITIALIZATION ---
       const map = L.map('map', { zoomControl: false, minZoom: 15, maxZoom: 18 }).setView([35.49539, -97.54089], 16);
       L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; CARTO', subdomains: 'abcd', maxZoom: 20 }).addTo(map);
 
@@ -466,24 +459,19 @@
               className: 'font-bold text-[10px] bg-white/90 backdrop-blur px-2 py-1 rounded shadow-sm border border-slate-200 text-slate-700' 
           });
           
-          // CLICK TO FILTER LOGIC
           layer.on('click', function(e) {
             L.DomEvent.stopPropagation(e);
             const buildingName = feature.properties.name;
             const buildingId = feature.properties.id;
             
-            // 1. Zoom to feature
             map.flyToBounds(layer.getBounds(), { padding: [50, 50], maxZoom: 18, duration: 0.8 });
 
-            // 2. Update search
             const searchInput = document.getElementById('search-input');
             searchInput.value = buildingName;
             document.getElementById('clear-search').classList.remove('hidden');
 
-            // 3. Filter List
             renderSidebar();
 
-            // 4. Highlight visual
             if (selectedLayer) geojsonLayer.resetStyle(selectedLayer);
             selectedLayer = layer;
             layer.setStyle({ weight: 3, color: '#ef4444', fillOpacity: 0.9 });
@@ -493,12 +481,13 @@
         }
       }).addTo(map);
 
-      // Clear selection on map click
       map.on('click', function() {
         clearSearch();
       });
 
-      // --- 6. CONTROLLER LOGIC ---
+      // --- CONTROLLER LOGIC ---
+
+      
 
       function switchTab(tab) {
           currentTab = tab;
@@ -528,7 +517,7 @@
             selectedLayer = null;
         }
         renderSidebar();
-        updateMapHighlights(); // Restore active status
+        updateMapHighlights();
       }
 
       document.getElementById('search-input').addEventListener('input', function(e) {
@@ -537,13 +526,10 @@
         renderSidebar();
       });
 
-      // --- 7. API INTERACTION ---
+      // --- API INTERACTION ---
+      
 
       async function fetchReports() {
-        const container = document.getElementById('report-list-container');
-        // Show simple loading indicator inside list if needed, or just let it refresh seamlessly
-        // container.innerHTML = '<div class="text-center p-8 text-slate-400 text-sm">Loading...</div>';
-
         let url = '';
         if (currentTab === 'all') url = 'https://jeffmaxwellfanclub.azurewebsites.net//API/allReports';
         else if (currentTab === 'assigned') url = `https://jeffmaxwellfanclub.azurewebsites.net//API/assignedReports?workerID=${WORKER_ID}`;
@@ -555,16 +541,13 @@
 
             if (data.success) {
                 if (currentTab === 'all') {
-                    // User snippet logic: filter out completed tasks from "All Requests"
                     currentReports = (data.reports || []).filter(r => r.completion !== true);
                 } else if (currentTab === 'assigned') {
-                    // User snippet logic: filter out completed tasks from "My Assigned"
                     currentReports = (data.assigned || []).filter(r => r.completion !== true);
                 } else if (currentTab === 'completed') {
                     currentReports = data.completed || [];
                 }
                 
-                // Update Map Highlights based on fetched data
                 activeBuildingIds.clear();
                 currentReports.forEach(report => {
                     const bId = findBuildingIdFromLocation(report.location);
@@ -600,11 +583,7 @@
             
             if (result.success) {
                 showToast(`<i class="fa-solid fa-check"></i> Task #${id} accepted!`, 'success');
-                // Automatically switch to 'My Tasks' tab to show the newly assigned item
                 switchTab('assigned');
-                // We also need to select it again or clear selection? 
-                // Let's fetch assigned reports and then maybe select it if it exists.
-                // For now, switchTab calls fetchReports, which re-renders sidebar.
             } else {
                 showToast("Failed: " + (result.error || "Unknown error"), "error");
                 if(btn) { btn.disabled = false; btn.innerHTML = 'Accept Request'; }
@@ -637,14 +616,19 @@
             if (result.success) {
                 showToast(`<i class="fa-solid fa-flag-checkered"></i> Task #${id} completed!`, 'success');
                 
-                // Refresh data. If we are in 'assigned', this item will disappear.
-                fetchReports();
+                await fetchReports();
                 
-                // Clear the detail view since the item is technically gone from this list
-                document.getElementById('action-footer').classList.add('hidden');
-                // Reset detail view inputs? Optional, but good UX.
-                document.getElementById('viewer-empty-state').style.display = 'flex';
-                document.getElementById('viewer-empty-state').classList.remove('hidden'); // Ensure flex is applied
+                const stillExists = currentReports.some(r => r.reportID === id);
+                if (stillExists && currentTab === 'completed') {
+                    const updatedReport = currentReports.find(r => r.reportID === id);
+                    selectReport(updatedReport);
+                } else {
+                    document.getElementById('action-footer').classList.add('hidden');
+                    document.getElementById('viewer-empty-state').style.display = 'flex';
+                    document.getElementById('viewer-empty-state').classList.remove('hidden');
+                    selectedReportId = null;
+                    renderSidebar();
+                }
             } else {
                 showToast("Failed: " + (result.error || "Unknown error"), "error");
                 if(btn) { btn.disabled = false; btn.innerHTML = 'Mark Complete'; }
@@ -655,14 +639,13 @@
         }
       }
 
-      // --- 8. RENDERING ---
+      // --- RENDERING ---
 
       function renderSidebar() {
         const container = document.getElementById('report-list-container');
         const searchVal = document.getElementById('search-input').value.toLowerCase();
         container.innerHTML = '';
 
-        // Filter by Search
         let displayReports = currentReports;
         if (searchVal) {
             displayReports = displayReports.filter(r => 
@@ -685,8 +668,7 @@
             let statusText = "Pending";
             let statusColor = "bg-yellow-100 text-yellow-700";
 
-            // Logic adapted from your snippet and previous requirements
-            if (report.completion || report.completionTime) { // Handle both potential API formats
+            if (report.completion || report.completionTime) {
                 statusText = "Completed";
                 statusColor = "bg-green-100 text-green-700";
             } else if (String(report.assignedWorkerID) === String(WORKER_ID)) {
@@ -718,9 +700,8 @@
 
       function selectReport(report) {
         selectedReportId = report.reportID;
-        renderSidebar(); // Re-render to update active class
+        renderSidebar();
 
-        // Mobile toggle
         if (window.innerWidth < 768) {
             document.getElementById('sidebar-panel').classList.add('hidden');
             const main = document.getElementById('main-panel');
@@ -756,17 +737,14 @@
         }
         badge.classList.remove('hidden');
         
-        // Urgency indicators
         ['urg-1', 'urg-2', 'urg-3'].forEach(id => document.getElementById(id).style.opacity = '0.3');
         if (report.priority >= 1 && report.priority <= 3) {
             document.getElementById(`urg-${report.priority}`).style.opacity = '1';
         }
 
-        // Update Map ID field
         const foundId = findBuildingIdFromLocation(report.location);
         document.getElementById('view-area-id').value = foundId || 'Unknown';
 
-        // ZOOM LOGIC
         if (foundId) {
             geojsonLayer.eachLayer(layer => {
                 if (layer.feature.properties.id === foundId) {
@@ -779,41 +757,26 @@
             });
         }
 
-        // Render Footer Buttons
         const footer = document.getElementById('action-footer');
         footer.classList.remove('hidden');
         footer.innerHTML = '';
 
-        // 1. Check Final State
         if (report.completion || report.completionTime) {
-             footer.innerHTML = `<div class="w-full text-center text-sm text-green-600 font-bold bg-green-50 py-2 rounded border border-green-100 flex items-center justify-center gap-2"><i class="fa-solid fa-check-circle"></i> Report Finalized</div>`;
+            footer.innerHTML = `<div class="w-full text-center text-sm text-green-600 font-bold bg-green-50 py-2 rounded border border-green-100 flex items-center justify-center gap-2"><i class="fa-solid fa-check-circle"></i> Report Finalized</div>`;
              return;
         }
 
-        // 2. Check Assignment
         const btnClass = "flex-1 py-2 px-4 text-white font-semibold rounded-lg shadow-sm flex items-center justify-center gap-2 transition-all active:scale-95";
 
-        if (String(report.assignedWorkerID) === String(WORKER_ID)) {
-            // It's mine -> I can move it to Final State
-            const btn = document.createElement('button');
-            btn.className = `${btnClass} bg-blue-600 hover:bg-blue-700`; // Matches style from ref image
-            btn.innerHTML = `Mark Complete`;
-            btn.onclick = () => handleComplete(report.reportID);
-            footer.appendChild(btn);
-        } else if (!report.assignedWorkerID) {
-            // Unassigned -> I can move to LoggedIn state
-            const btn = document.createElement('button');
-            btn.className = `${btnClass} bg-blue-600 hover:bg-blue-700`;
-            btn.innerHTML = `Accept Request`; // Removed icon to match ref style closer
-            btn.onclick = () => handleAccept(report.reportID);
-            footer.appendChild(btn);
-        } else {
-            // Someone else's task
-            footer.innerHTML = `<div class="w-full text-center text-sm text-slate-400 italic bg-slate-100 py-2 rounded">Assigned to Worker #${report.assignedWorkerID}</div>`;
-        }
+        // SIMPLIFIED: Always show "Mark Complete" button for any active task
+        const btn = document.createElement('button');
+        btn.className = `${btnClass} bg-blue-600 hover:bg-blue-700`;
+        btn.innerHTML = `Mark Complete`;
+        btn.onclick = () => handleComplete(report.reportID);
+        footer.appendChild(btn);
       }
 
-      // --- 9. HELPERS ---
+      // --- HELPERS ---
 
       function showMobileList() {
         document.getElementById('sidebar-panel').classList.remove('hidden');
@@ -821,7 +784,7 @@
         main.classList.add('hidden');
         main.classList.remove('flex');
         selectedReportId = null;
-        renderSidebar(); // remove active class
+        renderSidebar();
       }
 
       function findBuildingIdFromLocation(locationStr) {
