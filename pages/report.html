@@ -253,7 +253,7 @@
             <div class="flex gap-4 mt-2">
               <label class="flex items-center gap-2 cursor-pointer group">
                 <div class="relative flex items-center">
-                  <input type="radio" id="priority" name="urgency" value="1" class="peer sr-only" checked />
+                  <input type="radio" id="priority" name="urgency" value="1" class="peer sr-only" disabled checked />
                   <div
                     class="w-4 h-4 border-2 border-slate-300 rounded-full peer-checked:border-blue-600 peer-checked:bg-blue-600 transition-all"
                   ></div>
@@ -262,7 +262,7 @@
               </label>
               <label class="flex items-center gap-2 cursor-pointer group">
                 <div class="relative flex items-center">
-                  <input type="radio" id="priority" name="urgency" value="2" class="peer sr-only" />
+                  <input type="radio" id="priority" name="urgency" disabled value="2" class="peer sr-only" />
                   <div
                     class="w-4 h-4 border-2 border-slate-300 rounded-full peer-checked:border-orange-500 peer-checked:bg-orange-500 transition-all"
                   ></div>
@@ -271,7 +271,7 @@
               </label>
               <label class="flex items-center gap-2 cursor-pointer group">
                 <div class="relative flex items-center">
-                  <input type="radio" id="priority" name="urgency" value="3" class="peer sr-only" />
+                  <input type="radio" id="priority" name="urgency" disabled value="3" class="peer sr-only" />
                   <div
                     class="w-4 h-4 border-2 border-slate-300 rounded-full peer-checked:border-red-600 peer-checked:bg-red-600 transition-all"
                   ></div>
@@ -2670,6 +2670,75 @@
       let selectedLayer = null
 
       // --- 4. Logic ---
+
+      // --- AI Triage Integration ---
+      inputDescription.addEventListener('blur', async (e) => {
+        const descriptionText = e.target.value.trim();
+        console.log("123454321")
+        // 1. Don't run if description is empty or too short
+        if (descriptionText.length < 5) return;
+
+        // 2. visual feedback: Indicate "Thinking..."
+        const descriptionContainer = inputDescription.parentElement;
+        const loadingLabel = document.createElement('span');
+        loadingLabel.id = 'ai-loading';
+        loadingLabel.className = 'text-xs text-blue-500 font-bold animate-pulse ml-2';
+        loadingLabel.innerText = '...Analyzing Priority';
+        
+        // Prevent adding multiple labels
+        if(!document.getElementById('ai-loading')) {
+            descriptionContainer.querySelector('label').appendChild(loadingLabel);
+        }
+
+        try {
+          // 3. Call your new backend endpoint
+          const response = await fetch('/api/triage', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ description: descriptionText }),
+          });
+
+          if (!response.ok) throw new Error('Triage failed');
+
+          const data = await response.json();
+          
+          // 4. Update the UI based on the response
+          // Assuming your classifier returns 'high', 'medium', 'low' or numbers 1, 2, 3
+          updateUrgencyUI(data.priority);
+
+        } catch (error) {
+          console.error('AI Triage Error:', error);
+        } finally {
+          // Remove loading indicator
+          const loader = document.getElementById('ai-loading');
+          if(loader) loader.remove();
+        }
+      });
+
+      // Helper function to map backend response to Radio Buttons
+      function updateUrgencyUI(predictedPriority) {
+        // Convert to string and lowercase to be safe
+        const p = String(predictedPriority).toLowerCase();
+        let valueToSelect = '1'; // Default to Low
+
+        // Logic to match your Radio Button values: 1=Low, 2=Med, 3=High
+        if (p.includes('high') || p === '3') {
+          valueToSelect = '3';
+        } else if (p.includes('medium') || p === 'med' || p === '2') {
+          valueToSelect = '2';
+        } else {
+          valueToSelect = '1';
+        }
+
+        // Select the radio button
+        const radioBtn = document.querySelector(`input[name="urgency"][value="${valueToSelect}"]`);
+        if (radioBtn) {
+          radioBtn.checked = true;
+        }
+      }
+
       function style(feature) {
         return {
           fillColor: feature.properties.color,
