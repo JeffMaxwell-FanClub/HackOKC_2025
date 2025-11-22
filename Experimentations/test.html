@@ -3,345 +3,110 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Campus Maintenance Work Orders</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Building Selector Demo</title>
+
+    <!-- Leaflet CSS -->
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
       crossorigin=""
     />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
     <style>
       body {
+        margin: 0;
+        padding: 0;
         font-family: 'Inter', sans-serif;
       }
-
-      /* Hide scrollbar */
-      .no-scrollbar::-webkit-scrollbar {
-        display: none;
-      }
-      .no-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
+      #map {
+        height: 100vh;
+        width: 100%;
+        z-index: 0;
       }
 
-      /* Form states */
-      .form-input {
-        transition: all 0.2s ease;
+      /* Custom Leaflet Control Styling */
+      .leaflet-popup-content-wrapper {
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
       }
-      .form-disabled {
-        opacity: 0.6;
-        pointer-events: none;
-        background-color: #f3f4f6;
-      }
-
-      /* Error state for validation */
-      .input-error {
-        border-color: #ef4444 !important;
-        ring: 2px solid #ef4444 !important;
+      .leaflet-popup-content {
+        margin: 10px;
+        font-family: system-ui, -apple-system, sans-serif;
       }
 
-      /* Fix for map glitches */
+      /* Smooth transition for map layers */
       path.leaflet-interactive {
-        transition: fill-opacity 0.2s, fill 0.2s, stroke 0.2s, stroke-width 0.2s;
+        transition: stroke-width 0.2s, fill-opacity 0.2s, stroke 0.2s;
       }
     </style>
   </head>
-  <body class="h-screen w-screen overflow-hidden bg-white flex flex-col md:flex-row">
-    <div class="relative w-full md:w-[60%] h-[50vh] md:h-full border-r border-slate-200 bg-slate-50">
-      <div id="map" class="h-full w-full z-0"></div>
+  <body class="bg-gray-100 overflow-hidden relative">
+    <!-- Map Container -->
+    <div id="map"></div>
 
-      <div
-        class="absolute top-4 left-4 z-[1000] bg-white/90 backdrop-blur shadow-sm px-4 py-2 rounded-lg border border-slate-200 pointer-events-none"
-      >
-        <p class="text-sm font-semibold text-slate-700 flex items-center gap-2">
-          <span class="flex h-2 w-2 rounded-full bg-blue-500 animate-pulse"></span>
-          Click an area to start a Work Order
-        </p>
-      </div>
+    <!-- Overlay UI: Title -->
+    <div
+      class="absolute top-4 left-4 z-[1000] bg-white/90 backdrop-blur-md p-4 rounded-lg shadow-lg border border-gray-200 max-w-xs"
+    >
+      <h1 class="text-xl font-bold text-gray-800 flex items-center gap-2">
+        <i class="fa-solid fa-map-location-dot text-blue-600"></i> Campus Map
+      </h1>
+      <p class="text-sm text-gray-500 mt-1">Hover to highlight, click to view building details.</p>
     </div>
 
-    <div class="w-full md:w-[40%] h-[50vh] md:h-full bg-white flex flex-col shadow-xl z-10">
-      <div class="p-6 border-b border-slate-100 bg-white z-10">
-        <h2 class="text-xl font-bold text-slate-900">Maintenance Help Desk</h2>
-        <p class="text-sm text-slate-500">Submit a new work order request.</p>
-      </div>
-
-      <div class="flex-1 overflow-y-auto p-6 space-y-6 no-scrollbar relative bg-white">
-        <div
-          id="empty-state"
-          class="absolute inset-0 bg-white/90 backdrop-blur-[1px] z-20 flex flex-col items-center justify-center text-center p-8 transition-opacity duration-300"
-        >
-          <div class="bg-blue-50 p-4 rounded-full mb-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-8 w-8 text-blue-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-              />
-            </svg>
-          </div>
-          <h3 class="text-lg font-medium text-slate-900">Select an Area</h3>
-          <p class="text-slate-500 max-w-xs mt-1">Please click on a building/area on the map to begin.</p>
-        </div>
-
-        <div class="space-y-4">
-          <div class="flex items-center justify-between">
-            <h3 class="text-sm font-bold uppercase tracking-wide text-blue-600">1. Location Details</h3>
-            <span id="status-badge" class="hidden px-2 py-1 bg-green-100 text-green-700 text-xs font-bold rounded"
-              >Area Selected</span
-            >
-          </div>
-
-          <div class="grid grid-cols-1 gap-4">
-            <div>
-              <label class="block text-xs font-medium text-slate-500 mb-1">Area / Main Building</label>
-              <input
-                type="text"
-                id="input-building-name"
-                readonly
-                class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-900 font-semibold focus:outline-none cursor-default"
-                placeholder="No area selected..."
-              />
-            </div>
-
-            <div>
-              <label class="block text-xs font-medium text-slate-700 mb-1">Specific Building / Room (Optional)</label>
-              <input
-                type="text"
-                id="input-sub-location"
-                class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                placeholder="e.g. Building B, Apt 204, or Room 101"
-              />
-              <p class="text-[10px] text-slate-400 mt-1">
-                Useful for areas with multiple buildings like Cokesbury Court.
-              </p>
-            </div>
-
-            <div class="grid grid-cols-2 gap-4">
-              <div>
-                <label class="block text-xs font-medium text-slate-500 mb-1">Area ID</label>
-                <input
-                  type="text"
-                  id="input-building-id"
-                  readonly
-                  class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-600 font-mono text-sm"
-                  placeholder="---"
-                />
-              </div>
-              <div>
-                <label class="block text-xs font-medium text-slate-500 mb-1">Type</label>
-                <input
-                  type="text"
-                  id="input-building-type"
-                  readonly
-                  class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-600 text-sm"
-                  placeholder="---"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="h-px bg-slate-100"></div>
-
-        <form id="report-form" class="space-y-4 form-disabled transition-opacity duration-300">
-          <h3 class="text-sm font-bold uppercase tracking-wide text-slate-400">2. Work Order Details</h3>
-
-          <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Problem Type</label>
-            <div class="relative">
-              <select
-                id="input-category"
-                class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-slate-700"
-              >
-                <option value="" disabled selected>Select a category...</option>
-
-                <optgroup label="General & Custodial">
-                  <option>General Maintenance</option>
-                  <option>Custodial / Cleaning</option>
-                  <option>Trash Removal</option>
-                  <option>Recycling</option>
-                  <option>Pest Control</option>
-                  <option>Indoor Air Quality</option>
-                  <option>Soap/Sanitizer Dispenser</option>
-                </optgroup>
-
-                <optgroup label="Mechanical & Electrical">
-                  <option>Electrical</option>
-                  <option>Lighting</option>
-                  <option>Power Outage</option>
-                  <option>Plumbing</option>
-                  <option>Water Leaks</option>
-                  <option>Climate Control (HVAC)</option>
-                  <option>Filters</option>
-                  <option>Elevators</option>
-                </optgroup>
-
-                <optgroup label="Structural & Interior">
-                  <option>Carpentry</option>
-                  <option>Drywall</option>
-                  <option>Painting</option>
-                  <option>Ceilings / Ceiling Tile</option>
-                  <option>Flooring</option>
-                  <option>Carpet Repair / Cleaning</option>
-                  <option>Ceramic Tile</option>
-                  <option>Windows / Glass Repair</option>
-                  <option>Doors and Hardware</option>
-                  <option>Cabinetry</option>
-                  <option>Remodeling</option>
-                </optgroup>
-
-                <optgroup label="Safety & Security">
-                  <option>Fire Alarm System</option>
-                  <option>Fire Extinguishers</option>
-                  <option>Fire Sprinkler System</option>
-                  <option>Smoke Detector</option>
-                  <option>Key and Lock</option>
-                  <option>Key Duplication</option>
-                </optgroup>
-
-                <optgroup label="Furniture & Fixtures">
-                  <option>Appliance Repair</option>
-                  <option>Furniture Repair</option>
-                  <option>Desk Repair</option>
-                  <option>Shades/Blinds</option>
-                  <option>Locker Repair</option>
-                  <option>Bleachers</option>
-                </optgroup>
-
-                <optgroup label="Exterior & Grounds">
-                  <option>Grounds / Landscaping</option>
-                  <option>Roof</option>
-                  <option>Concrete / Paving</option>
-                  <option>Parking Lot Striping</option>
-                  <option>Sidewalk / Walkway</option>
-                  <option>Graffiti</option>
-                  <option>Signage</option>
-                </optgroup>
-
-                <optgroup label="Events & Logistics">
-                  <option>Event Setup</option>
-                  <option>Event Break Down</option>
-                  <option>Special Events</option>
-                  <option>Moving</option>
-                  <option>Transportation (Bus/Van)</option>
-                  <option>Vehicle Maintenance</option>
-                  <option>Special Projects</option>
-                </optgroup>
-              </select>
-
-              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
-                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Urgency</label>
-            <div class="flex gap-4 mt-2">
-              <label class="flex items-center gap-2 cursor-pointer group">
-                <div class="relative flex items-center">
-                  <input type="radio" id="priority" name="urgency" value="1" class="peer sr-only" checked />
-                  <div
-                    class="w-4 h-4 border-2 border-slate-300 rounded-full peer-checked:border-blue-600 peer-checked:bg-blue-600 transition-all"
-                  ></div>
-                </div>
-                <span class="text-sm text-slate-600 group-hover:text-slate-900">Low</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer group">
-                <div class="relative flex items-center">
-                  <input type="radio" id="priority" name="urgency" value="2" class="peer sr-only" />
-                  <div
-                    class="w-4 h-4 border-2 border-slate-300 rounded-full peer-checked:border-orange-500 peer-checked:bg-orange-500 transition-all"
-                  ></div>
-                </div>
-                <span class="text-sm text-slate-600 group-hover:text-slate-900">Medium</span>
-              </label>
-              <label class="flex items-center gap-2 cursor-pointer group">
-                <div class="relative flex items-center">
-                  <input type="radio" id="priority" name="urgency" value="3" class="peer sr-only" />
-                  <div
-                    class="w-4 h-4 border-2 border-slate-300 rounded-full peer-checked:border-red-600 peer-checked:bg-red-600 transition-all"
-                  ></div>
-                </div>
-                <span class="text-sm text-slate-600 group-hover:text-slate-900">High</span>
-              </label>
-            </div>
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">
-              Description of Issue <span class="text-red-500">*</span>
-            </label>
-            <textarea
-              id="input-description"
-              rows="4"
-              class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none resize-none text-slate-700"
-              placeholder="Please describe the issue in detail..."
-            ></textarea>
-            <p id="error-desc" class="text-xs text-red-500 mt-1 hidden">
-              This field is required to submit a work order.
-            </p>
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Upload Photos</label>
-            <div class="flex items-center justify-center w-full">
-              <label
-                for="dropzone-file"
-                class="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-lg cursor-pointer bg-slate-50 hover:bg-slate-100 transition-colors"
-              >
-                <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                  <svg
-                    class="w-8 h-8 mb-3 text-slate-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                    ></path>
-                  </svg>
-                  <p class="mb-2 text-sm text-slate-500">
-                    <span class="font-semibold">Click to upload</span> or drag and drop
-                  </p>
-                  <p class="text-xs text-slate-500">SVG, PNG, JPG (MAX. 3 files)</p>
-                </div>
-                <input id="dropzone-file" type="file" class="hidden" accept="image/*" multiple />
-              </label>
-            </div>
-            <p id="file-count" class="text-xs text-slate-500 mt-1 font-medium text-center h-4"></p>
-          </div>
-        </form>
-      </div>
-
-      <div class="p-6 border-t border-slate-100 bg-slate-50 z-10">
-        <button
-          id="btn-submit"
-          disabled
-          class="w-full py-3 px-4 bg-slate-300 text-white font-semibold rounded-xl transition-colors flex items-center justify-center gap-2 cursor-not-allowed"
-        >
-          Submit Work Order
+    <!-- Overlay UI: Building Info Panel (Hidden by default) -->
+    <div
+      id="info-panel"
+      class="absolute top-4 right-4 z-[1000] w-80 bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border border-gray-200 transform transition-all duration-300 translate-x-[120%] opacity-0 overflow-hidden"
+    >
+      <!-- Header -->
+      <div class="h-32 bg-gradient-to-r from-blue-600 to-indigo-600 relative">
+        <button id="close-panel" class="absolute top-3 right-3 text-white/80 hover:text-white transition">
+          <i class="fa-solid fa-xmark text-xl"></i>
         </button>
+        <div class="absolute bottom-4 left-4 text-white">
+          <div class="text-xs uppercase tracking-wider font-semibold opacity-75" id="panel-type">Office</div>
+          <h2 class="text-2xl font-bold" id="panel-title">Building Name</h2>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="p-6 space-y-4">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-gray-50 p-3 rounded-lg border border-gray-100">
+            <div class="text-gray-400 text-xs uppercase font-bold mb-1">Floors</div>
+            <div class="text-gray-800 font-semibold text-lg" id="panel-floors">0</div>
+          </div>
+          <div class="bg-gray-50 p-3 rounded-lg border border-gray-100">
+            <div class="text-gray-400 text-xs uppercase font-bold mb-1">Occupancy</div>
+            <div class="text-gray-800 font-semibold text-lg" id="panel-occupancy">0%</div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-bold text-gray-700 mb-2">Description</h3>
+          <p class="text-sm text-gray-600 leading-relaxed" id="panel-desc">Building description goes here.</p>
+        </div>
+
+        <div class="pt-4 border-t border-gray-100">
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-gray-400 font-mono" id="panel-id">ID: #000</span>
+            <button class="text-blue-600 text-sm font-semibold hover:underline">
+              View Floorplan <i class="fa-solid fa-arrow-right ml-1"></i>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
+    <!-- Leaflet JS -->
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
@@ -349,22 +114,31 @@
     ></script>
 
     <script>
-      // --- 1. Map Setup (With Zoom Limits) ---
+      // --- 1. Map Initialization ---
+      // Centered on a fictional layout in a park to avoid cluttering real buildings
+      const mapCenter = [35.49539, -97.54089]
       const map = L.map('map', {
         zoomControl: false,
-        minZoom: 15, // Restricted Zoom Out
-        maxZoom: 18, // Restricted Zoom In
-      }).setView([35.49539, -97.54089], 17)
+      }).setView(mapCenter, 18)
 
-      L.control.zoom({ position: 'topright' }).addTo(map)
+      // Move zoom control to bottom right
+      L.control
+        .zoom({
+          position: 'bottomright',
+        })
+        .addTo(map)
 
+      // Add CartoDB Positron Tiles (Clean, Greyscale look ideal for overlays)
       L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap &copy; CARTO',
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
         maxZoom: 20,
       }).addTo(map)
 
-      // --- 2. Data ---
+      // --- 2. Data: GeoJSON Buildings ---
+      // We are manually defining polygons around the center point.
+      // In a real app, this would come from an API or a .json file.
       const buildingsData = {
         type: 'FeatureCollection',
         features: [
@@ -2650,206 +2424,156 @@
         ],
       }
 
-      // --- 3. UI References ---
-      const emptyState = document.getElementById('empty-state')
-      const reportForm = document.getElementById('report-form')
-      const btnSubmit = document.getElementById('btn-submit')
-      const inputName = document.getElementById('input-building-name')
-      const inputId = document.getElementById('input-building-id')
-      const inputType = document.getElementById('input-building-type')
-      const inputSubLocation = document.getElementById('input-sub-location') // New Input
-      const statusBadge = document.getElementById('status-badge')
-
-      // Validation References
-      const inputDescription = document.getElementById('input-description')
-      const errorDesc = document.getElementById('error-desc')
-      const fileInput = document.getElementById('dropzone-file')
-      const fileCount = document.getElementById('file-count')
-
+      // --- 3. State Management ---
       let geojsonLayer
       let selectedLayer = null
 
-      // --- 4. Logic ---
+      // DOM Elements
+      const infoPanel = document.getElementById('info-panel')
+      const closePanelBtn = document.getElementById('close-panel')
+      const panelTitle = document.getElementById('panel-title')
+      const panelType = document.getElementById('panel-type')
+      const panelFloors = document.getElementById('panel-floors')
+      const panelOccupancy = document.getElementById('panel-occupancy')
+      const panelDesc = document.getElementById('panel-desc')
+      const panelId = document.getElementById('panel-id')
+
+      // --- 4. Interaction Logic ---
+
+      // Function to define style for each feature
       function style(feature) {
         return {
           fillColor: feature.properties.color,
-          weight: 1,
+          weight: 2,
           opacity: 1,
           color: 'white',
+          dashArray: '3',
           fillOpacity: 0.6,
-          className: 'transition-all duration-200',
         }
       }
 
+      // Hover effect
       function highlightFeature(e) {
         const layer = e.target
+
+        // Don't change style if it's the currently selected building
         if (layer === selectedLayer) return
-        layer.setStyle({ weight: 3, fillOpacity: 0.8, color: '#cbd5e1' })
-        layer.bringToFront()
+
+        layer.setStyle({
+          weight: 4,
+          color: '#666',
+          dashArray: '',
+          fillOpacity: 0.8,
+        })
+
+        if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+          layer.bringToFront()
+        }
       }
 
+      // Mouse out effect
       function resetHighlight(e) {
         const layer = e.target
-        if (layer !== selectedLayer) geojsonLayer.resetStyle(layer)
+
+        // Only reset if it's NOT the selected layer
+        if (layer !== selectedLayer) {
+          geojsonLayer.resetStyle(e.target)
+        }
       }
 
-      function selectBuilding(e) {
-        const layer = e.target
-        const props = layer.feature.properties
+      // Update UI Panel
+      function updatePanel(props) {
+        panelTitle.innerText = props.name
+        panelType.innerText = props.type
+        panelFloors.innerText = props.floors
+        panelOccupancy.innerText = props.occupancy
+        panelDesc.innerText = props.description
+        panelId.innerText = `ID: #${props.id}`
 
-        if (selectedLayer) geojsonLayer.resetStyle(selectedLayer)
+        // Open panel
+        infoPanel.classList.remove('translate-x-[120%]', 'opacity-0')
+      }
+
+      // Close UI Panel
+      function closePanel() {
+        infoPanel.classList.add('translate-x-[120%]', 'opacity-0')
+
+        // Reset map selection style
+        if (selectedLayer) {
+          const layerToReset = selectedLayer
+          selectedLayer = null // Clear reference first
+          geojsonLayer.resetStyle(layerToReset)
+        }
+      }
+
+      // Click Handler
+      function selectFeature(e) {
+        const layer = e.target
+
+        // If clicking the already selected layer, deselect it
+        if (selectedLayer === layer) {
+          closePanel()
+          return
+        }
+
+        // Reset previous selection
+        if (selectedLayer) {
+          geojsonLayer.resetStyle(selectedLayer)
+        }
+
+        // Set new selection
         selectedLayer = layer
 
-        layer.setStyle({ weight: 4, color: '#2563eb', fillOpacity: 0.9 })
+        // Apply "Selected" Style
+        layer.setStyle({
+          weight: 5,
+          color: '#1e40af', // Dark blue border
+          dashArray: '',
+          fillOpacity: 0.9,
+        })
+
         layer.bringToFront()
 
-        emptyState.style.opacity = '0'
-        setTimeout(() => (emptyState.style.display = 'none'), 300)
+        // Zoom to feature (optional, keeping it subtle)
+        map.flyToBounds(layer.getBounds(), { padding: [50, 50], maxZoom: 19, duration: 0.5 })
 
-        reportForm.classList.remove('form-disabled')
-
-        inputName.value = props.name
-        inputId.value = props.id
-        inputType.value = props.type
-        // Clear optional field when switching buildings
-        inputSubLocation.value = ''
-        statusBadge.classList.remove('hidden')
-
-        btnSubmit.disabled = false
-        btnSubmit.classList.remove('bg-slate-300', 'cursor-not-allowed')
-        btnSubmit.classList.add('bg-blue-600', 'hover:bg-blue-700', 'shadow-lg')
-
-        // Adjust padding for split screen
-        map.flyToBounds(layer.getBounds(), { padding: [50, 50], maxZoom: 18, duration: 0.8 })
+        // Update Sidebar
+        updatePanel(layer.feature.properties)
       }
 
-      // --- File Upload Logic ---
-      fileInput.addEventListener('change', (e) => {
-        const count = e.target.files.length
-        if (count > 0) {
-          fileCount.innerText = `${count} photo(s) selected`
-          fileCount.classList.add('text-blue-600')
-        } else {
-          fileCount.innerText = ''
-        }
-      })
+      function onEachFeature(feature, layer) {
+        layer.on({
+          mouseover: highlightFeature,
+          mouseout: resetHighlight,
+          click: selectFeature,
+        })
 
-      // --- Submit Logic with Validation ---
-      btnSubmit.addEventListener('click', function () {
-        // Reset errors
-        inputDescription.classList.remove('border-red-500', 'ring-2', 'ring-red-500')
-        errorDesc.classList.add('hidden')
+        // Add a simple tooltip that shows on hover
+        layer.bindTooltip(feature.properties.name, {
+          permanent: false,
+          direction: 'center',
+          className: 'font-bold px-2 py-1 rounded shadow text-s',
+        })
+      }
 
-        // Validate Description
-        if (!inputDescription.value.trim()) {
-          inputDescription.classList.add('border-red-500', 'ring-2', 'ring-red-500')
-          errorDesc.classList.remove('hidden')
-          // Shake animation effect
-          reportForm.classList.add('animate-pulse')
-          setTimeout(() => reportForm.classList.remove('animate-pulse'), 200)
-          return // Stop submission
-        }
-
-        // Success State
-        const originalText = btnSubmit.innerText
-        btnSubmit.innerText = 'Submitting...'
-        btnSubmit.classList.add('opacity-75')
-
-        const category = document.getElementById('input-category').value;
-        const location = `${document.querySelector('#input-building-name').value} ${document.querySelector('#input-sub-location').value}`;
-        const description = document.getElementById('input-description').value;
-        const priority = parseInt(document.getElementById('priority').value);
-        const fileInput = document.getElementById('dropzone-file');
-        const timestamp = new Date().toISOString();
-
-        if (fileInput.files.length > 0) {
-            const reader = new FileReader();
-            reader.onload = ev => {
-                const base64 = ev.target.result.split(',')[1];
-                saveReport(category, location, description, priority, timestamp, base64);
-            };
-            reader.readAsDataURL(fileInput.files[0]);
-        } else {
-            saveReport(category, location, description, priority, timestamp, null);
-        }
-
-        function saveReport(category, location, description, priority, timestamp, imageBinary) {
-            console.log("test")
-            const report = {
-                location: location,
-                category: category,
-                description: description,
-                priority: priority,
-                submissionTime: timestamp,
-                completion: 0,
-                deleted: 0,
-                img: imageBinary,
-                userID: 1
-            };
-
-            fetch('/API/createReport', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(report)
-            })
-            .then(res => res.json())
-            .then(data => {
-                const msg = document.getElementById('message');
-                msg.textContent = "Report submitted successfully!";
-                msg.className = "mb-4 p-3 bg-green-50 text-green-700 rounded-lg border border-green-200";
-                msg.classList.remove('hidden');
-
-                document.getElementById('maintenanceForm').reset();
-                document.getElementById('imagePreview').classList.add('hidden');
-            })
-            .catch(err => console.error(err));
-        }
-
-        function goToDashboard() {
-            window.location.href = '/';
-        }
-
-        setTimeout(() => {
-          // Construct summary including the new Sub-Location field
-          let locationString = inputName.value
-          if (inputSubLocation.value.trim()) {
-            locationString += ` (${inputSubLocation.value})`
-          }
-
-          btnSubmit.innerText = 'Order Submitted'
-          btnSubmit.classList.replace('bg-blue-600', 'bg-green-600')
-
-          // Reset form optional
-          inputDescription.value = ''
-          inputSubLocation.value = ''
-          fileInput.value = ''
-          fileCount.innerText = ''
-
-          setTimeout(() => {
-            btnSubmit.innerText = originalText
-            btnSubmit.classList.replace('bg-green-600', 'bg-blue-600')
-            btnSubmit.classList.remove('opacity-75')
-            //goToDashboard()
-          }, 2000)
-        }, 1000)
-      })
-
-      // --- Init Map ---
+      // Add Layer to Map
       geojsonLayer = L.geoJson(buildingsData, {
         style: style,
-        onEachFeature: function (feature, layer) {
-          layer.on({
-            mouseover: highlightFeature,
-            mouseout: resetHighlight,
-            click: selectBuilding,
-          })
-          layer.bindTooltip(feature.properties.name, {
-            direction: 'center',
-            className:
-              'font-bold text-xs bg-white/90 backdrop-blur px-2 py-1 rounded shadow-sm border border-slate-200 text-slate-700',
-          })
-        },
+        onEachFeature: onEachFeature,
       }).addTo(map)
+
+      // Global Event Listeners
+      closePanelBtn.addEventListener('click', closePanel)
+
+      // Clicking the map background closes the panel
+      map.on('click', function (e) {
+        // Leaflet propagates clicks. We check if the original target was the map container
+        // However, the geojson layer stops propagation usually.
+        // This handles clicking "empty space"
+        if (e.originalEvent.target.id === 'map' || e.originalEvent.target.classList.contains('leaflet-container')) {
+          closePanel()
+        }
+      })
     </script>
   </body>
 </html>
