@@ -1,8 +1,38 @@
 const express = require('express');
 const path = require('path');
+const { Connection, Request } = require('tedious');
 
 const app = express();
 const PORT = 3000;
+
+const config = {
+  server: "hackathon-server.database.windows.net",
+  authentication: {
+    type: "default",
+    options: {
+      userName: "hackathonOCU2025",
+      password: "hackOKC!!"
+    }
+  },
+  options: {
+    database: "maintenanceCrewDB",
+    encrypt: true,
+    trustServerCertificate: false,
+    port: 1433
+  }
+};
+
+const connection = new Connection(config);
+
+connection.on('connect', err => {
+  if (err) {
+    console.error("error:", err);
+  } else {
+    console.log("working");
+  }
+});
+
+connection.connect();
 
 // Middleware
 app.use(express.json());
@@ -76,6 +106,12 @@ app.post('/api/reports', (req, res) => {
   // In a real app, this would save to a database
   // For now, we'll just return success
   res.json({ success: true, report });
+});
+
+// LISTEN FOR SIGNUP
+app.post('/api/signup', (req, res) => {
+    console.log(req.body);
+    res.json({ status: 'ok' });
 });
 
 app.listen(PORT, () => {
