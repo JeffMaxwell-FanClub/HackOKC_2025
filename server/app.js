@@ -5,27 +5,29 @@ const { Connection, Request, TYPES } = require('tedious');
 const app = express();
 const PORT = 3000;
 
+app.use(express.json({ limit: '10mb' }));
+
 const config = {
-  server: "hackathon-server.database.windows.net",
-  authentication: {
-    type: "default",
+    server: "hackathon-server.database.windows.net",
+    authentication: {
+        type: "default",
+        options: {
+            userName: "hackathonOCU2025",
+            password: "hackOKC!!"
+        }
+    },
     options: {
-      userName: "hackathonOCU2025",
-      password: "hackOKC!!"
+        database: "maintenanceCrewDB",
+        encrypt: true,
+        trustServerCertificate: false,
+        port: 1433
     }
-  },
-  options: {
-    database: "maintenanceCrewDB",
-    encrypt: true,
-    trustServerCertificate: false,
-    port: 1433
-  }
 };
 
 const connection = new Connection(config);
 
 connection.on('connect', err => {
-  if (err) {
+    if (err) {
     console.error("error:", err);
   } else {
     console.log("working");
