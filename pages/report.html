@@ -2827,7 +2827,8 @@
         const category = document.getElementById('input-category').value;
         const location = `${document.querySelector('#input-building-name').value} ${document.querySelector('#input-sub-location').value}`;
         const description = document.getElementById('input-description').value;
-        const priority = parseInt(document.getElementById('priority').value);
+        const priorityElement = document.querySelector('input[name="urgency"]:checked');
+        const priority = priorityElement ? parseInt(priorityElement.value) : 1;
         const fileInput = document.getElementById('dropzone-file');
         const timestamp = new Date().toISOString();
 
