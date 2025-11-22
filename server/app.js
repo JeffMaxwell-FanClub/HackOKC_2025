@@ -64,6 +64,24 @@ app.post('/api/reports', (req, res) => {
   res.json({ success: true, report });
 });
 
+app.get('/API/allReports', (req, res) => {
+  
+
+  res.json({ success: true, message: "All reports fetched successfully." });
+});
+
+app.get('/API/assignedReports', (req, res) => {
+  
+
+  res.json({ success: true, message: "All reports fetched successfully." });
+});
+
+app.get('/API/completedReports', (req, res) => {
+  
+
+  res.json({ success: true, message: "All reports fetched successfully." });
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
