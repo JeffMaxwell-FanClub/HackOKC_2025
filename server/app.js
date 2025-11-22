@@ -64,23 +64,110 @@ app.post('/api/reports', (req, res) => {
   res.json({ success: true, report });
 });
 
-app.get('/API/allReports', (req, res) => {
-  
+function runQuery(query) {
+  return new Promise((resolve, reject) => {
+    const results = [];
 
-  res.json({ success: true, message: "All reports fetched successfully." });
+    const request = new Request(query, (err) => {
+      if (err) reject(err);
+      else resolve(results);
+    });
+
+    request.on("row", columns => {
+      const row = {};
+      columns.forEach(col => {
+        row[col.metadata.colName] = col.value;
+      });
+      results.push(row);
+    });
+
+    connection.execSql(request);
+  });
+}
+
+app.get('/API/allReports', async (req, res) => {
+  const query = `
+    SELECT 
+      r.reportID,
+      r.location,
+      r.category,
+      r.description,
+      r.priority,
+      r.submissionTime,
+      r.completion,
+      r.deleted,
+      u.name AS submittedBy
+    FROM reports r
+    LEFT JOIN [user] u ON r.userID = u.userID
+    WHERE r.deleted = 0
+    ORDER BY r.submissionTime DESC;
+  `;
+
+  try {
+    const data = await runQuery(query);
+    res.json({ success: true, reports: data });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
 });
 
-app.get('/API/assignedReports', (req, res) => {
-  
 
-  res.json({ success: true, message: "All reports fetched successfully." });
+app.get('/API/assignedReports', async (req, res) => {
+  const { workerID } = req.query;
+
+  const query = `
+    SELECT 
+      ar.assignID,
+      w.workerID,
+      w.name AS workerName,
+      r.reportID,
+      r.location,
+      r.category,
+      r.description,
+      r.priority,
+      r.submissionTime,
+      r.completion
+    FROM assignedReports ar
+    INNER JOIN worker w ON ar.workerID = w.workerID
+    INNER JOIN reports r ON ar.reportID = r.reportID
+    ${workerID ? `WHERE ar.workerID = ${workerID}` : ""}
+    ORDER BY r.submissionTime DESC;
+  `;
+
+  try {
+    const data = await runQuery(query);
+    res.json({ success: true, assigned: data });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
 });
 
-app.get('/API/completedReports', (req, res) => {
-  
 
-  res.json({ success: true, message: "All reports fetched successfully." });
+app.get('/API/completedReports', async (req, res) => {
+  const query = `
+    SELECT 
+      r.reportID,
+      r.location,
+      r.category,
+      r.description,
+      r.priority,
+      r.submissionTime,
+      r.completion,
+      u.name AS submittedBy
+    FROM reports r
+    LEFT JOIN [user] u ON r.userID = u.userID
+    WHERE r.completion = 1 AND r.deleted = 0
+    ORDER BY r.submissionTime DESC;
+  `;
+
+  try {
+    const data = await runQuery(query);
+    res.json({ success: true, completed: data });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
 });
+
 
 // Start server
 app.listen(PORT, () => {
