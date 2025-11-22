@@ -19,11 +19,12 @@
                     <div class="bg-blue-800 text-white p-2 rounded-lg">
                         <i class="fa-solid fa-star"></i>
                     </div>
-                    <span class="font-bold text-xl text-slate-800 tracking-tight">OCU Maintenance</span>
+                    <span class="font-bold text-xl text-slate-800 tracking-tight">CampusFix - Worker Portal</span>
                 </div>
-                <div class="flex items-center">
-                    <button onclick="handleLogout()" class="text-red-600 hover:text-red-700 font-medium underline">Log
-                        Out</button>
+                <div class="flex items-center gap-4">
+                    <span id="worker-name" class="text-sm text-gray-600"></span>
+                    <a href="/" class="text-blue-700 hover:text-blue-800 font-medium">Dashboard</a>
+                    <button onclick="handleLogout()" class="text-red-600 hover:text-red-700 font-medium underline">Log Out</button>
                 </div>
             </div>
         </div>
@@ -54,36 +55,85 @@
     </div>
 
     <script>
-        // Demo data
-        const requests = [
-            {
-                id: 1,
-                category: "Plumbing",
-                description: "Leaking faucet in restroom",
-                location: "Building A, Room 102",
-                submitted: "2025-11-21 14:30",
-                priority: "High",
-                assignedTo: null,
-                completedBy: null,
-                completionNotes: null,
-                submitter: { name: "Alice Johnson", phone: "405-555-1234", email: "alice.johnson@example.com" }
-            },
-            {
-                id: 2,
-                category: "Electrical",
-                description: "Light flickering in hallway",
-                location: "Building B, 2nd Floor",
-                submitted: "2025-11-21 15:10",
-                priority: "Medium",
-                assignedTo: null,
-                completedBy: null,
-                completionNotes: null,
-                submitter: { name: "Bob Smith", phone: "405-555-5678", email: "bob.smith@example.com" }
+        // Check authentication
+        function checkAuth() {
+            try {
+                const currentUserStr = localStorage.getItem('currentUser');
+                if (!currentUserStr) {
+                    alert('Please log in first');
+                    window.location.href = '/';
+                    return null;
+                }
+                
+                const currentUser = JSON.parse(currentUserStr);
+                const users = JSON.parse(localStorage.getItem('campusUsers')) || [];
+                
+                if (!users.find(u => u.email === currentUser.email)) {
+                    alert('User not found. Please log in again.');
+                    window.location.href = '/';
+                    return null;
+                }
+                
+                // Check if user is maintenance staff
+                if (currentUser.role !== 'maintenance') {
+                    alert('Access denied. This page is for maintenance staff only.');
+                    window.location.href = '/';
+                    return null;
+                }
+                
+                // Display worker name
+                document.getElementById('worker-name').textContent = `Logged in as: ${currentUser.name}`;
+                
+                return currentUser;
+            } catch (error) {
+                console.error('Error checking auth:', error);
+                window.location.href = '/';
+                return null;
             }
-        ];
+        }
 
-        const assignedRequests = [];
-        const completedRequests = [];
+        const currentWorker = checkAuth();
+        if (!currentWorker) {
+            // Will redirect, but just in case
+            throw new Error('Authentication failed');
+        }
+
+        // Load reports from localStorage
+        function loadReports() {
+            const reports = JSON.parse(localStorage.getItem('campusReports')) || [];
+            
+            // Convert to the format expected by the UI
+            return reports.map(report => {
+                // Get submitter info from users
+                const users = JSON.parse(localStorage.getItem('campusUsers')) || [];
+                const submitter = users.find(u => u.email === report.userId) || { name: report.userName || 'Unknown', email: report.userId };
+                
+                return {
+                    id: report.id,
+                    category: report.type || 'General',
+                    description: report.description || '',
+                    location: report.location || '',
+                    submitted: report.formattedTime || new Date(report.timestamp).toLocaleString(),
+                    priority: report.priority || 'Medium',
+                    assignedTo: report.assignedTo || null,
+                    completedBy: report.completedBy || null,
+                    completionNotes: report.completionNotes || null,
+                    status: report.status || 'pending',
+                    submitter: {
+                        name: submitter.name,
+                        email: submitter.email || report.userId,
+                        phone: submitter.phone || 'N/A'
+                    },
+                    imageData: report.imageData || null,
+                    imageFileName: report.imageFileName || null
+                };
+            });
+        }
+
+        // Initialize data
+        let requests = loadReports().filter(r => r.status === 'pending' && !r.assignedTo);
+        let assignedRequests = loadReports().filter(r => r.assignedTo === currentWorker.name && r.status !== 'completed');
+        let completedRequests = loadReports().filter(r => r.status === 'completed');
 
         // Renderers
         function renderCard(req, containerId) {
@@ -100,6 +150,7 @@
         <p class="text-gray-600 mt-1"><i class="fa-solid fa-circle-info text-blue-600 mr-2"></i>${req.description}</p>
         <p class="text-sm text-gray-500 mt-2">Submitted: ${req.submitted}</p>
         <p class="text-sm text-gray-500">Submitted By: ${req.submitter.name}</p>
+        ${req.imageData ? `<div class="mt-3"><img src="${req.imageData}" alt="Report Image" class="max-w-xs rounded-lg border border-gray-300"></div>` : ''}
 
         <div id="contact-${req.id}" class="hidden mt-2 text-sm text-gray-600">
           <p><strong>Phone:</strong> ${req.submitter.phone}</p>
@@ -200,9 +251,57 @@
             document.getElementById('completedRequests').classList.add('hidden');
             document.getElementById(listType + 'Requests').classList.remove('hidden');
 
-            document.getElementById("tab-all").classList.toggle("ring-2", listType === "all");
-            document.getElementById("tab-assigned").classList.toggle("ring-2", listType === "assigned");
-            document.getElementById("tab-completed").classList.toggle("ring-2", listType === "completed");
+            // Update tab styling
+            const tabs = ['all', 'assigned', 'completed'];
+            tabs.forEach(tab => {
+                const tabEl = document.getElementById(`tab-${tab}`);
+                if (tab === listType) {
+                    tabEl.classList.remove('bg-blue-700');
+                    tabEl.classList.add('bg-blue-800', 'ring-2', 'ring-blue-400');
+                } else {
+                    tabEl.classList.remove('bg-blue-800', 'ring-2', 'ring-blue-400');
+                    tabEl.classList.add('bg-blue-700');
+                }
+            });
+        }
+
+        // Update report in localStorage
+        function updateReportInStorage(req) {
+            const reports = JSON.parse(localStorage.getItem('campusReports')) || [];
+            const index = reports.findIndex(r => r.id === req.id);
+            
+            if (index !== -1) {
+                // Update existing report
+                reports[index] = {
+                    ...reports[index],
+                    assignedTo: req.assignedTo,
+                    completedBy: req.completedBy,
+                    completionNotes: req.completionNotes,
+                    status: req.status,
+                    priority: req.priority
+                };
+            } else {
+                // Create new report entry (shouldn't happen, but just in case)
+                reports.push({
+                    id: req.id,
+                    userId: req.submitter.email,
+                    userName: req.submitter.name,
+                    type: req.category,
+                    location: req.location,
+                    description: req.description,
+                    timestamp: new Date(req.submitted).toISOString(),
+                    formattedTime: req.submitted,
+                    status: req.status,
+                    assignedTo: req.assignedTo,
+                    completedBy: req.completedBy,
+                    completionNotes: req.completionNotes,
+                    priority: req.priority,
+                    imageData: req.imageData,
+                    imageFileName: req.imageFileName
+                });
+            }
+            
+            localStorage.setItem('campusReports', JSON.stringify(reports));
         }
 
         // Actions
@@ -213,8 +312,12 @@
             }
 
             // Record completion info
-            req.completedBy = req.assignedTo || "John Doe";
+            req.completedBy = req.assignedTo || currentWorker.name;
             req.completionNotes = notes;
+            req.status = 'completed';
+
+            // Update in localStorage
+            updateReportInStorage(req);
 
             // Move request into completedRequests
             completedRequests.push(req);
@@ -242,10 +345,20 @@
 
 
         function assignToMe(req) {
-            req.assignedTo = "John Doe"; // placeholder
+            req.assignedTo = currentWorker.name;
+            req.status = 'assigned';
+            
+            // Update in localStorage
+            updateReportInStorage(req);
+            
+            // Remove from requests, add to assigned
+            const idx = requests.findIndex(r => r.id === req.id);
+            if (idx !== -1) requests.splice(idx, 1);
+            
             if (!assignedRequests.some(r => r.id === req.id)) {
                 assignedRequests.push(req);
             }
+            
             renderPanel("allRequests", requests, true);
             renderPanel("assignedRequests", assignedRequests, false);
             showList("assigned");
@@ -253,6 +366,11 @@
 
         function releaseRequest(req) {
             req.assignedTo = null;
+            req.status = 'pending';
+            
+            // Update in localStorage
+            updateReportInStorage(req);
+            
             const idx = assignedRequests.findIndex(r => r.id === req.id);
             if (idx !== -1) assignedRequests.splice(idx, 1);
             if (!requests.some(r => r.id === req.id)) requests.push(req);
@@ -263,15 +381,28 @@
         }
 
         function handleLogout() {
-            alert("Logging out...");
-            // Redirect to login page logic here
+            localStorage.removeItem('currentUser');
+            window.location.href = '/';
         }
 
-        // Initial render (once)
-        renderPanel("allRequests", requests, true);
-        renderPanel("assignedRequests", assignedRequests, false);
-        renderPanel("completedRequests", completedRequests, false);
+        // Refresh reports periodically
+        function refreshReports() {
+            const allReports = loadReports();
+            requests = allReports.filter(r => r.status === 'pending' && !r.assignedTo);
+            assignedRequests = allReports.filter(r => r.assignedTo === currentWorker.name && r.status !== 'completed');
+            completedRequests = allReports.filter(r => r.status === 'completed');
+            
+            renderPanel("allRequests", requests, true);
+            renderPanel("assignedRequests", assignedRequests, false);
+            renderPanel("completedRequests", completedRequests, false);
+        }
+
+        // Initial render
+        refreshReports();
         showList("all");
+        
+        // Refresh every 30 seconds to catch new reports
+        setInterval(refreshReports, 30000);
     </script>
 </body>
 

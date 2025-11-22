@@ -55,6 +55,15 @@ app.get('/admin', (req, res) => {
   });
 });
 
+app.get('/worker-reports', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'pages', 'workerReport.html'), (err) => {
+    if (err) {
+      console.error('Error serving worker reports page:', err);
+      res.status(500).send('Error loading page');
+    }
+  });
+});
+
 // API route to handle report submissions
 app.post('/api/reports', (req, res) => {
   const report = {

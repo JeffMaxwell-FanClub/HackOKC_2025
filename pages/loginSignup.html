@@ -75,6 +75,13 @@
                     <!-- Error Message Container -->
                     <div id="login-error" class="hidden mb-4 p-3 bg-red-50 text-red-700 text-sm rounded-lg border border-red-200"></div>
 
+                    <!-- Test Admin Account Info -->
+                    <div id="admin-info" class="mb-4 p-3 bg-blue-50 text-blue-700 text-sm rounded-lg border border-blue-200">
+                        <p class="font-semibold mb-1"><i class="fa-solid fa-info-circle mr-2"></i>Test Admin Account:</p>
+                        <p class="text-xs">Email: <strong>admin@campus.edu</strong></p>
+                        <p class="text-xs">Password: <strong>admin123</strong></p>
+                    </div>
+
                     <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-3 rounded-lg transition duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
                         Sign In
                     </button>
@@ -137,7 +144,8 @@
                 <h2 class="text-3xl font-bold text-gray-800 mb-2">Login Successful!</h2>
                 <p id="welcome-msg" class="text-lg text-gray-600 mb-8">Welcome back, User.</p>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto" id="dashboard-actions">
+                    <!-- Student/Faculty Actions -->
                     <button type="button" onclick="viewReports()" class="p-6 border rounded-xl hover:shadow-md transition bg-gray-50 text-left cursor-pointer hover:bg-gray-100 w-full">
                         <i class="fa-solid fa-clipboard-list text-3xl text-blue-600 mb-4"></i>
                         <h3 class="font-bold text-lg mb-2">View Reports</h3>
@@ -148,6 +156,17 @@
                         <h3 class="font-bold text-lg mb-2">New Request</h3>
                         <p class="text-sm text-gray-500">Submit a new campus maintenance issue.</p>
                     </a>
+                </div>
+                
+                <!-- Maintenance Staff Actions (shown conditionally) -->
+                <div id="maintenance-actions" class="hidden mt-6">
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                        <h3 class="font-bold text-lg mb-4 text-blue-800">Maintenance Staff Tools</h3>
+                        <a href="/worker-reports" class="inline-flex items-center gap-2 px-6 py-3 bg-blue-700 hover:bg-blue-800 text-white font-semibold rounded-lg transition shadow-md hover:shadow-lg">
+                            <i class="fa-solid fa-tools"></i>
+                            <span>View & Manage Work Requests</span>
+                        </a>
+                    </div>
                 </div>
 
                 <button onclick="handleLogout()" class="mt-10 text-red-600 hover:text-red-700 font-medium underline">Log Out</button>
@@ -162,6 +181,34 @@
         const loginView = document.getElementById('login-view');
         const signupView = document.getElementById('signup-view');
         const dashboardView = document.getElementById('dashboard-view');
+
+        // Initialize default admin/maintenance account for testing
+        function initializeAdminAccount() {
+            const users = JSON.parse(localStorage.getItem('campusUsers')) || [];
+            
+            // Check if admin account already exists
+            const adminExists = users.find(u => u.email === 'admin@campus.edu' || u.role === 'maintenance');
+            
+            if (!adminExists) {
+                // Create default maintenance/admin account
+                const adminUser = {
+                    name: 'Maintenance Admin',
+                    email: 'admin@campus.edu',
+                    password: 'admin123',
+                    role: 'maintenance'
+                };
+                
+                users.push(adminUser);
+                localStorage.setItem('campusUsers', JSON.stringify(users));
+                
+                console.log('Default admin account created!');
+                console.log('Email: admin@campus.edu');
+                console.log('Password: admin123');
+            }
+        }
+
+        // Initialize on page load
+        initializeAdminAccount();
 
         // Show Signup Form
         function showSignup() {
@@ -236,6 +283,17 @@
                 // Update Dashboard Text based on Role
                 const roleDisplay = user.role === 'maintenance' ? 'Maintenance Staff' : 'Student/Faculty';
                 document.getElementById('welcome-msg').innerHTML = `Welcome back, <b>${user.name}</b>.<br><span class="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded-full mt-2 inline-block">${roleDisplay}</span>`;
+                
+                // Show/hide maintenance staff tools
+                const maintenanceActions = document.getElementById('maintenance-actions');
+                const dashboardActions = document.getElementById('dashboard-actions');
+                if (user.role === 'maintenance') {
+                    maintenanceActions.classList.remove('hidden');
+                    dashboardActions.classList.add('hidden');
+                } else {
+                    maintenanceActions.classList.add('hidden');
+                    dashboardActions.classList.remove('hidden');
+                }
             } else {
                 // FAILURE
                 errorBox.textContent = "Invalid email or password.";
