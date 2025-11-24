@@ -40,6 +40,7 @@ This system simplifies the entire workflow—from submitting a maintenance reque
 ### Prerequisites
 - **Node.js**
 - **NPM**
+- **SQL Database**
 
 ### Quick Start
 
@@ -55,6 +56,8 @@ cd server
 
 # Install dependencies
 npm i
+
+# NOTICE: MUST MODIFY DATABASE VARIABLES
 
 # Run database migrations and start server
 npm start
