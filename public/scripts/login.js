@@ -26,7 +26,7 @@ function handleSignup(e) {
   const role = 'user'
 
   // Simulate saving to database
-  fetch('https://jeffmaxwellfanclub.azurewebsites.net/api/signup', {
+  fetch('/api/signup', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ async function handleLogin(e) {
   const errorBox = document.getElementById('login-error')
 
   try {
-    const response = await fetch('https://jeffmaxwellfanclub.azurewebsites.net//api/signin', {
+    const response = await fetch('/api/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -167,7 +167,7 @@ async function fetchReports() {
   try {
       // --- API CALL ---
       // Calls your specific endpoint
-      const response = await fetch('https://jeffmaxwellfanclub.azurewebsites.net//API/allReports');
+      const response = await fetch('/API/allReports');
       
       // Handle errors
       if (!response.ok) throw new Error("Network response was not ok");
