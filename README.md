@@ -57,7 +57,7 @@ cd server
 # Install dependencies
 npm i
 
-# NOTICE: MUST MODIFY DATABASE VARIABLES
+# NOTICE: MUST MODIFY DATABASE VARIABLES + API Routes to work
 
 # Run database migrations and start server
 npm start
